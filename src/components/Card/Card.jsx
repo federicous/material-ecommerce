@@ -1,10 +1,14 @@
 import * as React from 'react';
-import { Card,CardActions,CardContent,CardMedia,Button,Typography } from '@material-ui/core';
+import { Card,CardActions,CardContent,CardMedia,Typography } from '@material-ui/core';
 import ItemCount from '../ItemCount/ItemCount'
 
 export default function MediaCard({stock, addToCardWidget}) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}>
       <CardMedia
         component="img"
         height="240"
@@ -19,7 +23,9 @@ export default function MediaCard({stock, addToCardWidget}) {
           Notebook ASUS X509JA Intel I3 1005 G1 | 4GB | 1Tb | 15.6 FULL HD
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions sx={{
+        justifyContent:'center',
+      }}>
       <ItemCount stock={stock} addToCardWidget={addToCardWidget}/>
       </CardActions>
     </Card>

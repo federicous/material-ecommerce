@@ -1,5 +1,6 @@
 import React, {useState } from 'react'
-import { Button, ButtonGroup, TextField} from '@material-ui/core'
+import { Button, ButtonGroup, Box} from '@material-ui/core'
+import { flexbox } from '@material-ui/system'
 
 const ItemCount = ({stock, addToCardWidget}) => {
 
@@ -19,14 +20,16 @@ function removeItem() {
 }
 
 return (
-<div>
+<Box>
 	<ButtonGroup variant="contained" aria-label="outlined primary button group">
 		<Button onClick={()=>removeItem()}>-</Button>
-		<TextField id="outlined-basic" label={contador} variant="outlined" size="small" />
+		<Box component="span" sx={{ fontSize: 16, mt: 1 }}>{contador}</Box>
 		<Button onClick={()=>addItem()}>+</Button>
 	</ButtonGroup>
-	<Button onClick={()=>addToCardWidget(contador)} >Add</Button>
-</div>
+	<Box>
+		<Button onClick={()=>addToCardWidget(contador)} >Add</Button>
+	</Box>
+</Box>
 )
 }
 
