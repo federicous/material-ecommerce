@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppBar, Box, Toolbar, Typography, IconButton } from '@material-ui/core'
+import { AppBar, Box, Toolbar, Typography, IconButton, Badge } from '@material-ui/core'
 import { Menu, ShoppingCart } from '@material-ui/icons';
 import BrandIcon from '../BrandIcon/BrandIcon';
 import './ButtonAppBar.css';
@@ -18,7 +18,9 @@ return (
           Tecnalink
         </Typography>
       </div>
+      <Badge badgeContent={4} color="primary">
       <ShoppingCart />
+      </Badge>
     </Toolbar>
   </AppBar>
 </Box>
