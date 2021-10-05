@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Card,CardActions,CardContent,CardMedia,Button,Typography } from '@material-ui/core';
 import ItemCount from '../ItemCount/ItemCount'
 
-export default function MediaCard() {
+export default function MediaCard({stock, addToCardWidget}) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -20,7 +20,7 @@ export default function MediaCard() {
         </Typography>
       </CardContent>
       <CardActions>
-      <ItemCount />
+      <ItemCount stock={stock} addToCardWidget={addToCardWidget}/>
       </CardActions>
     </Card>
   );

@@ -1,15 +1,31 @@
-import React from 'react'
+import React, {useState } from 'react'
 import { Button, ButtonGroup, TextField} from '@material-ui/core'
 
-const ItemCount = () => {
+const ItemCount = ({stock, addToCardWidget}) => {
+
+const [contador, setContador] = useState(1)
+
+function addItem() {
+	if (contador < stock) {
+		setContador(contador+1)
+	}
+	
+}
+
+function removeItem() {
+	if (contador>1) {
+		setContador(contador-1)		
+	}
+}
+
 return (
 <div>
 	<ButtonGroup variant="contained" aria-label="outlined primary button group">
-		<Button>-</Button>
-		<TextField id="outlined-basic" label="0" variant="outlined" />
-		<Button>+</Button>
+		<Button onClick={()=>removeItem()}>-</Button>
+		<TextField id="outlined-basic" label={contador} variant="outlined" size="small" />
+		<Button onClick={()=>addItem()}>+</Button>
 	</ButtonGroup>
-	<Button>Add</Button>
+	<Button onClick={()=>addToCardWidget(contador)} >Add</Button>
 </div>
 )
 }

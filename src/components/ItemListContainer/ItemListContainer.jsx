@@ -1,11 +1,11 @@
 import React from 'react'
 import MediaCard from '../Card/Card'
 
-const ItemListContainer = (props) => {
+const ItemListContainer = ({greeting, stock, addToCardWidget}) => {
 	return (
 		<div>
-			<h3>{props.greeting}</h3>
-			<MediaCard />
+			<h3>{greeting}</h3>
+			<MediaCard stock={stock} addToCardWidget={addToCardWidget}/>
 		</div>
 	)
 }

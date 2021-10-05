@@ -4,7 +4,7 @@ import { Menu, ShoppingCart } from '@material-ui/icons';
 import BrandIcon from '../BrandIcon/BrandIcon';
 import './ButtonAppBar.css';
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar({carrito}) {
 return (
 <Box sx={{ flexGrow: 1 }}>
   <AppBar position="static">
@@ -18,7 +18,7 @@ return (
           Tecnalink
         </Typography>
       </div>
-      <Badge badgeContent={4} color="primary">
+      <Badge badgeContent={carrito} color="error">
       <ShoppingCart />
       </Badge>
     </Toolbar>
