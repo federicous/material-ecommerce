@@ -2,9 +2,9 @@ import * as React from 'react';
 import { AppBar, Box, Toolbar, Typography, IconButton, Badge } from '@material-ui/core'
 import { Menu, ShoppingCart } from '@material-ui/icons';
 import BrandIcon from '../BrandIcon/BrandIcon';
-import './ButtonAppBar.css';
+import './NavBar.css';
 
-export default function ButtonAppBar({carrito}) {
+export default function NavBar({carrito}) {
 return (
 <Box sx={{ flexGrow: 1 }}>
   <AppBar position="static">

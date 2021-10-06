@@ -1,7 +1,7 @@
 
 import React, { useState,useEffect } from 'react';
 import './App.css';
-import ButtonAppBar from './components/NavBar/ButtonAppBar';
+import NavBar from './components/NavBar/NavBar';
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 import { Container, Box } from '@material-ui/core';
 function App() {
@@ -18,7 +18,7 @@ const [carrito, setcarrito] = useState(0)
 
   return (
     <div className="App">
-    <ButtonAppBar carrito={carrito}/> 
+    <NavBar carrito={carrito}/> 
        <Container>
       <Box m={4}>
         
