@@ -22,7 +22,7 @@ const [carrito, setcarrito] = useState(0)
        <Container>
       <Box m={4}>
         
-          <ItemListContainer greeting="Lista de productos" stock={8} addToCardWidget={addToCardWidget}/>
+          <ItemListContainer greeting="Lista de productos" initial={1} stock={8} addToCardWidget={addToCardWidget}/>
       </Box>  
        </Container>  
     </div>

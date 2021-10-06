@@ -2,9 +2,9 @@ import React, {useState } from 'react'
 import { Button, ButtonGroup, Box} from '@material-ui/core'
 import { flexbox } from '@material-ui/system'
 
-const ItemCount = ({stock, addToCardWidget}) => {
-
-const [contador, setContador] = useState(1)
+const ItemCount = ({initial, stock, addToCardWidget}) => {
+console.log({initial});
+const [contador, setContador] = useState(initial)
 
 function addItem() {
 	if (contador < stock) {
