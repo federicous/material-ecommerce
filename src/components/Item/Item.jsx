@@ -2,7 +2,7 @@ import React from 'react'
 import { Card,CardActions,CardContent,CardMedia,Typography } from '@material-ui/core';
 import ItemCount from '../ItemCount/ItemCount'
 
-const Item = ({initial, stock, addToCardWidget}) => {
+const Item = ({initial, name, description, img, stock, addToCardWidget}) => {
 	return (
     <>
       <Card
@@ -11,20 +11,21 @@ const Item = ({initial, stock, addToCardWidget}) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          textAlign: "center",
         }}
       >
         <CardMedia
           component="img"
           height="240"
-          image="https://s3-sa-east-1.amazonaws.com/saasargentina/FT73bvaQY55Yhw7isnVJ/imagen"
-          alt="notebook Asus"
+          image={img}
+          alt="notebook"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Notebook
+            {name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Notebook ASUS X509JA Intel I3 1005 G1 | 4GB | 1Tb | 15.6 FULL HD
+            {description}
           </Typography>
         </CardContent>
         <CardActions
