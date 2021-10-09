@@ -7,7 +7,8 @@ const Item = ({initial, name, description, img, stock, addToCardWidget}) => {
     <>
       <Card
         sx={{
-          maxWidth: 345,
+          // maxWidth: 345,
+          // height: 200,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
