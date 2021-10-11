@@ -1,5 +1,6 @@
 import React, {useState } from 'react'
 import { Button, ButtonGroup, Box} from '@material-ui/core'
+import { ShoppingCart } from '@material-ui/icons';
 
 const ItemCount = ({initial, stock, addToCardWidget}) => {
 console.log({initial});
@@ -18,14 +19,16 @@ function removeItem() {
 }
 
 return (
-	<Box>
+	<Box  sx={{ fontSize: 16, mt: 1, width:"100%" }}>
 		<ButtonGroup variant="contained" aria-label="outlined primary button group">
 			<Button onClick={()=>removeItem()}>-</Button>
 			<Box component="span" sx={{ fontSize: 16, mt: 1 }}>{contador}</Box>
 			<Button onClick={()=>addItem()}>+</Button>
 		</ButtonGroup>
 		<Box>
-			<Button onClick={()=>addToCardWidget(contador)} >Add</Button>
+			<Button variant="contained" color="success"  sx={{ fontSize: 16, mt: 1, width:"100%" }}
+			startIcon={<ShoppingCart/>}
+			onClick={()=>addToCardWidget(contador)} >Add to Cart</Button>
 		</Box>
 	</Box>
 )

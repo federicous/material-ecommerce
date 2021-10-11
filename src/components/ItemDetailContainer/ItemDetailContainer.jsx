@@ -31,7 +31,7 @@ const ItemDetailContainer = ({initial, addToCardWidget}) => {
 
 	return (
 		<Container sx={{
-			marginTop:"40px",
+			marginTop:"30px",
 			display:"flex", 
 			flexDirection:"row",
 			justifyContent:"space-between",
@@ -47,6 +47,7 @@ const ItemDetailContainer = ({initial, addToCardWidget}) => {
 						description={item.name}
 						img={item.image}
 						stock={item.quantityLimit} 
+						price={item.regularPrice}
 						addToCardWidget={addToCardWidget}
 						/>
 					</Grid>
