@@ -7,7 +7,7 @@ import './NavBar.css';
 export default function NavBar({carrito}) {
 return (
 <Box sx={{ flexGrow: 1 }}>
-  <AppBar position="static">
+  <AppBar position="fixed">
     <Toolbar className="toolBar">
       <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
         <Menu />

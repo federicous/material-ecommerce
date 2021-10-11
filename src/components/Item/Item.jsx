@@ -7,10 +7,6 @@ const Item = ({initial, name, description, img, stock, price, addToCardWidget}) 
     <>
       <Card
         sx={{
-          // maxWidth: 345,
-          // width: 357,
-          // height: 357,
-          // height: 200,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -18,21 +14,19 @@ const Item = ({initial, name, description, img, stock, price, addToCardWidget}) 
         }}
       >
         <Container sx={{
-          height:"280px",
+          // height:"280px",
           display:"flex",
           alignItems:"center"
         }}
         >
         <CardMedia
           component="img"
-          // height="240"
-          // width="fit-content"
           image={img}
           alt="notebook"
         />
         </Container>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+        <CardContent sx={{margin:"0", py:"2"}}>
+          <Typography gutterBottom variant="h6" component="div">
             {name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
@@ -45,7 +39,7 @@ const Item = ({initial, name, description, img, stock, price, addToCardWidget}) 
             flexDirection: "column",
           }}
         >
-          <Typography sx={{fontWeight:"bold"}} variant="h5">$ {price}</Typography>
+          <Typography sx={{fontWeight:"bold"}} variant="h6">$ {price}</Typography>
           <Typography variant="body2">(Stock: {stock})</Typography>
           <ItemCount
             initial={initial}

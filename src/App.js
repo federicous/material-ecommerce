@@ -32,9 +32,9 @@ const [carrito, setcarrito] = useState(0)
                 addToCardWidget={addToCardWidget}
                 /> */}
                 <ItemDetailContainer 
-                                greeting="Lista de productos"
-                                initial={1}
-                                addToCardWidget={addToCardWidget}
+                  greeting="Lista de productos"
+                  initial={1}
+                  addToCardWidget={addToCardWidget}
                 />
               </Route>
 
