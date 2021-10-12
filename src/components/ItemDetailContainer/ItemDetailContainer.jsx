@@ -29,7 +29,7 @@ const ItemDetailContainer = ({initial, addToCardWidget}) => {
 			justifyContent:"space-between",
 			flexWrap: "wrap"
 			}}>
-			<Grid container spacing={4}>
+			<Grid container spacing={2}>
 			{ products && products.map((item) => (
 					<Grid item key={item.sku} xs={12} sm={4} md={3}>
 						<Item

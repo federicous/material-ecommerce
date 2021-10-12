@@ -20,13 +20,13 @@ function removeItem() {
 
 return (
 	<Box  sx={{ fontSize: 16, mt: 1, width:"100%", display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center" }}>
-		<ButtonGroup variant="contained" aria-label="outlined primary button group">
+		<ButtonGroup size="small" variant="contained" aria-label="outlined primary button group">
 			<Button onClick={()=>removeItem()}>-</Button>
 			<Box component="span" sx={{ fontSize: 12, display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center" }}>{contador}</Box>
 			<Button onClick={()=>addItem()}>+</Button>
 		</ButtonGroup>
 		<Box>
-			<Button variant="contained" color="success"  sx={{ fontSize: 12, width:"100%" }}
+			<Button size="small" variant="contained" color="success"  sx={{ fontSize: 12, width:"100%" }}
 			startIcon={<ShoppingCart/>}
 			onClick={()=>addToCardWidget(contador)} >Add</Button>
 		</Box>
