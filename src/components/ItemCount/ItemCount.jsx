@@ -3,7 +3,7 @@ import { Button, ButtonGroup, Box} from '@material-ui/core'
 import { ShoppingCart } from '@material-ui/icons';
 
 const ItemCount = ({initial, stock, addToCardWidget}) => {
-console.log({initial});
+// console.log({initial});
 const [contador, setContador] = useState(initial)
 
 function addItem() {

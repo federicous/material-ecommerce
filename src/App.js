@@ -1,5 +1,5 @@
 
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
@@ -16,9 +16,9 @@ const [carrito, setcarrito] = useState(0)
       setcarrito(carrito+cantidad)
   }
 
-  useEffect(() => {
-    console.log("se agrego al carrito");
-  }, [carrito])
+  // useEffect(() => {
+  //   console.log("se agrego al carrito");
+  // }, [carrito])
 
   return (
           <BrowserRouter>
@@ -31,13 +31,25 @@ const [carrito, setcarrito] = useState(0)
                 stock={8}
                 addToCardWidget={addToCardWidget}
                 /> */}
+                <ItemListContainer 
+                  greeting="Lista de productos"
+                  initial={1}
+                  addToCardWidget={addToCardWidget}
+                />
+              </Route>
+              <Route exact path="/detalle">
+                {/* <ItemListContainer
+                greeting="Lista de productos"
+                initial={1}
+                stock={8}
+                addToCardWidget={addToCardWidget}
+                /> */}
                 <ItemDetailContainer 
                   greeting="Lista de productos"
                   initial={1}
                   addToCardWidget={addToCardWidget}
                 />
               </Route>
-
 
             </Switch>
 
