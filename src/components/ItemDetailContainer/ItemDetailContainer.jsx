@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import { Container, Grid } from '@material-ui/core';
-import Item from '../Item/Item';
+import ItemDetail from '../ItemDetail/ItemDetail';
+import { useParams } from 'react-router';
 
 const ItemDetailContainer = ({initial, addToCardWidget}) => {
+
+	const {sku} = useParams()
+	console.log(sku);
 
 	const [products, setProducts] = useState([])
     
 	const getProducts = async () => {
 		try {
-			const respuesta= await axios.get("https://api.bestbuy.com/v1/products((categoryPath.id=abcat0502000))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json")
+			// const respuesta= await axios.get(`https://api.bestbuy.com/v1/products(modelNumber=${sku.sku}&(categoryPath.id=abcat0502000))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`)
+			const respuesta= await axios.get(`https://api.bestbuy.com/v1/products(sku=${sku}&(categoryPath.id=abcat0502000))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`)
 			setProducts(respuesta.data.products)			
 		} catch (error) {
 			console.log(error);
@@ -32,7 +37,7 @@ const ItemDetailContainer = ({initial, addToCardWidget}) => {
 			<Grid container spacing={2}>
 			{ products && products.map((item) => (
 					<Grid item key={item.sku} xs={12} sm={4} md={3}>
-						<Item
+						<ItemDetail
 						key={item.sku}
 						initial={initial} 
 						name={`${item.manufacturer}`}

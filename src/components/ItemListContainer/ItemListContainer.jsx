@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import { Container, Grid } from '@material-ui/core';
-import Item from '../Item/Item';
+import ItemList from '../ItemList/ItemList';
 
 const ItemDetailContainer = ({initial, addToCardWidget}) => {
 
@@ -32,8 +32,9 @@ const ItemDetailContainer = ({initial, addToCardWidget}) => {
 			<Grid container spacing={2}>
 			{ products && products.map((item) => (
 					<Grid item key={item.sku} xs={12} sm={4} md={3}>
-						<Item
-						key={item.sku}
+						<ItemList
+						sku={item.sku}
+						model={item.modelNumber}
 						initial={initial} 
 						name={`${item.manufacturer}`}
 						description={item.name}

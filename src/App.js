@@ -25,25 +25,13 @@ const [carrito, setcarrito] = useState(0)
             <NavBar carrito={carrito} />
             <Switch>
               <Route exact path="/">
-                {/* <ItemListContainer
-                greeting="Lista de productos"
-                initial={1}
-                stock={8}
-                addToCardWidget={addToCardWidget}
-                /> */}
                 <ItemListContainer 
                   greeting="Lista de productos"
                   initial={1}
                   addToCardWidget={addToCardWidget}
                 />
               </Route>
-              <Route exact path="/detalle">
-                {/* <ItemListContainer
-                greeting="Lista de productos"
-                initial={1}
-                stock={8}
-                addToCardWidget={addToCardWidget}
-                /> */}
+              <Route exact path="/detail/:sku">
                 <ItemDetailContainer 
                   greeting="Lista de productos"
                   initial={1}
