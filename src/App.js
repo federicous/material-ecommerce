@@ -16,9 +16,6 @@ const [carrito, setcarrito] = useState(0)
       setcarrito(carrito+cantidad)
   }
 
-  // useEffect(() => {
-  //   console.log("se agrego al carrito");
-  // }, [carrito])
 
   return (
           <BrowserRouter>
