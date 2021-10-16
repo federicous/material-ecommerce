@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card,CardActions,CardContent,CardMedia,Container,Typography,Box, Button } from '@material-ui/core';
-import ItemCount from '../ItemCount/ItemCount'
 import { Link } from 'react-router-dom';
 
 const Item = ({initial, name, description, img, stock, price, addToCardWidget, model,sku}) => {

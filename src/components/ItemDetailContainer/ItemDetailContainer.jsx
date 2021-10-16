@@ -14,7 +14,8 @@ const ItemDetailContainer = ({initial, addToCardWidget}) => {
 	const getProducts = async () => {
 		try {
 			// const respuesta= await axios.get(`https://api.bestbuy.com/v1/products(modelNumber=${sku.sku}&(categoryPath.id=abcat0502000))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`)
-			const respuesta= await axios.get(`https://api.bestbuy.com/v1/products(sku=${sku}&(categoryPath.id=abcat0502000))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`)
+			// const respuesta= await axios.get(`https://api.bestbuy.com/v1/products(sku=${sku}&(categoryPath.id=abcat0502000))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`)
+			const respuesta= await axios.get(`https://api.bestbuy.com/v1/products(sku=${sku})?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`)
 			setProducts(respuesta.data.products)			
 		} catch (error) {
 			console.log(error);

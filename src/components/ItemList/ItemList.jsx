@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import { Container, Grid } from '@material-ui/core';
 import Item from '../Item/Item';
+import { useParams } from 'react-router';
 
 const ItemList = ({initial, addToCardWidget}) => {
-
+	const {category} = useParams()
 	const [products, setProducts] = useState([])
     
 	const getProducts = async () => {
 		try {
-			const respuesta= await axios.get("https://api.bestbuy.com/v1/products((categoryPath.id=abcat0502000))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json")
+			const respuesta= await axios.get(`https://api.bestbuy.com/v1/products((categoryPath.id=${category}))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`)
+			console.log(`https://api.bestbuy.com/v1/products((categoryPath.id=${category}))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`);
+			console.log(respuesta);
 			setProducts(respuesta.data.products)			
 		} catch (error) {
 			console.log(error);

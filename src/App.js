@@ -6,9 +6,7 @@ import ItemListContainer from './components/ItemListContainer/ItemListContainer'
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailContainer';
 
-
 function App() {
-
 
 const [carrito, setcarrito] = useState(0)
 
@@ -16,12 +14,18 @@ const [carrito, setcarrito] = useState(0)
       setcarrito(carrito+cantidad)
   }
 
-
   return (
           <BrowserRouter>
             <NavBar carrito={carrito} />
             <Switch>
               <Route exact path="/">
+                <ItemListContainer 
+                  // greeting="Lista de productos"
+                  // initial={1}
+                  // addToCardWidget={addToCardWidget}
+                />
+              </Route>
+              <Route exact path="/category/:category">
                 <ItemListContainer 
                   // greeting="Lista de productos"
                   // initial={1}
