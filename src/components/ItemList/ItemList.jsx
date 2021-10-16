@@ -21,7 +21,7 @@ const ItemList = ({initial, addToCardWidget}) => {
 
 	useEffect(() => {
 	    	getProducts()
-	}, [])
+	}, [category])
 
 
 	return (
