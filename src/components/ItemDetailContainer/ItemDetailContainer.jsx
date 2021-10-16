@@ -28,15 +28,15 @@ const ItemDetailContainer = ({initial, addToCardWidget}) => {
 
 
 	return (
-		<Container sx={{
-			marginTop:"80px",
-			display:"flex", 
-			flexDirection:"column",
-			justifyContent:"center",
-			}}>
+		<>
 			<Typography variant={"h4"}>Detalles del Producto</Typography>
 	
-			<Grid container spacing={2}>
+			<Grid sx={{
+			display:"flex", 
+			flexDirection:"column",
+     			alignItems:"center",
+			justifyContent:"center",
+			}} container spacing={2}>
 			{ products && products.map((item) => (
 					<Grid item key={item.sku} xs={12} sm={4} md={3}>
 						<ItemDetail
@@ -54,7 +54,7 @@ const ItemDetailContainer = ({initial, addToCardWidget}) => {
 				)
 			}
 			</Grid>	
-		</Container>
+		</>
 	)
 }
 

@@ -25,13 +25,6 @@ const ItemList = ({initial, addToCardWidget}) => {
 
 
 	return (
-		<Container sx={{
-			marginTop:"10px",
-			display:"flex", 
-			flexDirection:"row",
-			justifyContent:"space-between",
-			flexWrap: "wrap"
-			}}>
 			<Grid container spacing={2}>
 			{ products && products.map((item) => (
 					<Grid item key={item.sku} xs={12} sm={4} md={3}>
@@ -51,7 +44,6 @@ const ItemList = ({initial, addToCardWidget}) => {
 				)
 			}
 			</Grid>	
-		</Container>
 	)
 }
 

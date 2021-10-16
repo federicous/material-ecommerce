@@ -26,10 +26,12 @@ return (
           <Menu />
         </IconButton> */}
         <div className="logo">
+            <Link style={{ textDecoration:"none", color:"inherit", display:"flex", flexDirection:"row", alignItems:"center" }} to={`/`}>
           <BrandIcon />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, marginRight:"2rem" }}>
             Tecnalink
           </Typography>
+            </Link>
           {navList.map((item) => (
             <Link key={item.id} to={`/category/${item.value}`}>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
