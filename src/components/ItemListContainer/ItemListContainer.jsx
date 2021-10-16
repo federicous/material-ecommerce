@@ -1,55 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import axios from "axios";
-import { Container, Grid } from '@material-ui/core';
-import ItemList from '../ItemList/ItemList';
+import { Typography, Container } from '@material-ui/core'
+import React from 'react'
+import ItemList from '../ItemList/ItemList'
 
-const ItemDetailContainer = ({initial, addToCardWidget}) => {
-
-	const [products, setProducts] = useState([])
-    
-	const getProducts = async () => {
-		try {
-			const respuesta= await axios.get("https://api.bestbuy.com/v1/products((categoryPath.id=abcat0502000))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json")
-			setProducts(respuesta.data.products)			
-		} catch (error) {
-			console.log(error);
-		}
-	}	
-
-	useEffect(() => {
-	    	getProducts()
-	}, [])
-
-
+const ItemListContainer = () => {
 	return (
+		<>
 		<Container sx={{
 			marginTop:"80px",
 			display:"flex", 
 			flexDirection:"row",
-			justifyContent:"space-between",
-			flexWrap: "wrap"
+			justifyContent:"center",
 			}}>
-			<Grid container spacing={2}>
-			{ products && products.map((item) => (
-					<Grid item key={item.sku} xs={12} sm={4} md={3}>
-						<ItemList
-						sku={item.sku}
-						model={item.modelNumber}
-						initial={initial} 
-						name={`${item.manufacturer}`}
-						description={item.name}
-						img={item.image}
-						stock={item.quantityLimit} 
-						price={item.regularPrice}
-						addToCardWidget={addToCardWidget}
-						/>
-					</Grid>
-					)
-				)
-			}
-			</Grid>	
+			<Typography variant={"h4"}>Lista de Productos</Typography>
 		</Container>
+			<ItemList />
+			</>
 	)
 }
 
-export default ItemDetailContainer
+export default ItemListContainer

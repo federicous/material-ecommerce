@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid, Typography } from '@material-ui/core';
 import ItemDetail from '../ItemDetail/ItemDetail';
 import { useParams } from 'react-router';
 
@@ -30,10 +30,11 @@ const ItemDetailContainer = ({initial, addToCardWidget}) => {
 		<Container sx={{
 			marginTop:"80px",
 			display:"flex", 
-			flexDirection:"row",
-			justifyContent:"space-between",
-			flexWrap: "wrap"
+			flexDirection:"column",
+			justifyContent:"center",
 			}}>
+			<Typography variant={"h4"}>Detalles del Producto</Typography>
+	
 			<Grid container spacing={2}>
 			{ products && products.map((item) => (
 					<Grid item key={item.sku} xs={12} sm={4} md={3}>

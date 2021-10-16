@@ -23,9 +23,9 @@ const [carrito, setcarrito] = useState(0)
             <Switch>
               <Route exact path="/">
                 <ItemListContainer 
-                  greeting="Lista de productos"
-                  initial={1}
-                  addToCardWidget={addToCardWidget}
+                  // greeting="Lista de productos"
+                  // initial={1}
+                  // addToCardWidget={addToCardWidget}
                 />
               </Route>
               <Route exact path="/detail/:sku">
