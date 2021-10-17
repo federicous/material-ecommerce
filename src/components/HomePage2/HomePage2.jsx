@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { styled } from '@material-ui/core/styles';
 import { Typography, ButtonBase, Box } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+
+
 const navList =[
 	{id:"1", name:"Laptops", value:"abcat0502000", image:"https://assets.cybermonday.com.ar/uploads/tips/97/orig-1603762372LENOVO.png"},
 	{id:"2", name:"Phones", value:"pcmcat209400050001", image:"https://jobcompass.net/wp-content/uploads/2020/03/Sell-Your-Old-Cell-Phone-To-Both-Online-and-Offline.jpg"},
@@ -99,6 +102,8 @@ export default function HomePage2() {
             width: "33%",
           }}
         >
+                      <Link key={item.id} to={`/category/${item.value}`}>
+
           <ImageSrc style={{ backgroundImage: `url(${item.image})` }} />
           <ImageBackdrop className="MuiImageBackdrop-root" />
           <Image>
@@ -117,6 +122,8 @@ export default function HomePage2() {
               <ImageMarked className="MuiImageMarked-root" />
             </Typography>
           </Image>
+          </Link>
+
         </ImageButton>
       ))}
     </Box>
