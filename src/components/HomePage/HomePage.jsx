@@ -9,44 +9,40 @@ const HomePage = () => {
 		{id:"3", name:"TVs", value:"abcat0101000", image:"https://mastertechhome.com/wp-content/uploads/2020/02/smart-tvs.jpg"},
 	      ]
 	return (
-		<>
-			<Typography>
-				Categorías
-			</Typography>
-			<Container sx={{
-			display:"flex", 
-			flexDirection:"row",
-      			alignItems:"center",
-			justifyContent:"space-between",
-			}}>
-			{navList.map((item) => (
-            <Link key={item.id} to={`/category/${item.value}`}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                <Button variant="text">
-                  {item.name}
-                </Button>
-		<Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image={item.image}
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {item.name}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
-              </Typography>
-            </Link>
-	              ))}	
-			</Container>
-			
-		</>
-	)
+    <>
+    			<Typography variant={"h4"}>Categorias</Typography>
+
+      <Container
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        {navList.map((item) => (
+          <Link key={item.id} to={`/category/${item.value}`}>
+              <Card sx={{ maxWidth: 345 }}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={item.image}
+                    alt="green iguana"
+                  />
+                  <CardContent>
+              <Button variant="text">{item.name}</Button>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {item.name}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+          </Link>
+        ))}
+      </Container>
+    </>
+  );
 }
 
 export default HomePage
