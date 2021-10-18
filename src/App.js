@@ -19,41 +19,42 @@ const [carrito, setcarrito] = useState(0)
   }
 
   return (
-          <BrowserRouter>
-            <NavBar carrito={carrito} />
-            <Container sx={{
-			marginTop:"80px",
-			display:"flex", 
-			flexDirection:"column",
-      alignItems:"center",
-			justifyContent:"center",
-			}}>
-            <Switch>
-              <Route exact path="/">
-                {/* <HomePage/> */}
-                <Typography variant={"h5"}>Categories</Typography>
-                <HomePage2/>
-              </Route>
-              <Route exact path="/category/:category">
-                <Typography variant={"h5"}>Products list</Typography>
-                <ItemListContainer 
-                />
-              </Route>
-              <Route exact path="/detail/:sku">
-              <Typography variant={"h5"}>Details</Typography>
-                <ItemDetailContainer 
-                  greeting="Lista de productos"
-                  initial={1}
-                  addToCardWidget={addToCardWidget}
-                />
-              </Route>
-              <Route exact path="/cart">
-                <Typography variant={"h5"}>Cart</Typography>
-                <Cart/>
-              </Route>
-            </Switch>
-            </Container>
-          </BrowserRouter>
+    <BrowserRouter>
+      <NavBar carrito={carrito} />
+      <Container
+        sx={{
+          marginTop: "80px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Switch>
+          <Route exact path="/">
+            {/* <HomePage/> */}
+            <Typography variant={"h5"}>Categories</Typography>
+            <HomePage2 />
+          </Route>
+          <Route exact path="/category/:category">
+            <Typography variant={"h5"}>Products list</Typography>
+            <ItemListContainer />
+          </Route>
+          <Route exact path="/detail/:sku">
+            <Typography variant={"h5"}>Details</Typography>
+            <ItemDetailContainer
+              greeting="Lista de productos"
+              initial={1}
+              addToCardWidget={addToCardWidget}
+            />
+          </Route>
+          <Route exact path="/cart">
+            <Typography variant={"h5"}>Cart</Typography>
+            <Cart />
+          </Route>
+        </Switch>
+      </Container>
+    </BrowserRouter>
   );
 }
 

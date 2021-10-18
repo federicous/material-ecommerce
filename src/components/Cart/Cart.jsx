@@ -32,7 +32,7 @@ const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
 export default function Cart() {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ marginTop:'1rem' }}>
       <Table sx={{ minWidth: 700 }} aria-label="spanning table">
         <TableHead>
           <TableRow>
