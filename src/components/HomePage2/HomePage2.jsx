@@ -9,23 +9,6 @@ const navList =[
 	{id:"2", name:"Phones", value:"pcmcat209400050001", image:"https://jobcompass.net/wp-content/uploads/2020/03/Sell-Your-Old-Cell-Phone-To-Both-Online-and-Offline.jpg"},
 	{id:"3", name:"TVs", value:"abcat0101000", image:"https://mastertechhome.com/wp-content/uploads/2020/02/smart-tvs.jpg"},
       ]
-const images = [
-  {
-    url: '/static/images/buttons/breakfast.jpg',
-    title: 'Breakfast',
-    width: '40%',
-  },
-  {
-    url: '/static/images/buttons/burgers.jpg',
-    title: 'Burgers',
-    width: '30%',
-  },
-  {
-    url: '/static/images/buttons/camera.jpg',
-    title: 'Camera',
-    width: '30%',
-  },
-];
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
@@ -93,7 +76,7 @@ const ImageMarked = styled('span')(({ theme }) => ({
 
 export default function HomePage2() {
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%', marginTop:'1rem' }}>
       {navList.map((item) => (
         <ImageButton
           focusRipple

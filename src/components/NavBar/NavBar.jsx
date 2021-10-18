@@ -42,9 +42,11 @@ return (
             </Link>
           ))}
         </div>
-        <Badge badgeContent={carrito} color="error">
-          <ShoppingCart />
-        </Badge>
+        <Link to={`/cart`} style={{ textDecoration:"none", color:"inherit"}}>
+          <Badge badgeContent={carrito} color="error">
+            <ShoppingCart />
+          </Badge>
+        </Link>
       </Toolbar>
     </AppBar>
   </Box>

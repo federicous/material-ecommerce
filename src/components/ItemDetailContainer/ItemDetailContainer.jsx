@@ -29,8 +29,7 @@ const ItemDetailContainer = ({initial, addToCardWidget}) => {
 
 	return (
 		<>
-			<Typography variant={"h4"}>Detalles del Producto</Typography>
-	
+
 			<Grid sx={{
 			display:"flex", 
 			flexDirection:"column",

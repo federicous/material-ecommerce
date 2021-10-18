@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
-import { Container, Grid } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 import Item from '../Item/Item';
 import { useParams } from 'react-router';
 
@@ -25,7 +25,8 @@ const ItemList = ({initial, addToCardWidget}) => {
 
 
 	return (
-			<Grid container spacing={2}>
+		<>
+			<Grid container spacing={2} sx={{marginTop:"0.1rem"}}>
 			{ products && products.map((item) => (
 					<Grid item key={item.sku} xs={12} sm={4} md={3}>
 						<Item
@@ -44,6 +45,7 @@ const ItemList = ({initial, addToCardWidget}) => {
 				)
 			}
 			</Grid>	
+		</>
 	)
 }
 
