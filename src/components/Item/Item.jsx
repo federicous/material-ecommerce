@@ -12,7 +12,7 @@ const Item = ({initial, name, description, img, stock, price, addToCardWidget, m
           flexDirection: "column",
           justifyContent: "center",
           textAlign: "center",
-          paddingY:"20px"
+          paddingY: "20px",
         }}
       >
         <Container
@@ -23,18 +23,18 @@ const Item = ({initial, name, description, img, stock, price, addToCardWidget, m
           }}
         >
           <Link to={`/detail/${sku}`}>
-          <CardMedia component="img" image={img} alt="notebook" />
-	  </Link> 
+            <CardMedia component="img" image={img} alt="notebook" />
+          </Link>
         </Container>
         <CardContent sx={{ margin: "0" }}>
           <Typography gutterBottom variant="h6" component="div">
             {name}
           </Typography>
           <Link to={`/detail/${sku}`}>
-	  <Typography variant="body2" color="text.secondary">
-            {description}
-          </Typography>
-	  </Link> 
+            <Typography variant="body2" color="text.secondary">
+              {description}
+            </Typography>
+          </Link>
         </CardContent>
         <CardActions
           sx={{
@@ -43,12 +43,18 @@ const Item = ({initial, name, description, img, stock, price, addToCardWidget, m
           }}
         >
           <Typography variant="body2">(Stock: {stock})</Typography>
-	  <Box>
-          <Link to={`/detail/${sku}`}>
-			<Button size="medium" variant="contained" color="success"  sx={{ fontSize: 12, width:"100%" }}
-			>Detalles</Button>
-		</Link>
-		</Box>
+          <Box>
+            <Link to={`/detail/${sku}`}>
+              <Button
+                size="medium"
+                variant="contained"
+                color="success"
+                sx={{ fontSize: 12, width: "100%" }}
+              >
+                Detalles
+              </Button>
+            </Link>
+          </Box>
         </CardActions>
       </Card>
     </>
