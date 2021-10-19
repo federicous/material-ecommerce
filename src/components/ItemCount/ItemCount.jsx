@@ -29,10 +29,6 @@ function addCart(counter) {
 	setVisibilty(false)
 }
 
-// useEffect(() => {	
-// 	setVisibilty(false)	
-// }, [contador])
-
 return (
 	<>
 	{visibilty ? (
@@ -50,7 +46,7 @@ return (
 		</Box>
 		
 	):(
-		<Box  sx={{ fontSize: 16, mt: 1, width:"100%", display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center" }}>
+		<Box  sx={{ fontSize: 16, mt: 1, width:"100%", display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center" }}>
 			<Link to={`/cart`} style={{ textDecoration:"none", color:"inherit"}}>
 				<Button size="small" variant="contained" color="primary">go to Cart</Button>
 			</Link>
