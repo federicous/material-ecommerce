@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState } from 'react'
 import { Button, ButtonGroup, Box} from '@material-ui/core'
 import { ShoppingCart } from '@material-ui/icons';
 import { Link } from 'react-router-dom'
