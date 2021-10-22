@@ -39,7 +39,8 @@ const ItemDetailContainer = ({initial, addToCardWidget}) => {
 			{ products && products.map((item) => (
 					<Grid item key={item.sku} xs={12} sm={4} md={3}>
 						<ItemDetail
-						key={item.sku}
+						product={item}
+						sku={item.sku}
 						initial={initial} 
 						name={`${item.manufacturer}`}
 						description={item.name}

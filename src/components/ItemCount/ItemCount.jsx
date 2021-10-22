@@ -1,33 +1,38 @@
-import React, {useState } from 'react'
+import React, {useContext, useState } from 'react'
 import { Button, ButtonGroup, Box} from '@material-ui/core'
 import { ShoppingCart } from '@material-ui/icons';
 import { Link } from 'react-router-dom'
+import { CartContext } from '../CartContext/CartContext';
 
 
-const ItemCount = ({initial, stock, addToCardWidget}) => {
-// console.log({initial});
-const [contador, setContador] = useState(initial)
-const [visibilty, setVisibilty] = useState(true)
-const [result, setResult] = useState(stock)
+const ItemCount = ({initial, sku, stock, product, addToCardWidget}) => {
 
-function addItem() {
-	if (contador < result) {
-		setContador(contador+1)
+	const cartContext = useContext(CartContext);
+	const {addToCart, cart}= cartContext;
+	// console.log({initial});
+	const [contador, setContador] = useState(initial)
+	const [visibilty, setVisibilty] = useState(true)
+	const [result, setResult] = useState(stock)
+
+	function addItem() {
+		if (contador < result) {
+			setContador(contador+1)
+		}
 	}
-}
 
-function removeItem() {
-	if (contador>1) {
-		setContador(contador-1)		
+	function removeItem() {
+		if (contador>1) {
+			setContador(contador-1)		
+		}
 	}
-}
 
-function addCart(counter) {
-	addToCardWidget(counter)
-	setResult(stock-counter)
-	setContador(initial)	
-	setVisibilty(false)
-}
+	function addCart(counter) {
+		addToCart(product, counter)
+		addToCardWidget(counter)
+		setResult(stock-counter)
+		setContador(initial)	
+		setVisibilty(false)
+	}
 
 return (
 	<>

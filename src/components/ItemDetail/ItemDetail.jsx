@@ -2,7 +2,7 @@ import React from 'react'
 import { Card,CardActions,CardContent,CardMedia,Container,Typography } from '@material-ui/core';
 import ItemCount from '../ItemCount/ItemCount'
 
-const Item = ({initial, name, description, img, stock, price, addToCardWidget}) => {
+const Item = ({initial, name, description, img, stock, sku, price, product, addToCardWidget}) => {
 	return (
     <>
       <Card
@@ -42,6 +42,7 @@ const Item = ({initial, name, description, img, stock, price, addToCardWidget}) 
           </Typography>
           <Typography variant="body2">(Stock: {stock})</Typography>
           <ItemCount
+            product={product}
             initial={initial}
             stock={stock}
             addToCardWidget={addToCardWidget}
