@@ -2,7 +2,7 @@ import React from 'react'
 import { Card,CardActions,CardContent,CardMedia,Container,Typography } from '@material-ui/core';
 import ItemCount from '../ItemCount/ItemCount'
 
-const Item = ({initial, name, description, img, stock, sku, price, product}) => {
+const Item = ({initial, name, model, description, img, stock, sku, price, product}) => {
 	return (
     <>
       <Card
@@ -26,6 +26,9 @@ const Item = ({initial, name, description, img, stock, sku, price, product}) => 
         <CardContent sx={{ margin: "0" }}>
           <Typography gutterBottom variant="h6" component="div">
             {name}
+          </Typography>
+          <Typography gutterBottom variant="body2" component="div">
+            Model: {model}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {description}

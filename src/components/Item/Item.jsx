@@ -30,6 +30,9 @@ const Item = ({initial, name, description, img, stock, price, addToCardWidget, m
           <Typography gutterBottom variant="h6" component="div">
             {name}
           </Typography>
+          <Typography gutterBottom variant="body2" component="div">
+            Model: {model}
+          </Typography>
           <Link to={`/detail/${sku}`}>
             <Typography variant="body2" color="text.secondary">
               {description}

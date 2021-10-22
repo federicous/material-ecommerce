@@ -1,5 +1,6 @@
-import * as React from 'react';
-import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper  } from '@material-ui/core';
+import React, {useContext, useState, useEffect } from 'react'
+import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia  } from '@material-ui/core';
+import { CartContext } from '../CartContext/CartContext';
 
 const TAX_RATE = 0.07;
 
@@ -31,6 +32,14 @@ const invoiceTaxes = TAX_RATE * invoiceSubtotal;
 const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
 export default function Cart() {
+
+	const cartContext = useContext(CartContext);
+	const {cart}= cartContext;  
+
+  useEffect(() => {
+console.log(cart);
+  }, [cart])  
+  
   return (
     <TableContainer component={Paper} sx={{ marginTop:'1rem' }}>
       <Table sx={{ minWidth: 700 }} aria-label="spanning table">
@@ -49,12 +58,17 @@ export default function Cart() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.desc}>
-              <TableCell>{row.desc}</TableCell>
+          {cart.map((row) => (
+            <TableRow key={row.sku}>
+              <TableCell  sx={{ fontSize: 16, mt: 1, width:"100%", display:"flex", flexDirection:"row", justifyContent:"left", alignItems:"center" }}>
+              <Box component="span" sx={{ fontSize: 12, display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center" }}>
+              <CardMedia component="img" image={row.image} alt="notebook" sx={{height:60, marginRight:"1rem"}} />
+              </Box>
+                {row.manufacturer} ({row.modelNumber})
+                </TableCell>
               <TableCell align="right">{row.qty}</TableCell>
-              <TableCell align="right">{row.unit}</TableCell>
-              <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+              <TableCell align="right">{row.regularPrice}</TableCell>
+              <TableCell align="right">{ccyFormat(row.regularPrice*row.qty)}</TableCell>
             </TableRow>
           ))}
 

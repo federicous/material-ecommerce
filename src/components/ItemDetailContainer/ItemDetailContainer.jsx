@@ -43,6 +43,7 @@ const ItemDetailContainer = ({initial}) => {
 						sku={item.sku}
 						initial={initial} 
 						name={`${item.manufacturer}`}
+						model={item.modelNumber}
 						description={item.name}
 						img={item.image}
 						stock={item.quantityLimit} 
