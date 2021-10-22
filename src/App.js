@@ -13,16 +13,10 @@ import CartContextProvider from './components/CartContext/CartContext';
 
 function App() {
 
-const [carrito, setcarrito] = useState(0)
-
-  const addToCardWidget= (cantidad)=>{
-      setcarrito(carrito+cantidad)
-  }
-
   return (
     <CartContextProvider>
       <BrowserRouter>
-        <NavBar carrito={carrito} />
+        <NavBar />
         <Container
           sx={{
             marginTop: "80px",
@@ -47,7 +41,6 @@ const [carrito, setcarrito] = useState(0)
               <ItemDetailContainer
                 greeting="Lista de productos"
                 initial={1}
-                addToCardWidget={addToCardWidget}
               />
             </Route>
             <Route exact path="/cart">

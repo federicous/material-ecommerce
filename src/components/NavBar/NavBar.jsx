@@ -1,11 +1,24 @@
-import * as React from 'react';
+import React, {useContext, useState, useEffect} from 'react'
 import { AppBar, Box, Toolbar, Typography, IconButton, Badge, Button } from '@material-ui/core'
 import { Menu, ShoppingCart } from '@material-ui/icons';
 import BrandIcon from '../BrandIcon/BrandIcon';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../CartContext/CartContext';
 
-export default function NavBar({carrito}) {
+export default function NavBar() {
+	const cartContext = useContext(CartContext);
+	const {cart}= cartContext;
+
+  const [quantity, setQuantity] = useState(0)
+
+  useEffect(() => {
+    let total=0;
+    for (const prod of cart) {
+      total+=prod.qty
+    }
+    setQuantity(total)
+  }, [cart])
 
   const navList =[
     {id:"1", name:"Laptops", value:"abcat0502000"},
@@ -43,7 +56,7 @@ return (
           ))}
         </div>
         <Link to={`/cart`} style={{ textDecoration:"none", color:"inherit"}}>
-          <Badge badgeContent={carrito} color="error">
+          <Badge badgeContent={quantity} color="error">
             <ShoppingCart />
           </Badge>
         </Link>

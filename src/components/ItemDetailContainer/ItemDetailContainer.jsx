@@ -4,7 +4,7 @@ import { Container, Grid, Typography } from '@material-ui/core';
 import ItemDetail from '../ItemDetail/ItemDetail';
 import { useParams } from 'react-router';
 
-const ItemDetailContainer = ({initial, addToCardWidget}) => {
+const ItemDetailContainer = ({initial}) => {
 
 	const {sku} = useParams()
 	console.log(sku);
@@ -47,7 +47,6 @@ const ItemDetailContainer = ({initial, addToCardWidget}) => {
 						img={item.image}
 						stock={item.quantityLimit} 
 						price={item.regularPrice}
-						addToCardWidget={addToCardWidget}
 						/>
 					</Grid>
 					)

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { CartContext } from '../CartContext/CartContext';
 
 
-const ItemCount = ({initial, sku, stock, product, addToCardWidget}) => {
+const ItemCount = ({initial, sku, stock, product}) => {
 
 	const cartContext = useContext(CartContext);
 	const {addToCart, cart}= cartContext;
@@ -28,7 +28,6 @@ const ItemCount = ({initial, sku, stock, product, addToCardWidget}) => {
 
 	function addCart(counter) {
 		addToCart(product, counter)
-		addToCardWidget(counter)
 		setResult(stock-counter)
 		setContador(initial)	
 		setVisibilty(false)
