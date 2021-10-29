@@ -1,8 +1,9 @@
 import React, {useContext, useState, useEffect } from 'react'
-import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia  } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia, Button  } from '@material-ui/core';
 import { CartContext } from '../CartContext/CartContext';
+import { DeleteForever } from '@material-ui/icons';
 
-const TAX_RATE = 0.07;
+const TAX_RATE = 0.105;
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
@@ -17,41 +18,48 @@ function createRow(desc, qty, unit) {
   return { desc, qty, unit, price };
 }
 
-function subtotal(items) {
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
+// function subtotal(items) {
+//   return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+// }
 
-const rows = [
-  createRow('Paperclips (Box)', 100, 1.15),
-  createRow('Paper (Case)', 10, 45.99),
-  createRow('Waste Basket', 2, 17.99),
-];
+// const rows = [
+//   createRow('Paperclips (Box)', 100, 1.15),
+//   createRow('Paper (Case)', 10, 45.99),
+//   createRow('Waste Basket', 2, 17.99),
+// ];
 
-const invoiceSubtotal = subtotal(rows);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+// const invoiceSubtotal = subtotal(rows);
+// const invoiceTaxes = TAX_RATE * invoiceSubtotal;
+// const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
+let invoiceTaxes;
+let invoiceTotal;
 export default function Cart() {
 
 	const cartContext = useContext(CartContext);
-	const {cart}= cartContext;  
+	const {cart, total, removeFromCart}= cartContext;  
 
   useEffect(() => {
 console.log(cart);
-  }, [cart])  
+console.log(total);
+invoiceTaxes = TAX_RATE * total;
+invoiceTotal = invoiceTaxes + total;
+
+  }, [cart,total])  
   
   return (
     <TableContainer component={Paper} sx={{ marginTop:'1rem' }}>
       <Table sx={{ minWidth: 700 }} aria-label="spanning table">
         <TableHead>
           <TableRow>
-            <TableCell align="center" colSpan={3}>
+            <TableCell align="center" colSpan={4}>
               Details
             </TableCell>
             <TableCell align="right">Price</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Desc</TableCell>
+            <TableCell align="right"></TableCell>
             <TableCell align="right">Qty.</TableCell>
             <TableCell align="right">Unit</TableCell>
             <TableCell align="right">Sum</TableCell>
@@ -66,6 +74,10 @@ console.log(cart);
               </Box>
                 {row.manufacturer} ({row.modelNumber})
                 </TableCell>
+              <TableCell align="right">
+                <Button size="small" variant="contained" color="warning" 
+				          onClick={()=>removeFromCart(cart.indexOf(row))} ><DeleteForever/></Button>
+              </TableCell>
               <TableCell align="right">{row.qty}</TableCell>
               <TableCell align="right">{row.regularPrice}</TableCell>
               <TableCell align="right">{ccyFormat(row.regularPrice*row.qty)}</TableCell>
@@ -74,17 +86,17 @@ console.log(cart);
 
           <TableRow>
             <TableCell rowSpan={3} />
-            <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+            <TableCell colSpan={3}>Subtotal</TableCell>
+            <TableCell align="right">{ccyFormat(parseInt(total))}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Tax</TableCell>
-            <TableCell align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+            <TableCell  colSpan={2} align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</TableCell>
+            <TableCell colSpan={2} align="right">{ccyFormat(parseInt(invoiceTaxes))}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+            <TableCell colSpan={3}>Total</TableCell>
+            <TableCell align="right">{ccyFormat(parseInt(invoiceTotal))}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
