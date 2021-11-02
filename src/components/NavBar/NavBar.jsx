@@ -21,9 +21,9 @@ export default function NavBar() {
   }, [cart])
 
   const navList =[
-    {id:"1", name:"Laptops", value:"abcat0502000"},
-    {id:"2", name:"Phones", value:"pcmcat209400050001"},
-    {id:"3", name:"TVs", value:"abcat0101000"},
+    {id:"1", name:"Laptops", value:"laptops"},
+    {id:"2", name:"Phones", value:"phones"},
+    {id:"3", name:"TVs", value:"tvs"},
   ]
 return (
   <Box sx={{ flexGrow: 1 }}>

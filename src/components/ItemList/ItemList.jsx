@@ -3,24 +3,34 @@ import axios from "axios";
 import { Typography, Grid } from '@material-ui/core';
 import Item from '../Item/Item';
 import { useParams } from 'react-router';
+import { getFirestore } from '../../services/getFirebase';
 
 const ItemList = ({initial, addToCardWidget}) => {
 	const {category} = useParams()
 	const [products, setProducts] = useState([])
     
-	const getProducts = async () => {
-		try {
-			const respuesta= await axios.get(`https://api.bestbuy.com/v1/products((categoryPath.id=${category}))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`)
-			console.log(`https://api.bestbuy.com/v1/products((categoryPath.id=${category}))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`);
-			console.log(respuesta);
-			setProducts(respuesta.data.products)			
-		} catch (error) {
-			console.log(error);
-		}
-	}	
+
+	// const getProducts = async () => {
+	// 	try {
+	// 		const respuesta= await axios.get(`https://api.bestbuy.com/v1/products((categoryPath.id=${category}))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`)
+	// 		console.log(`https://api.bestbuy.com/v1/products((categoryPath.id=${category}))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`);
+	// 		console.log(respuesta);
+	// 		setProducts(respuesta.data.products)			
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	}
+	// }	
 
 	useEffect(() => {
-	    	getProducts()
+	    	// getProducts()
+		
+		const db = getFirestore()
+		db.collection('Items').where('categoryId', '==', category).get()
+		.then(respuesta => setProducts(respuesta.docs.map(item=>({id: item.id, ...item.data()}))))
+		console.log(products);
+		
+
+
 	}, [category])
 
 
