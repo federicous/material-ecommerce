@@ -4,6 +4,9 @@ import { CartContext } from '../CartContext/CartContext';
 import { DeleteForever } from '@material-ui/icons';
 import { typography } from '@material-ui/system';
 import { Link } from 'react-router-dom';
+import { getFirestore } from '../../services/getFirebase';
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 
 const TAX_RATE = 0.105;
 
@@ -15,6 +18,33 @@ export default function Cart() {
 
 	const cartContext = useContext(CartContext);
 	const {cart, total, removeFromCart}= cartContext;  
+
+  const orderGenerate = ()=>{
+    let order={}
+    order.date = firebase.firestore.Timestamp.fromDate(new Date()); 
+    order.buyer={name:"John", phone:"341654321", email:"john@react.com"}
+    order.total = total;
+    order.items = cart.map(cartItem => {
+        const id = cartItem.item.sku;
+        const nombre = cartItem.item.modelNumber;
+        const precio = cartItem.item.regularPrice * cartItem.qty;
+        
+        return {id, nombre, precio}   
+    })
+
+  }
+
+  const db=getFirestore()
+  const orderQuery= db.collection("orders")
+  orderQuery.add(order)
+  .then(result => console.log(result))
+  .catch(error=>console.log(error))
+
+
+
+
+
+
 
   useEffect(() => {
 console.log(cart);
