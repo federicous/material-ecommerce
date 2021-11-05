@@ -19,28 +19,32 @@ export default function Cart() {
 	const cartContext = useContext(CartContext);
 	const {cart, total, removeFromCart}= cartContext;  
 
-  const orderGenerate = ()=>{
-    let order={}
-    order.date = firebase.firestore.Timestamp.fromDate(new Date()); 
-    order.buyer={name:"John", phone:"341654321", email:"john@react.com"}
-    order.total = total;
-    order.items = cart.map(cartItem => {
-        const id = cartItem.item.sku;
-        const nombre = cartItem.item.modelNumber;
-        const precio = cartItem.item.regularPrice * cartItem.qty;
-        
-        return {id, nombre, precio}   
-    })
+    let order = {};
+    const orderGenerate = () => {
+      console.log(cart);
+      order.date = firebase.firestore.Timestamp.fromDate(new Date());
+      order.buyer = {
+        name: "John",
+        phone: "341654321",
+        email: "john@react.com",
+      };
+      order.total = total;
+      order.items = cart.map((cartItem) => {
+        const id = cartItem.sku;
+        const nombre = cartItem.modelNumber;
+        const precio = cartItem.regularPrice * cartItem.qty;
 
-  }
+        return { id, nombre, precio };
+      });
+      console.log(order);
 
-  const db=getFirestore()
-  const orderQuery= db.collection("orders")
-  orderQuery.add(order)
-  .then(result => console.log(result))
-  .catch(error=>console.log(error))
-
-
+      const db = getFirestore();
+      const orderQuery = db.collection("orders");
+      orderQuery
+        .add(order)
+        .then((result) => console.log(result))
+        .catch((error) => console.log(error));
+    };
 
 
 
@@ -146,7 +150,14 @@ console.log(total);
               </TableRow>
             </TableBody>
           </Table>
+          <Button
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                      onClick={()=>orderGenerate()}>Realizar Compra
+                    </Button>
         </TableContainer>
+        
       ) : (
         <Box                      
         sx={{
