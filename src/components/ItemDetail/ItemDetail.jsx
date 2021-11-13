@@ -16,7 +16,6 @@ const Item = ({initial, name, model, description, img, stock, sku, price, produc
       >
         <Container
           sx={{
-            // height:"280px",
             display: "flex",
             alignItems: "center",
           }}

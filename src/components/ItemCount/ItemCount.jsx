@@ -8,8 +8,7 @@ import { CartContext } from '../CartContext/CartContext';
 const ItemCount = ({initial, sku, stock, product}) => {
 
 	const cartContext = useContext(CartContext);
-	const {addToCart, cart}= cartContext;
-	// console.log({initial});
+	const {addToCart}= cartContext;
 	const [contador, setContador] = useState(initial)
 	const [visibilty, setVisibilty] = useState(true)
 	const [result, setResult] = useState(stock)

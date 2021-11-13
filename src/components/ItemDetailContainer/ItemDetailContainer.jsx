@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from "axios";
-import { Container, Grid, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import ItemDetail from '../ItemDetail/ItemDetail';
 import { useParams } from 'react-router';
 import { getFirestore } from '../../services/getFirebase';
@@ -8,30 +7,13 @@ import { getFirestore } from '../../services/getFirebase';
 const ItemDetailContainer = ({initial}) => {
 
 	const {sku} = useParams()
-	console.log(sku);
-
 	const [products, setProducts] = useState([])
-    
-	// const getProducts = async () => {
-	// 	try {
-	// 		// const respuesta= await axios.get(`https://api.bestbuy.com/v1/products(modelNumber=${sku.sku}&(categoryPath.id=abcat0502000))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`)
-	// 		// const respuesta= await axios.get(`https://api.bestbuy.com/v1/products(sku=${sku}&(categoryPath.id=abcat0502000))?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`)
-	// 		const respuesta= await axios.get(`https://api.bestbuy.com/v1/products(sku=${sku})?apiKey=zIORAv06W1eGJM2Drgksm7Ku&format=json`)
-	// 		setProducts(respuesta.data.products)			
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// }	
 
 	useEffect(() => {
-	    	// getProducts()
 		    const db = getFirestore()
 		    db.collection('Items').where('sku', '==', sku).get()
 		    .then(respuesta => setProducts(respuesta.docs.map(item=>({id: item.id, ...item.data()}))))
-		    console.log(products);
-
 	}, [sku])
-
 
 	return (
 		<>

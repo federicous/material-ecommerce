@@ -2,7 +2,7 @@ import React from 'react'
 import { Card,CardActions,CardContent,CardMedia,Container,Typography,Box, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
-const Item = ({initial, name, description, img, stock, price, addToCardWidget, model,sku}) => {
+const Item = ({initial, name, description, img, stock, price, model,sku}) => {
 	console.log(sku);
 	return (
     <>
@@ -17,7 +17,6 @@ const Item = ({initial, name, description, img, stock, price, addToCardWidget, m
       >
         <Container
           sx={{
-            // height:"280px",
             display: "flex",
             alignItems: "center",
           }}

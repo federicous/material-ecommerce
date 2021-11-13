@@ -1,11 +1,9 @@
 
-import React, { useState } from 'react';
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailContainer';
-import HomePage from './components/HomePage/HomePage';
 import { Typography, Container } from '@material-ui/core'
 import HomePage2 from './components/HomePage2/HomePage2';
 import Cart from './components/Cart/Cart';
@@ -28,7 +26,6 @@ function App() {
         >
           <Switch>
             <Route exact path="/">
-              {/* <HomePage/> */}
               <Typography variant={"h5"}>Categories</Typography>
               <HomePage2 />
             </Route>
