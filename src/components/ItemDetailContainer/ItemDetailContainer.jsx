@@ -11,8 +11,9 @@ const ItemDetailContainer = ({initial}) => {
 
 	useEffect(() => {
 		    const db = getFirestore()
-		    db.collection('Items').where('sku', '==', sku).get()
+		    db.collection('Items').where('sku', '==', parseInt(sku)).get()
 		    .then(respuesta => setProducts(respuesta.docs.map(item=>({id: item.id, ...item.data()}))))
+		    console.log(products);
 	}, [sku])
 
 	return (

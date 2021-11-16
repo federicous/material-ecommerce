@@ -6,6 +6,8 @@ import { getFirestore } from '../../services/getFirebase';
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import CartTable from '../CartTable.jsx/CartTable';
+import Form2 from '../Form/Form2';
+import { datosJson, datosJsonPhones, datosJsonTv } from '../utils/datosJson';
 
 const TAX_RATE = 0.105;
 
@@ -41,6 +43,29 @@ export default function Cart() {
         .catch((error) => console.log(error));
     };
 
+    let productos={};
+    const datosGenerate = () => {
+      console.log(cart);
+      datosJsonPhones.products.map((cartItem) => {
+        productos.sku = cartItem.sku;
+        productos.modelNumber = cartItem.modelNumber;
+        productos.regularPrice = cartItem.regularPrice;
+        productos.name = cartItem.name;
+        productos.quantityLimit = cartItem.quantityLimit;
+        productos.manufacturer = cartItem.manufacturer;
+        productos.image = cartItem.image
+        productos.categoryId = "phones";
+        
+        const db = getFirestore();
+        const orderQuery = db.collection("Items");
+        orderQuery
+          .add(productos)
+          .then((result) => console.log(result))
+          .catch((error) => console.log(error));
+        return {productos}
+      });
+    };
+
     useEffect(() => {
       console.log(cart);
       console.log(total);
@@ -49,13 +74,28 @@ export default function Cart() {
   return (
     <>
       {total ? (
-        <CartTable
+        <Box
+        sx={{
+          fontSize: 20,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          margin: "0px",
+          flexWrap:'wrap'
+        }}
+        >
+          <CartTable
           cart={cart}
           removeFromCart={removeFromCart}
           total={total}
-          TAX_RATE={TAX_RATE}
-          orderGenerate={orderGenerate}
-        />
+          TAX_RATE={TAX_RATE}          
+          />
+          <Form2
+           orderGenerate={orderGenerate}
+          />
+        </Box>
+
       ) : (
         <Box
           sx={{
@@ -89,7 +129,7 @@ export default function Cart() {
             }}
             to={`/`}
           >
-            <Button size="small" variant="contained" color="primary">
+            <Button size="small" variant="contained" color="primary" onClick={()=>datosGenerate()}>
               return
             </Button>
           </Link>
