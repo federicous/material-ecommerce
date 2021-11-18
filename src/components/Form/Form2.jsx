@@ -8,7 +8,7 @@ export default function Form2({orderGenerate}) {
   const onSubmit = data => {
 	  if (data.email === data.email2){
 		  console.log(data);
-		  orderGenerate()
+		  orderGenerate(data)
 	  } else{
 		console.log("los correos difieren")
 	  }

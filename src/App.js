@@ -44,6 +44,9 @@ function App() {
               <Typography variant={"h5"}>Cart</Typography>
               <Cart />
             </Route>
+            <Route exact path="*">
+              <Typography variant={"h5"}>NOT FOUND 404</Typography>              
+            </Route>
           </Switch>
         </Container>
       </BrowserRouter>

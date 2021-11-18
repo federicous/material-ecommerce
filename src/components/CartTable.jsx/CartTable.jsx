@@ -2,8 +2,8 @@ import React from 'react'
 import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia, Button, } from '@material-ui/core';
 import { DeleteForever } from '@material-ui/icons';
 import 'firebase/firestore'
-import Form from '../Form/Form';
-import Form2 from '../Form/Form2';
+// import Form from '../Form/Form';
+// import Form2 from '../Form/Form2';
 
 function ccyFormat(num) {
 	return `${num.toFixed(2)}`;

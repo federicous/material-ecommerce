@@ -7,7 +7,7 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import CartTable from '../CartTable.jsx/CartTable';
 import Form2 from '../Form/Form2';
-import { datosJson, datosJsonPhones, datosJsonTv } from '../utils/datosJson';
+// import { datosJson, datosJsonPhones, datosJsonTv } from '../utils/datosJson';
 
 const TAX_RATE = 0.105;
 
@@ -17,13 +17,14 @@ export default function Cart() {
 	const {cart, total, removeFromCart}= cartContext;  
 
     let order = {};
-    const orderGenerate = () => {
+    const orderGenerate = (data) => {
       console.log(cart);
+      console.log("esta es la data",data);
       order.date = firebase.firestore.Timestamp.fromDate(new Date());
       order.buyer = {
-        name: "John",
-        phone: "341654321",
-        email: "john@react.com",
+        name: data.firstName + data.lastName,
+        phone: data.phone,
+        email: data.email,
       };
       order.total = total;
       order.items = cart.map((cartItem) => {
@@ -43,28 +44,28 @@ export default function Cart() {
         .catch((error) => console.log(error));
     };
 
-    let productos={};
-    const datosGenerate = () => {
-      console.log(cart);
-      datosJsonPhones.products.map((cartItem) => {
-        productos.sku = cartItem.sku;
-        productos.modelNumber = cartItem.modelNumber;
-        productos.regularPrice = cartItem.regularPrice;
-        productos.name = cartItem.name;
-        productos.quantityLimit = cartItem.quantityLimit;
-        productos.manufacturer = cartItem.manufacturer;
-        productos.image = cartItem.image
-        productos.categoryId = "phones";
+    // let productos={};
+    // const datosGenerate = () => {
+    //   console.log(cart);
+    //   datosJsonPhones.products.map((cartItem) => {
+    //     productos.sku = cartItem.sku;
+    //     productos.modelNumber = cartItem.modelNumber;
+    //     productos.regularPrice = cartItem.regularPrice;
+    //     productos.name = cartItem.name;
+    //     productos.quantityLimit = cartItem.quantityLimit;
+    //     productos.manufacturer = cartItem.manufacturer;
+    //     productos.image = cartItem.image
+    //     productos.categoryId = "phones";
         
-        const db = getFirestore();
-        const orderQuery = db.collection("Items");
-        orderQuery
-          .add(productos)
-          .then((result) => console.log(result))
-          .catch((error) => console.log(error));
-        return {productos}
-      });
-    };
+    //     const db = getFirestore();
+    //     const orderQuery = db.collection("Items");
+    //     orderQuery
+    //       .add(productos)
+    //       .then((result) => console.log(result))
+    //       .catch((error) => console.log(error));
+    //     return {productos}
+    //   });
+    // };
 
     useEffect(() => {
       console.log(cart);
@@ -129,7 +130,7 @@ export default function Cart() {
             }}
             to={`/`}
           >
-            <Button size="small" variant="contained" color="primary" onClick={()=>datosGenerate()}>
+            <Button size="small" variant="contained" color="primary" /* onClick={()=>datosGenerate()} */>
               return
             </Button>
           </Link>
