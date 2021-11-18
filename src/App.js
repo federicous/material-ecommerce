@@ -39,6 +39,9 @@ function App() {
                 greeting="Lista de productos"
                 initial={1}
               />
+              {/* <Route exact path="*">
+                <Typography variant={"h5"}>El producto no existe</Typography>              
+              </Route> */}
             </Route>
             <Route exact path="/cart">
               <Typography variant={"h5"}>Cart</Typography>

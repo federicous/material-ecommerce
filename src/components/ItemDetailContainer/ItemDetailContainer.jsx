@@ -8,18 +8,23 @@ const ItemDetailContainer = ({initial}) => {
 
 	const {sku} = useParams()
 	const [products, setProducts] = useState([])
-
+	const [loading, setLoading] = useState(true)
 	useEffect(() => {
 		    const db = getFirestore()
 		    db.collection('Items').where('sku', '==', parseInt(sku)).get()
 		    .then(respuesta => setProducts(respuesta.docs.map(item=>({id: item.id, ...item.data()}))))
+		    .then(setLoading(false))
+		    .catch()
 		    console.log(products);
 	}, [sku])
 
 	return (
 		<>
+		{loading ? (
+		<h1>loading...</h1>
+		):(
 
-			<Grid sx={{
+		<Grid sx={{
 			display:"flex", 
 			flexDirection:"column",
      			alignItems:"center",
@@ -42,7 +47,8 @@ const ItemDetailContainer = ({initial}) => {
 					)
 				)
 			}
-			</Grid>	
+			</Grid>			
+		)}
 		</>
 	)
 }
