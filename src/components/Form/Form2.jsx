@@ -12,6 +12,7 @@ export default function Form2({orderGenerate}) {
 	  } else{
 		console.log("los correos difieren")
 	  }
+
 	};
    
   return (
@@ -29,10 +30,10 @@ export default function Form2({orderGenerate}) {
 		}}
 		>
 			<TextField  id="outlined-name" label="Name" {...register("firstName", { required: true, pattern: /^[A-Za-z]+$/i })} />
-			<TextField  id="outlined-name" label="Last Name" {...register("lastName", {  required: true, pattern: /^[A-Za-z]+$/i })} />
+			<TextField  id="outlined-name" label="LastName" {...register("lastName", {  required: true, pattern: /^[A-Za-z]+$/i })} />
 			<TextField  id="outlined-name" label="Phone" type="phone" {...register("phone", { required: true,  pattern: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g })} />
 			<TextField  id="outlined-name" label="Email" type="email" {...register("email", { required: true })} />
-			<TextField  id="outlined-name" label="Email" type="email" {...register("email2", { required: true})} />
+			<TextField  id="outlined-name" label="Email2" type="email" {...register("email2", { required: true})} />
 			<Button type="submit" color="primary" size="small" variant="contained">Purchase</Button>
 			
 		</Box>

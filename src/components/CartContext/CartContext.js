@@ -33,6 +33,10 @@ const CartContextProvider = ({children}) => {
 		setCart([...aux])
 	}
 
+	function cleanCart() {
+		setCart([])
+	}
+
 	useEffect(() => {
 		console.log(cart)
 		let suma=0;
@@ -51,6 +55,7 @@ const CartContextProvider = ({children}) => {
 			setCart,
 			addToCart,
 			removeFromCart,
+			cleanCart,
 			total,
 		}}>
 			{children}

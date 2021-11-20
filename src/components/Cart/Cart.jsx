@@ -14,7 +14,7 @@ const TAX_RATE = 0.105;
 export default function Cart() {
 
 	const cartContext = useContext(CartContext);
-	const {cart, total, removeFromCart}= cartContext;  
+	const {cart, total, removeFromCart, cleanCart}= cartContext;  
 
   // La funcion ordenGenerate guarda en Firebase los datos de los productos comprados y del cliente, también actualiza el stock
     let order = {};
@@ -66,6 +66,11 @@ export default function Cart() {
           batch.commit().then(res =>{
               console.log('resultado batch:', res)
           })
+      })
+      .finally(()=>{
+        setTimeout(() => {
+          cleanCart()
+        }, 2000);
       })
 
 
