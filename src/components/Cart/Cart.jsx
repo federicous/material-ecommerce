@@ -162,7 +162,7 @@ export default function Cart() {
             Thanks for your purchase 
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {`El ID de la compra es: ${modalResult}`}
+            {`The transaction ID is: ${modalResult}`}
           </Typography>
         </Box>
       </Modal>

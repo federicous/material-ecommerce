@@ -81,10 +81,10 @@ const CartTable = ({cart, removeFromCart, total, TAX_RATE, orderGenerate}) => {
 
           <TableRow>
             <TableCell rowSpan={3} />
-            <TableCell colSpan={3}>Subtotal</TableCell>
-            <TableCell align="right">{ccyFormat(parseInt(total))}</TableCell>
+            <TableCell colSpan={3}>Total</TableCell>
+            <TableCell align="right">{ccyFormat(parseFloat(total))}</TableCell>
           </TableRow>
-          <TableRow>
+          {/* <TableRow>
             <TableCell>Tax</TableCell>
             <TableCell colSpan={2} align="right">{`${(TAX_RATE * 100).toFixed(
               0
@@ -98,7 +98,7 @@ const CartTable = ({cart, removeFromCart, total, TAX_RATE, orderGenerate}) => {
             <TableCell align="right">
               {ccyFormat(parseInt(TAX_RATE * total + total))}
             </TableCell>
-          </TableRow>
+          </TableRow> */}
         </TableBody>
       </Table>
     </TableContainer>
