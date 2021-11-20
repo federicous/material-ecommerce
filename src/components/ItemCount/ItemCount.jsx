@@ -51,7 +51,7 @@ return (
 				<Box>
 					<Link to={`/`}>
 						<Button size="small" variant="contained" color="primary"  sx={{ fontSize: 12, width:"100%" }}
-						onClick={()=>addCart(contador)} >Return</Button>
+						>Return</Button>
 					</Link>	
 				</Box>
 			)}

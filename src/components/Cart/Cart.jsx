@@ -1,5 +1,5 @@
-import React, {useContext, useEffect } from 'react'
-import {Box, Button, Typography  } from '@material-ui/core';
+import React, {useContext, useEffect, useState } from 'react'
+import {Box, Button, Modal, Typography  } from '@material-ui/core';
 import { CartContext } from '../CartContext/CartContext';
 import { Link } from 'react-router-dom';
 import { getFirestore } from '../../services/getFirebase';
@@ -9,10 +9,30 @@ import CartTable from '../CartTable.jsx/CartTable';
 import Form2 from '../Form/Form2';
 // import { datosJson, datosJsonPhones, datosJsonTv } from '../utils/datosJson';
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+
 const TAX_RATE = 0.105;
 
 export default function Cart() {
 
+  const [open, setOpen] = useState(false);
+  const [modalResult, setModalResult] = useState()
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    cleanCart()
+  }
 	const cartContext = useContext(CartContext);
 	const {cart, total, removeFromCart, cleanCart}= cartContext;  
 
@@ -42,7 +62,9 @@ export default function Cart() {
       const orderQuery = db.collection("orders");
       orderQuery
         .add(order)
-        .then((result) => alert(`El ID de la compra es: ${result.id}`))
+        // .then((result) => alert(`El ID de la compra es: ${result.id}`))
+        .then((result) => setModalResult(result.id))
+        .then(() => handleOpen())
         .catch((error) => console.log(error));
 
 
@@ -67,11 +89,11 @@ export default function Cart() {
               console.log('resultado batch:', res)
           })
       })
-      .finally(()=>{
-        setTimeout(() => {
-          cleanCart()
-        }, 2000);
-      })
+      // .finally(()=>{
+      //   setTimeout(() => {
+      //     cleanCart()
+      //   }, 9000);
+      // })
 
 
 
@@ -129,6 +151,22 @@ export default function Cart() {
           <Form2
            orderGenerate={orderGenerate}
           />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Thanks for your purchase 
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            {`El ID de la compra es: ${modalResult}`}
+          </Typography>
+        </Box>
+      </Modal>
+
         </Box>
 
       ) : (
