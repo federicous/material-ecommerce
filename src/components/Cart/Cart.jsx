@@ -16,13 +16,14 @@ export default function Cart() {
 	const cartContext = useContext(CartContext);
 	const {cart, total, removeFromCart}= cartContext;  
 
+  // La funcion ordenGenerate guarda en Firebase los datos de los productos comprados y del cliente, también actualiza el stock
     let order = {};
-    const orderGenerate = (data) => {
+    const orderGenerate = (data) => { // "data" viene del formulario
       console.log(cart);
       console.log("esta es la data",data);
       order.date = firebase.firestore.Timestamp.fromDate(new Date());
       order.buyer = {
-        name: data.firstName + data.lastName,
+        name: data.firstName + " " + data.lastName,
         phone: data.phone,
         email: data.email,
       };
@@ -35,13 +36,41 @@ export default function Cart() {
         return { id, nombre, precio };
       });
       console.log(order);
-
+      
+      // Ahora guardo la orden generada en Firebase:
       const db = getFirestore();
       const orderQuery = db.collection("orders");
       orderQuery
         .add(order)
-        .then((result) => console.log(result))
+        .then((result) => alert(`El ID de la compra es: ${result.id}`))
         .catch((error) => console.log(error));
+
+
+      //Traigo los items comprados para actualizar stock
+      const itemsToUpdate = db.collection('Items').where(
+          firebase.firestore.FieldPath.documentId(), 'in', cart.map(i=> i.id)
+      )
+          console.log('Item a actualizar: '+itemsToUpdate);
+
+      const batch = db.batch();
+      
+      // por cada item restar del stock la cantidad de el carrito
+      itemsToUpdate.get()
+      .then( collection=>{
+          collection.docs.forEach(docSnapshot => {
+              batch.update(docSnapshot.ref, {
+              quantityLimit: docSnapshot.data().quantityLimit - cart.find(item => item.id === docSnapshot.id).qty
+              })
+          })
+
+          batch.commit().then(res =>{
+              console.log('resultado batch:', res)
+          })
+      })
+
+
+
+
     };
 
     // let productos={};
