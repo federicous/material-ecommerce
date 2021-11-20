@@ -41,11 +41,20 @@ return (
 				<Box component="span" sx={{ fontSize: 12, display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center" }}>{contador}</Box>
 				<Button onClick={()=>addItem()}>+</Button>
 			</ButtonGroup>
+			{initial ? (
 			<Box>
 				<Button size="small" variant="contained" color="success"  sx={{ fontSize: 12, width:"100%" }}
 				startIcon={<ShoppingCart/>}
 				onClick={()=>addCart(contador)} >Add</Button>
 			</Box>
+			):(
+				<Box>
+					<Link to={`/`}>
+						<Button size="small" variant="contained" color="primary"  sx={{ fontSize: 12, width:"100%" }}
+						onClick={()=>addCart(contador)} >Return</Button>
+					</Link>	
+				</Box>
+			)}
 		</Box>
 		
 	):(

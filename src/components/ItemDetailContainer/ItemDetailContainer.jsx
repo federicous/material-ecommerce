@@ -34,7 +34,7 @@ const ItemDetailContainer = ({initial}) => {
 						<ItemDetail
 						product={item}
 						sku={item.sku}
-						initial={initial} 
+						initial={item.quantityLimit ? initial : item.quantityLimit} 
 						name={`${item.manufacturer}`}
 						model={item.modelNumber}
 						description={item.name}
