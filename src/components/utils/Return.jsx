@@ -14,7 +14,7 @@ const Return = () => {
 		}}
 		to={`/`}
 	      >
-		<Button size="small" variant="contained" color="primary" /* onClick={()=>datosGenerate()} */>
+		<Button size="small" variant="contained" color="primary">
 		  return
 		</Button>
 	      </Link>

@@ -8,7 +8,7 @@ import 'firebase/firestore'
 import CartTable from '../CartTable.jsx/CartTable';
 import Form2 from '../Form/Form2';
 import Return from '../utils/Return';
-// import { datosJson, datosJsonPhones, datosJsonTv } from '../utils/datosJson';
+import { datosJsonCameras, datosJsonTablets } from '../utils/datosJson';
 
 const style = {
   position: 'absolute',
@@ -101,28 +101,28 @@ export default function Cart() {
 
     };
 
-    // let productos={};
-    // const datosGenerate = () => {
-    //   console.log(cart);
-    //   datosJsonPhones.products.map((cartItem) => {
-    //     productos.sku = cartItem.sku;
-    //     productos.modelNumber = cartItem.modelNumber;
-    //     productos.regularPrice = cartItem.regularPrice;
-    //     productos.name = cartItem.name;
-    //     productos.quantityLimit = cartItem.quantityLimit;
-    //     productos.manufacturer = cartItem.manufacturer;
-    //     productos.image = cartItem.image
-    //     productos.categoryId = "phones";
+    let productos={};
+    const datosGenerate = () => {
+      console.log(cart);
+      datosJsonTablets.products.map((cartItem) => {
+        productos.sku = cartItem.sku;
+        productos.modelNumber = cartItem.modelNumber;
+        productos.regularPrice = cartItem.regularPrice;
+        productos.name = cartItem.name;
+        productos.quantityLimit = cartItem.quantityLimit;
+        productos.manufacturer = cartItem.manufacturer;
+        productos.image = cartItem.image
+        productos.categoryId = "tablets";
         
-    //     const db = getFirestore();
-    //     const orderQuery = db.collection("Items");
-    //     orderQuery
-    //       .add(productos)
-    //       .then((result) => console.log(result))
-    //       .catch((error) => console.log(error));
-    //     return {productos}
-    //   });
-    // };
+        const db = getFirestore();
+        const orderQuery = db.collection("Items");
+        orderQuery
+          .add(productos)
+          .then((result) => console.log(result))
+          .catch((error) => console.log(error));
+        return {productos}
+      });
+    };
 
     useEffect(() => {
       console.log(cart);
@@ -193,6 +193,20 @@ export default function Cart() {
           >
             Empty Cart !!!
           </Typography>
+          <Link
+		style={{
+		  textDecoration: "none",
+		  color: "inherit",
+		  display: "flex",
+		  flexDirection: "row",
+		  alignItems: "center",
+		}}
+		to={`/`}
+	      >
+		<Button size="small" variant="contained" color="primary" onClick={()=>datosGenerate()}>
+		  upload
+		</Button>
+	      </Link>
             <Return />
         </Box>
       )}

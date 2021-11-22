@@ -5,6 +5,7 @@ import BrandIcon from '../BrandIcon/BrandIcon';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../CartContext/CartContext';
+import { navList } from '../utils/navList';
 
 export default function NavBar() {
 	const cartContext = useContext(CartContext);
@@ -20,11 +21,7 @@ export default function NavBar() {
     setQuantity(total)
   }, [cart])
 
-  const navList =[
-    {id:"1", name:"Laptops", value:"laptops"},
-    {id:"2", name:"Phones", value:"phones"},
-    {id:"3", name:"TVs", value:"tvs"},
-  ]
+
 return (
   <Box sx={{ flexGrow: 1 }}>
     <AppBar position="fixed">
