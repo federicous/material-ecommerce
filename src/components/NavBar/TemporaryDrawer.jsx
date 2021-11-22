@@ -1,5 +1,5 @@
-import { Button, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
-import { Inbox, Mail, Menu } from '@material-ui/icons';
+import { Button, Divider, Drawer, List, ListItem, Typography } from '@material-ui/core';
+import { Menu } from '@material-ui/icons';
 import { Box } from '@material-ui/system';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -43,8 +43,6 @@ export default function TemporaryDrawer() {
                       </Typography>
                     </Link>
           </ListItem>
-        
-
         ))}
         <Divider />
       </List>
@@ -53,9 +51,8 @@ export default function TemporaryDrawer() {
 
   return (
     <div>
-      {/* {['left', 'right', 'top', 'bottom'].map((anchor) => ( */}
         <React.Fragment key={anchor}>
-          <Button sx={{ color: "white" }} onClick={toggleDrawer(anchor, true)}>
+          <Button sx={{ color: "white" }} onClick={toggleDrawer(anchor, true)} size="large">
             <Menu fontSize='large'/>
           </Button>
           <Drawer
@@ -66,7 +63,6 @@ export default function TemporaryDrawer() {
             {list(anchor)}
           </Drawer>
         </React.Fragment>
-      {/* ))} */}
     </div>
   );
 }
