@@ -16,8 +16,7 @@ const ItemDetailContainer = ({initial}) => {
 		    const db = getFirestore()
 		    db.collection('Items').where('sku', '==', parseInt(sku)).get()
 		    .then(respuesta => setProducts(respuesta.docs.map(item=>({id: item.id, ...item.data()}))))
-		    .catch(error=>{console.log(error);
-		console.log(`no se ecuentra el producto`);})
+		    .catch(error=>{console.log(error);})
 		    .finally(()=>{setLoading(false)})
 	}, [sku])
 

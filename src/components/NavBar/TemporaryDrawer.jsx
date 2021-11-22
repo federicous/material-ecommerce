@@ -34,8 +34,8 @@ export default function TemporaryDrawer() {
 
       <List>
         {navList.map((item) => (
-          <ListItem>
-                      <Link key={item.id} to={`/category/${item.value}`}>
+          <ListItem key={item.id}>
+                      <Link to={`/category/${item.value}`}>
                       <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         <Button sx={{ color: "black" }} variant="text">
                           {item.name}

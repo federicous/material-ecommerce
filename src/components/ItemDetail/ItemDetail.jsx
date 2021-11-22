@@ -2,7 +2,7 @@ import React from 'react'
 import { Card,CardActions,CardContent,CardMedia,Container,Typography } from '@material-ui/core';
 import ItemCount from '../ItemCount/ItemCount'
 
-const Item = ({initial, name, model, description, img, stock, sku, price, product}) => {
+const Item = ({initial, name, model, description, img, stock, price, product}) => {
 	return (
     <>
       <Card

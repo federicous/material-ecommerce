@@ -1,5 +1,3 @@
-
-import './App.css';
 import NavBar from './components/NavBar/NavBar';
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -8,6 +6,7 @@ import { Typography, Container } from '@material-ui/core'
 import HomePage2 from './components/HomePage2/HomePage2';
 import Cart from './components/Cart/Cart';
 import CartContextProvider from './components/CartContext/CartContext';
+import Return from './components/utils/Return';
 
 function App() {
 
@@ -39,16 +38,14 @@ function App() {
                 greeting="Lista de productos"
                 initial={1}
               />
-              {/* <Route exact path="*">
-                <Typography variant={"h5"}>El producto no existe</Typography>              
-              </Route> */}
             </Route>
             <Route exact path="/cart">
               <Typography variant={"h5"}>Cart</Typography>
               <Cart />
             </Route>
             <Route exact path="*">
-              <Typography variant={"h5"}>NOT FOUND 404</Typography>              
+              <Typography variant={"h5"} sx={{margin: "40px",}} >NOT FOUND 404</Typography>              
+              <Return/>
             </Route>
           </Switch>
         </Container>

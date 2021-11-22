@@ -7,19 +7,14 @@ export default function Form2({orderGenerate}) {
   const { register, handleSubmit } = useForm();
   const onSubmit = data => {
 	  if (data.email === data.email2){
-		  console.log(data);
 		  orderGenerate(data)
-	  } else{
-		console.log("los correos difieren")
 	  }
-
 	};
    
   return (
 	<form onSubmit={handleSubmit(onSubmit)}>  
 		<Box 	sx={{
 			margin: '1rem',
-			// width: '390px',
 			flex:'30%',
 			flexGrow:'grow',
 			display: 'flex',

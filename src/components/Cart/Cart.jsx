@@ -1,14 +1,12 @@
-import React, {useContext, useEffect, useState } from 'react'
-import {Box, Button, Modal, Typography  } from '@material-ui/core';
+import React, {useContext, useState } from 'react'
+import {Box, Modal, Typography  } from '@material-ui/core';
 import { CartContext } from '../CartContext/CartContext';
-import { Link } from 'react-router-dom';
 import { getFirestore } from '../../services/getFirebase';
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import CartTable from '../CartTable.jsx/CartTable';
 import Form2 from '../Form/Form2';
 import Return from '../utils/Return';
-// import { datosJsonCameras, datosJsonTablets } from '../utils/datosJson';
 
 const style = {
   position: 'absolute',
@@ -21,7 +19,6 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
 
 const TAX_RATE = 0.105;
 
@@ -40,8 +37,6 @@ export default function Cart() {
   // La funcion ordenGenerate guarda en Firebase los datos de los productos comprados y del cliente, también actualiza el stock
     let order = {};
     const orderGenerate = (data) => { // "data" viene del formulario
-      console.log(cart);
-      console.log("esta es la data",data);
       order.date = firebase.firestore.Timestamp.fromDate(new Date());
       order.buyer = {
         name: data.firstName + " " + data.lastName,
@@ -56,7 +51,6 @@ export default function Cart() {
 
         return { id, nombre, precio };
       });
-      console.log(order);
       
       // Ahora guardo la orden generada en Firebase:
       const db = getFirestore();
@@ -73,7 +67,6 @@ export default function Cart() {
       const itemsToUpdate = db.collection('Items').where(
           firebase.firestore.FieldPath.documentId(), 'in', cart.map(i=> i.id)
       )
-          console.log('Item a actualizar: '+itemsToUpdate);
 
       const batch = db.batch();
       
@@ -85,79 +78,20 @@ export default function Cart() {
               quantityLimit: docSnapshot.data().quantityLimit - cart.find(item => item.id === docSnapshot.id).qty
               })
           })
-
-          batch.commit().then(res =>{
-              console.log('resultado batch:', res)
-          })
+          batch.commit().catch((error) => console.log(error));
       })
-      // .finally(()=>{
-      //   setTimeout(() => {
-      //     cleanCart()
-      //   }, 9000);
-      // })
-
-
-
-
     };
-
-    // let productos={};
-    // const datosGenerate = () => {
-    //   console.log(cart);
-    //   datosJsonTablets.products.map((cartItem) => {
-    //     productos.sku = cartItem.sku;
-    //     productos.modelNumber = cartItem.modelNumber;
-    //     productos.regularPrice = cartItem.regularPrice;
-    //     productos.name = cartItem.name;
-    //     productos.quantityLimit = cartItem.quantityLimit;
-    //     productos.manufacturer = cartItem.manufacturer;
-    //     productos.image = cartItem.image
-    //     productos.categoryId = "tablets";
-        
-    //     const db = getFirestore();
-    //     const orderQuery = db.collection("Items");
-    //     orderQuery
-    //       .add(productos)
-    //       .then((result) => console.log(result))
-    //       .catch((error) => console.log(error));
-    //     return {productos}
-    //   });
-    // };
-
-    useEffect(() => {
-      console.log(cart);
-      console.log(total);
-    }, [cart,total])  
     
   return (
     <>
       {total ? (
         <Box
-        sx={{
-          fontSize: 20,
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: "0px",
-          flexWrap:'wrap'
-        }}
-        >
-          <CartTable
-          cart={cart}
-          removeFromCart={removeFromCart}
-          total={total}
-          TAX_RATE={TAX_RATE}          
-          />
+        sx={{fontSize: 20, display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap'}} >
+          <CartTable cart={cart} removeFromCart={removeFromCart} total={total} TAX_RATE={TAX_RATE} />
           <Form2
            orderGenerate={orderGenerate}
           />
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Thanks for your purchase 
@@ -172,41 +106,11 @@ export default function Cart() {
 
       ) : (
         <Box
-          sx={{
-            fontSize: 12,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-            margin: "50px",
-          }}
-        >
+          sx={{fontSize: 12, display: "flex", flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", margin: "50px",}} >
           <Typography
-            sx={{
-              fontSize: 20,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-evenly",
-              alignItems: "center",
-              margin: "10px",
-            }}
-          >
+            sx={{fontSize: 20, display: "flex", flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", margin: "10px",}} >
             Empty Cart !!!
           </Typography>
-          {/* <Link
-		style={{
-		  textDecoration: "none",
-		  color: "inherit",
-		  display: "flex",
-		  flexDirection: "row",
-		  alignItems: "center",
-		}}
-		to={`/`}
-	      >
-		<Button size="small" variant="contained" color="primary" onClick={()=>datosGenerate()}>
-		  upload
-		</Button>
-	      </Link> */}
             <Return />
         </Box>
       )}

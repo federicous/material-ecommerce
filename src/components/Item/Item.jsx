@@ -2,8 +2,7 @@ import React from 'react'
 import { Card,CardActions,CardContent,CardMedia,Container,Typography,Box, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
-const Item = ({initial, name, description, img, stock, price, model,sku}) => {
-	console.log(sku);
+const Item = ({name, description, img, stock, model,sku}) => {
 	return (
     <>
       <Card

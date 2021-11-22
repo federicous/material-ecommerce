@@ -9,7 +9,6 @@ const CartContextProvider = ({children}) => {
 	
 	function addToCart(productAdd, counter) {
 		if (cart.some(product=>product.sku===productAdd.sku)) {
-			console.log("repetido");
 			let productIndex=cart.findIndex(product=>product.sku===productAdd.sku)
 			if ((cart[productIndex].qty+counter)<=cart[productIndex].quantityLimit) {
 				cart[productIndex].qty+=counter
@@ -19,11 +18,8 @@ const CartContextProvider = ({children}) => {
 			}
 		
 		} else {
-			console.log("sin repetir");
 			productAdd.qty=counter
-			// productAdd.index=cart.length
 			setCart([...cart, productAdd])
-	
 		}
 	}
 	
@@ -38,12 +34,9 @@ const CartContextProvider = ({children}) => {
 	}
 
 	useEffect(() => {
-		console.log(cart)
 		let suma=0;
 		for (const item of cart) {
 			suma=item.qty*item.regularPrice+suma
-			console.log(item.qty);
-			console.log(item.regularPrice);
 		}
 		setTotal(suma)		
 
@@ -62,7 +55,5 @@ const CartContextProvider = ({children}) => {
 		</CartContext.Provider>
 	)
 }
-
-
 
 export default CartContextProvider
