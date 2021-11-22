@@ -1,6 +1,6 @@
 # Material Ecommerce
 ## _A React App_
-[![Click to see a Demo]()](https://youthful-ritchie-aa8625.netlify.app/category/tvs)
+[![Click to see a Demo]()](https://youthful-ritchie-aa8625.netlify.app)
 
 Material Ecommerce is an app to buy technology pruducts as Laptops, phones, TVs, etc.
 
