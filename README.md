@@ -9,6 +9,16 @@ Material Ecommerce is an app to buy technology pruducts as Laptops, phones, TVs,
 - Material UI design
 - Firebase connection
 
+## Dependencies
+    
+- @material-ui/core": "5.0.0-beta.5"
+- @material-ui/icons": "4.11.2"
+- firebase": "8.9.1"
+- react": "17.0.2"
+- react-dom": "17.0.2"
+- react-hook-form": "7.19.5"
+- react-router-dom": "5.3.0"
+
 
 
 ## Installation
