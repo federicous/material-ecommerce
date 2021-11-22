@@ -7,6 +7,7 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import CartTable from '../CartTable.jsx/CartTable';
 import Form2 from '../Form/Form2';
+import Return from '../utils/Return';
 // import { datosJson, datosJsonPhones, datosJsonTv } from '../utils/datosJson';
 
 const style = {
@@ -192,20 +193,7 @@ export default function Cart() {
           >
             Empty Cart !!!
           </Typography>
-          <Link
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-            to={`/`}
-          >
-            <Button size="small" variant="contained" color="primary" /* onClick={()=>datosGenerate()} */>
-              return
-            </Button>
-          </Link>
+            <Return />
         </Box>
       )}
     </>
