@@ -20,7 +20,7 @@ const Item = ({initial, name, model, description, img, stock, price, product}) =
             alignItems: "center",
           }}
         >
-          <CardMedia component="img" image={img} alt="notebook" />
+          <CardMedia component="img" image={img}/>
         </Container>
         <CardContent sx={{ margin: "0" }}>
           <Typography gutterBottom variant="h6" component="div">
