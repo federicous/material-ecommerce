@@ -4,6 +4,7 @@ import ItemDetail from '../ItemDetail/ItemDetail';
 import { useParams } from 'react-router';
 import { getFirestore } from '../../services/getFirebase';
 import { Box } from '@material-ui/system';
+import Return from '../utils/Return';
 
 const ItemDetailContainer = ({initial}) => {
 
@@ -64,14 +65,16 @@ const ItemDetailContainer = ({initial}) => {
             <Box
               sx={{
 		      display:'flex',
-		      flexDirection:'center',		      
+		      flexDirection:'column',		      
 		      justifyContent:'center',
+		      alignItems:'center',
 		      marginTop:'10vh',              
               }}
             >
 		<Typography variant="h4">
 		This product does not exist
 		</Typography>              
+		<Return />
             </Box>
           )}
         </Grid>
