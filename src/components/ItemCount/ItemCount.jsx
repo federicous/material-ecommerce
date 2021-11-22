@@ -62,7 +62,7 @@ return (
 		<Box  sx={{ fontSize: 16, mt: 1, width:"100%", display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center" }}>
 			<Return />
 			<Link to={`/cart`} style={{ textDecoration:"none", color:"inherit"}}>
-				<Button size="small" variant="contained" color="primary">go to Cart</Button>
+				<Button size="small" variant="contained" color="primary">Cart</Button>
 			</Link>
 		</Box>
 

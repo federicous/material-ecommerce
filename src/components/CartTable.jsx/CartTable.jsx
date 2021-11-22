@@ -1,7 +1,8 @@
 import React from 'react'
-import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia, Button, } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia, Button, Link, } from '@material-ui/core';
 import { DeleteForever } from '@material-ui/icons';
-import 'firebase/firestore'
+import 'firebase/firestore';
+import './CartTable.css';
 
 function ccyFormat(num) {
 	return `${num.toFixed(2)}`;
@@ -10,7 +11,7 @@ function ccyFormat(num) {
 const CartTable = ({cart, removeFromCart, total, }) => {
 	return (
     <TableContainer component={Paper} sx={{ marginTop: "1rem", flex:'40%' }}>
-      <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+      <Table className="table" aria-label="spanning table">
         <TableHead>
           <TableRow>
             <TableCell align="center" colSpan={4}>
@@ -45,29 +46,26 @@ const CartTable = ({cart, removeFromCart, total, }) => {
                   sx={{
                     fontSize: 12,
                     display: "flex",
-                    flexDirection: "row",
+                    flexDirection: "column",
                     justifyContent: "space-evenly",
                     alignItems: "center",
                   }}
                 >
+                  <Box>
                   <CardMedia
                     component="img"
                     image={row.image}
                     alt="notebook"
-                    sx={{ height: 60, marginRight: "1rem" }}
+                    sx={{ height: 90, marginBottom: "1rem" }}
                   />
-                </Box>
+                  </Box>
                 {row.manufacturer} ({row.modelNumber})
+                </Box>
               </TableCell>
               <TableCell align="right">
-                <Button
-                  size="small"
-                  variant="contained"
-                  color="warning"
-                  onClick={() => removeFromCart(cart.indexOf(row))}
-                >
-                  <DeleteForever />
-                </Button>
+                <Link sx={{cursor:"pointer"}} onClick={() => removeFromCart(cart.indexOf(row))}>
+                <DeleteForever />
+                </Link>
               </TableCell>
               <TableCell align="right">{row.qty}</TableCell>
               <TableCell align="right">{row.regularPrice}</TableCell>

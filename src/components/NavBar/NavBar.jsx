@@ -22,7 +22,6 @@ export default function NavBar() {
     setQuantity(total)
   }, [cart])
 
-
 return (
   <Box sx={{ flexGrow: 1 }}>
     <AppBar position="fixed">

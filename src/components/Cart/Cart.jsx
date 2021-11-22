@@ -1,5 +1,5 @@
 import React, {useContext, useState } from 'react'
-import {Box, Modal, Typography  } from '@material-ui/core';
+import {Box, Modal, Typography, useMediaQuery  } from '@material-ui/core';
 import { CartContext } from '../CartContext/CartContext';
 import { getFirestore } from '../../services/getFirebase';
 import firebase from 'firebase/app'
@@ -20,10 +20,9 @@ const style = {
   p: 4,
 };
 
-const TAX_RATE = 0.105;
-
 export default function Cart() {
 
+  const isMobile = useMediaQuery('(max-width:900px)');
   const [open, setOpen] = useState(false);
   const [modalResult, setModalResult] = useState()
   const handleOpen = () => setOpen(true);
@@ -57,7 +56,6 @@ export default function Cart() {
       const orderQuery = db.collection("orders");
       orderQuery
         .add(order)
-        // .then((result) => alert(`El ID de la compra es: ${result.id}`))
         .then((result) => setModalResult(result.id))
         .then(() => handleOpen())
         .catch((error) => console.log(error));
@@ -86,8 +84,8 @@ export default function Cart() {
     <>
       {total ? (
         <Box
-        sx={{fontSize: 20, display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap'}} >
-          <CartTable cart={cart} removeFromCart={removeFromCart} total={total} TAX_RATE={TAX_RATE} />
+        sx={{fontSize: 20, display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap'}} >
+          <CartTable cart={cart} removeFromCart={removeFromCart} total={total} />
           <Form2
            orderGenerate={orderGenerate}
           />

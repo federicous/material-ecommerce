@@ -18,7 +18,7 @@ export default function Form2({orderGenerate}) {
   return (
 	<form onSubmit={handleSubmit(onSubmit)}>  
 		<Box 	sx={{
-			margin: '1rem',
+			margin: '5vw',
 			flex:'30%',
 			flexGrow:'grow',
 			display: 'flex',
