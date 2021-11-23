@@ -1,10 +1,25 @@
-import * as React from 'react';
+import {useEffect, useState} from 'react';
 import { Typography, Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { navList } from '../utils/navList';
 import { ImageButton, ImageSrc, Image,ImageBackdrop, ImageMarked  } from '../utils/homePageUtils';
+import { getFirestore } from '../../services/getFirebase';
+import ItemList from '../ItemList/ItemList';
 
 export default function HomePage2() {
+
+	const [products, setProducts] = useState([])
+    
+	useEffect(() => {
+        let someProducts=[]; 
+		    const db = getFirestore()
+		    db.collection('Items').get()
+        .then(respuesta => {let allProducts= respuesta.docs.map(item=>({id: item.id, ...item.data()}))
+            someProducts=allProducts.slice(4,12)
+            setProducts(someProducts)
+        })
+	}, [])
+
   return (
     <Box
       sx={{
@@ -12,7 +27,7 @@ export default function HomePage2() {
         flexWrap: "wrap",
         minWidth: 300,
         width: "100%",
-        marginTop: "1rem",
+        marginTop: "2rem",
       }}
     >
       {navList.map((item) => (
@@ -45,6 +60,19 @@ export default function HomePage2() {
           </Link>
         </ImageButton>
       ))}
+      <Box       sx={{
+        display: "flex",
+        justifyContent:"center",
+        flexWrap: "wrap",
+        minWidth: 300,
+        width: "100%",
+        marginTop: "2rem",
+      }}>
+       <Typography variant={"h5"}>Products</Typography>
+      </Box>
+      <Box>
+			<ItemList products={products} />
+      </Box>
     </Box>
   );
 }
