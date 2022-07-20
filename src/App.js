@@ -29,14 +29,14 @@ function App() {
             <Route exact path="/">
               <Login />
             </Route>
-            {/* <Route exact path="/home">
+            <Route exact path="/home">
               <Typography variant={"h5"}>Categories</Typography>
               <HomePage2 />
-            </Route> */}
-            <ProtectedRoutes exact path="/home" >
+            </Route>
+            {/* <ProtectedRoutes exact path="/home" >
               <Typography variant={"h5"}>Categories</Typography>
               <HomePage2 />
-            </ProtectedRoutes>
+            </ProtectedRoutes> */}
 
             <Route exact path="/category/:category">
               <Typography variant={"h5"}>Products list</Typography>
