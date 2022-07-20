@@ -63,6 +63,7 @@ const ItemDetailContainer = ({initial}) => {
 
 	return (
     <>
+    <Typography variant={"h5"}>Details</Typography>
       {!products.length && loading ? (
         <Box
           sx={{

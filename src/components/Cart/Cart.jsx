@@ -82,6 +82,7 @@ export default function Cart() {
     
   return (
     <>
+    <Typography variant={"h5"}>Cart</Typography>
       {total ? (
         <Box
         sx={{fontSize: 20, display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap'}} >

@@ -73,6 +73,8 @@ export default function HomePage2() {
   }, []);
 
   return (
+    <>
+    <Typography variant={"h5"}>Categories</Typography>
     <Box
       sx={{
         display: "flex",
@@ -128,5 +130,6 @@ export default function HomePage2() {
         <ItemList products={products} />
       </Box>
     </Box>
+    </>
   );
 }
