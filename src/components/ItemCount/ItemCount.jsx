@@ -1,9 +1,11 @@
 import React, {useContext, useState } from 'react'
-import { Button, ButtonGroup, Box} from '@material-ui/core'
-import { ShoppingCart } from '@material-ui/icons';
+import { Button, ButtonGroup, Box, TextField} from '@material-ui/core'
+import { ShoppingCart, AddShoppingCart, Add, Remove } from '@material-ui/icons';
+// import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
 import { Link } from 'react-router-dom'
 import { CartContext } from '../CartContext/CartContext';
 import Return from '../utils/Return';
+import './itemCount.css';
 
 
 const ItemCount = ({initial, sku, stock, product}) => {
@@ -16,37 +18,58 @@ const ItemCount = ({initial, sku, stock, product}) => {
 
 	function addItem() {
 		if (contador < result) {
-			setContador(contador+1)
+			setContador(Number(contador)+1)
 		}
 	}
 
 	function removeItem() {
 		if (contador>1) {
-			setContador(contador-1)		
+			setContador(Number(contador)-1)		
 		}
 	}
 
 	function addCart(counter) {
-		addToCart(product, counter)
-		setResult(stock-counter)
-		setContador(initial)	
-		setVisibilty(false)
+		if (counter<=stock) {
+			addToCart(product, counter)
+			setResult(stock-counter)
+			setContador(initial)	
+			setVisibilty(false)
+		}
+	}
+
+	function setContadorFunction(value) {
+		if (contador<stock) {
+			setContador(Number(value))
+		} else {
+			setContador(Number(stock)-1)
+		}
+
 	}
 
 return (
 	<>
 	{visibilty ? (
-		<Box  sx={{ fontSize: 16, mt: 1, width:"100%", display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center" }}>
+		<Box  sx={{ fontSize: 16, mt: 1, width:"100%", display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center", marginX:"5px" }}>
 			<ButtonGroup size="small" variant="contained" aria-label="outlined primary button group">
-				<Button onClick={()=>removeItem()}>-</Button>
-				<Box component="span" sx={{ fontSize: 12, display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center" }}>{contador}</Box>
-				<Button onClick={()=>addItem()}>+</Button>
+				<Button onClick={()=>removeItem()}><Remove/></Button>
+				{/* <Box component="span" sx={{ fontSize: 12, display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center" }}>{contador}</Box> */}
+				<Box component="div" sx={{ fontSize: 12, display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center",width:"100%" }}>    
+					<TextField onChange={(e) => setContadorFunction(e.target.value)} sx={{ width:"45px", input: {textAlign: "center" }}}    id="standard-number"
+						type="number"
+						value={contador}							
+						InputLabelProps={{
+						shrink: true,
+						}}
+						variant="standard"
+				/></Box>
+				<Button onClick={()=>addItem()}><Add/></Button>
 			</ButtonGroup>
 			{initial ? (
 			<Box>
-				<Button size="small" variant="contained" color="success"  sx={{ fontSize: 12, width:"100%" }}
-				startIcon={<ShoppingCart/>}
-				onClick={()=>addCart(contador)} >Add</Button>
+				<Button size="medium" variant="contained" color="success"  sx={{ fontSize: 12, width:"100%", height:"100%", marginLeft:"5px", textAlign:"center" }}
+				// startIcon={<ShoppingCart/>}
+				// startIcon={<AddShoppingCart fontSize="medium" sx={{ margin:"0px" }}/>}
+				onClick={()=>addCart(contador)} ><AddShoppingCart fontSize="small"/> </Button>
 			</Box>
 			):(
 				<Box>

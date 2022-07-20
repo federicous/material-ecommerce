@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../CartContext/CartContext';
 import { navList } from '../utils/navList';
 import TemporaryDrawer from './TemporaryDrawer';
+import Logout from '../Logout/Logout'
 
 export default function NavBar() {
 	const cartContext = useContext(CartContext);
@@ -40,7 +41,8 @@ return (
         {isMobile ? (
           <></>
         ):(
-          navList.map((item) => (
+          <>
+          {navList.map((item) => (
             <Link key={item.id} to={`/category/${item.value}`}>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 <Button sx={{ color: "white" }} variant="text">
@@ -48,7 +50,9 @@ return (
                 </Button>
               </Typography>
             </Link>
-          ))
+          ))}
+                <Logout />
+          </>
         )}
 
         </div>

@@ -1,24 +1,76 @@
-import {useEffect, useState} from 'react';
-import { Typography, Box } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import { navList } from '../utils/navList';
-import { ImageButton, ImageSrc, Image,ImageBackdrop, ImageMarked  } from '../utils/homePageUtils';
-import { getFirestore } from '../../services/getFirebase';
-import ItemList from '../ItemList/ItemList';
+import { useEffect, useState } from "react";
+import { Typography, Box } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { navList } from "../utils/navList";
+import {
+  ImageButton,
+  ImageSrc,
+  Image,
+  ImageBackdrop,
+  ImageMarked,
+} from "../utils/homePageUtils";
+// import { getFirestore } from "../../services/getFirebase";
+import ItemList from "../ItemList/ItemList";
+import axios from "axios";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 export default function HomePage2() {
+  const [products, setProducts] = useState([]);
 
-	const [products, setProducts] = useState([])
-    
-	useEffect(() => {
-        let someProducts=[]; 
-		    const db = getFirestore()
-		    db.collection('Items').get()
-        .then(respuesta => {let allProducts= respuesta.docs.map(item=>({id: item.id, ...item.data()}))
-            someProducts=allProducts.slice(4,12)
-            setProducts(someProducts)
-        })
-	}, [])
+  // useEffect(() => {
+  //   let someProducts = [];
+  //   const db = getFirestore();
+  //   db.collection("Items")
+  //     .get()
+  //     .then((respuesta) => {
+  //       let allProducts = respuesta.docs.map((item) => ({
+  //         id: item.id,
+  //         ...item.data(),
+  //       }));
+  //       someProducts = allProducts.slice(4, 12);
+  //       setProducts(someProducts);
+  //     });
+  // }, []);
+
+  useEffect(() => {
+    // get token generated on login
+    const token = cookies.get("token");
+    let someProducts = [];
+    // set configurations
+    const configuration = {
+      method: "get",
+      url: "/api/product",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    // make the API call
+    axios(configuration)
+      .then((result) => {
+        console.log(result.data[0]);
+        // let allProducts = result.docs.map((item) => ({
+        //   id: item.id,
+        //   ...item.data(),
+        // }));
+        console.log(`consulta backend2`);
+        // someProducts = allProducts.slice(4, 12);
+
+        console.log(`consulta backend3`);
+        console.log(someProducts);
+        setProducts(result.data);
+        // set the cookie
+        // redirect user to the auth page
+        // window.location.href = "/auth";
+        console.log(`consulta backend`);
+        console.log(someProducts);
+        // setLogin(true);
+      })
+      .catch((error) => {
+        error = new Error();
+      });
+  }, []);
 
   return (
     <Box
@@ -60,18 +112,20 @@ export default function HomePage2() {
           </Link>
         </ImageButton>
       ))}
-      <Box       sx={{
-        display: "flex",
-        justifyContent:"center",
-        flexWrap: "wrap",
-        minWidth: 300,
-        width: "100%",
-        marginTop: "2rem",
-      }}>
-       <Typography variant={"h5"}>Products</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          minWidth: 300,
+          width: "100%",
+          marginTop: "2rem",
+        }}
+      >
+        <Typography variant={"h5"}>Products</Typography>
       </Box>
       <Box>
-			<ItemList products={products} />
+        <ItemList products={products} />
       </Box>
     </Box>
   );

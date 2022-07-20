@@ -21,11 +21,11 @@ const Item = ({name, description, img, stock, model,sku}) => {
           }}
         >
           <Link to={`/detail/${sku}`}>
-            <CardMedia component="img" image={img} alt="notebook" />
+            <CardMedia component="img" image={`images/${img}`} alt="notebook" />
           </Link>
         </Container>
         <CardContent sx={{ margin: "0" }}>
-          <Typography gutterBottom variant="h6" component="div">
+          <Typography gutterBottom variant="body" component="div">
             {name}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">

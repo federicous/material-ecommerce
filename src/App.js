@@ -7,6 +7,8 @@ import HomePage2 from './components/HomePage2/HomePage2';
 import Cart from './components/Cart/Cart';
 import CartContextProvider from './components/CartContext/CartContext';
 import Return from './components/utils/Return';
+import Login from './components/Login/Login';
+import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
 
 function App() {
 
@@ -25,9 +27,17 @@ function App() {
         >
           <Switch>
             <Route exact path="/">
+              <Login />
+            </Route>
+            {/* <Route exact path="/home">
               <Typography variant={"h5"}>Categories</Typography>
               <HomePage2 />
-            </Route>
+            </Route> */}
+            <ProtectedRoutes exact path="/home" >
+              <Typography variant={"h5"}>Categories</Typography>
+              <HomePage2 />
+            </ProtectedRoutes>
+
             <Route exact path="/category/:category">
               <Typography variant={"h5"}>Products list</Typography>
               <ItemListContainer />
