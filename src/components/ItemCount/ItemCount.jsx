@@ -1,6 +1,6 @@
 import React, {useContext, useState } from 'react'
 import { Button, ButtonGroup, Box, TextField} from '@material-ui/core'
-import { ShoppingCart, AddShoppingCart, Add, Remove } from '@material-ui/icons';
+import { AddShoppingCart, Add, Remove } from '@material-ui/icons';
 // import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
 import { Link } from 'react-router-dom'
 import { CartContext } from '../CartContext/CartContext';

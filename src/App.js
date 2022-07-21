@@ -2,7 +2,7 @@ import NavBar from './components/NavBar/NavBar';
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailContainer';
-import { Typography, Container } from '@material-ui/core'
+import { Container } from '@material-ui/core'
 import HomePage2 from './components/HomePage2/HomePage2';
 import Cart from './components/Cart/Cart';
 import CartContextProvider from './components/CartContext/CartContext';
@@ -26,14 +26,17 @@ function App() {
           }}
         >
           <Routes>
+            {/* <Route exact path="/"  element={<Login />}/> */}
             <Route exact path="/"  element={<Login />}/>
-            <Route exact path="/home" element={<HomePage2 />} />
-            <Route exact path="/category/:category" element={<ItemListContainer />} />
-            <Route exact path="/detail/:sku" element={< ItemDetailContainer
-                greeting="Lista de productos"
-                initial={1} />} />
-            <Route exact path="/cart" element={<Cart />} />
-            <Route exact path="*" element={<Return />} />       
+            <Route path="/" element={<ProtectedRoutes />}>
+              <Route path="/home" element={<HomePage2 />} />
+              <Route exact path="/category/:category" element={<ItemListContainer />} />
+              <Route exact path="/detail/:sku" element={< ItemDetailContainer
+                  greeting="Lista de productos"
+                  initial={1} />} />
+              <Route exact path="/cart" element={<Cart />} />     
+            </Route>
+            <Route exact path="*" element={<Return />} /> 
           </Routes>
         </Container>
       </BrowserRouter>

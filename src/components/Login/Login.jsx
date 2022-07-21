@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import { Form } from "react-bootstrap";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Box,
   TextField,
@@ -14,15 +15,16 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import HomePage2 from "../HomePage2/HomePage2";
 const cookies = new Cookies();
 
 // Definición del theme
-const theme = createTheme({
-  spacing: 4,
-  palette: {
-    mode: "light",
-  },
-});
+// const theme = createTheme({
+//   spacing: 4,
+//   palette: {
+//     mode: "light",
+//   },
+// });
 
 // theme.spacing(4); // `${8 * 2}px` = '16px'
 
@@ -31,16 +33,19 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
-
-  useEffect(() => {
-    // get token generated on login
+  
+  const location = useLocation();
+  const navigate = useNavigate();
+  const token = cookies.get("token");
+  // useEffect(() => {
+  //   // get token generated on login
     
-    const token = cookies.get("token");
-    if (token) {
-      window.location.href = "/home";
-    }
+  //   const token = cookies.get("token");
+  //   if (token) {
+  //     window.location.href = "/home";
+  //   }
     
-  }, []);
+  // }, []);
 
   const handleSubmit = (e) => {
     // prevent the form from refreshing the whole page
@@ -75,11 +80,22 @@ export default function Login() {
 
   };
 
-  
+  // if (cookies.get("token")) {
+  //   // const { from } = location.state || { from: { pathname: "/home" } };
+  //   // console.log(from);
+  //   // navigate(from, { replace: true });
+  //   window.location.href = "home";
+
+  //   // navigate({ pathname: "/home" });
+  // } else {
+
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    {token ? (
+    <HomePage2/>
+    ):( <>
+      {/* <ThemeProvider theme={theme}> */}
+        {/* <CssBaseline /> */}
         <h2>Login</h2>
         <Box>
         <form onSubmit={(e) => handleSubmit(e)}>
@@ -132,7 +148,11 @@ export default function Login() {
           </>
         </form>
         </Box>
-      </ThemeProvider>
-    </>
+      {/* </ThemeProvider> */}
+    </>)
+    }
+     </>         
   );
 }
+
+

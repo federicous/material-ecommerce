@@ -30,13 +30,13 @@ return (
 
         <div className="logo">
         <Link style={{textDecoration: "none", color: "inherit", display: "flex", flexDirection: "row", alignItems: "center",}}
-            to={`/`}
+            to={`/home`}
           >
             <BrandIcon />
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, marginRight: "2rem" }}>
               Tecnalink
             </Typography>
-          </Link>
+        </Link>
 
         {isMobile ? (
           <></>
