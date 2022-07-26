@@ -26,7 +26,6 @@ function App() {
           }}
         >
           <Routes>
-            {/* <Route exact path="/"  element={<Login />}/> */}
             <Route exact path="/"  element={<Login />}/>
             <Route path="/" element={<ProtectedRoutes />}>
               <Route path="/home" element={<HomePage2 />} />

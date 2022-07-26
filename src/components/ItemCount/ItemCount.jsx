@@ -64,13 +64,12 @@ return (
 				/></Box>
 				<Button onClick={()=>addItem()}><Add/></Button>
 			</ButtonGroup>
+
 			{initial ? (
-			<Box>
-				<Button size="medium" variant="contained" color="success"  sx={{ fontSize: 12, width:"100%", height:"100%", marginLeft:"5px", textAlign:"center" }}
-				// startIcon={<ShoppingCart/>}
-				// startIcon={<AddShoppingCart fontSize="medium" sx={{ margin:"0px" }}/>}
-				onClick={()=>addCart(contador)} ><AddShoppingCart fontSize="small"/> </Button>
-			</Box>
+				<Box>
+					<Button size="medium" variant="contained" color="success"  sx={{ fontSize: 12, width:"100%", height:"100%", marginLeft:"5px", textAlign:"center" }}
+					onClick={()=>addCart(contador)} ><AddShoppingCart fontSize="small"/> </Button>
+				</Box>
 			):(
 				<Box>
 					<Link to={`/`}>
@@ -83,9 +82,12 @@ return (
 		
 	):(
 		<Box  sx={{ fontSize: 16, mt: 1, width:"100%", display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center" }}>
-			<Return />
+			<Link to={`/`} style={{ textDecoration:"none", color:"inherit"}}>
+				<Button size="small" variant="contained" color="primary"  sx={{ fontSize: 12, width:"100%",  }}
+				>Return</Button>
+			</Link>	
 			<Link to={`/cart`} style={{ textDecoration:"none", color:"inherit"}}>
-				<Button size="small" variant="contained" color="primary">Cart</Button>
+				<Button size="small" variant="contained" color="primary"  sx={{ fontSize: 12, width:"100%",  }}>Cart</Button>
 			</Link>
 		</Box>
 

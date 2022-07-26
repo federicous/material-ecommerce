@@ -19,6 +19,7 @@ export default function NavBar() {
     let total=0;
     for (const prod of cart) {
       total+=prod.qty
+      console.log(cart);
     }
     setQuantity(total)
   }, [cart])
@@ -43,7 +44,7 @@ return (
         ):(
           <>
           {navList.map((item) => (
-            <Link key={item.id} to={`/category/${item.value}`}>
+            <Link key={item.id} to={`/category/${item.value}`} style={{ textDecoration:"none", color:"inherit"}}>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 <Button sx={{ color: "white" }} variant="text">
                   {item.name}

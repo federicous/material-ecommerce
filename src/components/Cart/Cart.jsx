@@ -1,12 +1,13 @@
-import React, {useContext, useState } from 'react'
-import {Box, Modal, Typography, useMediaQuery  } from '@material-ui/core';
+import React, {useContext, useState, useEffect } from 'react'
+import {Box, Modal, Typography, useMediaQuery, Button  } from '@material-ui/core';
 import { CartContext } from '../CartContext/CartContext';
 import { getFirestore } from '../../services/getFirebase';
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import CartTable from '../CartTable.jsx/CartTable';
 import Form2 from '../Form/Form2';
-import Return from '../utils/Return';
+import { Link } from 'react-router-dom'
+// import Return from '../utils/Return';
 
 const style = {
   position: 'absolute',
@@ -79,14 +80,23 @@ export default function Cart() {
           batch.commit().catch((error) => console.log(error));
       })
     };
+
+    useEffect(() => {
+      console.log("cart: log");
+      console.log(cart);
+      console.log(total);
+
+    }, [cart]);
+    
     
   return (
     <>
     <Typography variant={"h5"}>Cart</Typography>
       {total ? (
         <Box
-        sx={{fontSize: 20, display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap'}} >
-          <CartTable cart={cart} removeFromCart={removeFromCart} total={total} />
+        // sx={{fontSize: 20, display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap', width:"100%"}} >
+        sx={{fontSize: 20, display: "flex", flexDirection:"column", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap', width:"100%"}} >
+          <CartTable cart={cart} removeFromCart={removeFromCart} total={total}/>
           <Form2
            orderGenerate={orderGenerate}
           />
@@ -104,13 +114,15 @@ export default function Cart() {
         </Box>
 
       ) : (
-        <Box
-          sx={{fontSize: 12, display: "flex", flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", margin: "50px",}} >
-          <Typography
-            sx={{fontSize: 20, display: "flex", flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", margin: "10px",}} >
+        <Box sx={{fontSize: 12, display: "flex", flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", margin: "50px",}} >
+          <Typography sx={{fontSize: 20, display: "flex", flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", margin: "10px",}} >
             Empty Cart !!!
           </Typography>
-            <Return />
+          <Link to={`/`} style={{ textDecoration:"none", color:"inherit"}}>
+			    	<Button size="small" variant="contained" color="primary"  sx={{ fontSize: 12, width:"100%",  }}
+			    	>Return</Button>
+			    </Link>	
+            
         </Box>
       )}
     </>

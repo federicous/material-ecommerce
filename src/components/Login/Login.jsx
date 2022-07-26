@@ -9,9 +9,9 @@ import {
   FormControl,
   Alert,
   Stack,
-  createTheme,
-  ThemeProvider,
-  CssBaseline,
+  // createTheme,
+  // ThemeProvider,
+  // CssBaseline,
 } from "@material-ui/core";
 import axios from "axios";
 import Cookies from "universal-cookie";
@@ -37,15 +37,7 @@ export default function Login() {
   const location = useLocation();
   const navigate = useNavigate();
   const token = cookies.get("token");
-  // useEffect(() => {
-  //   // get token generated on login
-    
-  //   const token = cookies.get("token");
-  //   if (token) {
-  //     window.location.href = "/home";
-  //   }
-    
-  // }, []);
+
 
   const handleSubmit = (e) => {
     // prevent the form from refreshing the whole page
@@ -64,13 +56,6 @@ export default function Login() {
     // make the API call
     axios(configuration)
       .then((result) => {
-        // set the cookie
-        // cookies.set("TOKEN", result.data.token, {
-        //   path: "/",
-        // });
-        // redirect user to the auth page
-        // window.location.href = "/auth";
-
         setLogin(true);
         window.location.href = "home";
       })
@@ -79,15 +64,6 @@ export default function Login() {
       });
 
   };
-
-  // if (cookies.get("token")) {
-  //   // const { from } = location.state || { from: { pathname: "/home" } };
-  //   // console.log(from);
-  //   // navigate(from, { replace: true });
-  //   window.location.href = "home";
-
-  //   // navigate({ pathname: "/home" });
-  // } else {
 
   return (
     <>

@@ -49,23 +49,7 @@ export default function HomePage2() {
     // make the API call
     axios(configuration)
       .then((result) => {
-        console.log(result.data[0]);
-        // let allProducts = result.docs.map((item) => ({
-        //   id: item.id,
-        //   ...item.data(),
-        // }));
-        console.log(`consulta backend2`);
-        // someProducts = allProducts.slice(4, 12);
-
-        console.log(`consulta backend3`);
-        console.log(someProducts);
         setProducts(result.data);
-        // set the cookie
-        // redirect user to the auth page
-        // window.location.href = "/auth";
-        console.log(`consulta backend`);
-        console.log(someProducts);
-        // setLogin(true);
       })
       .catch((error) => {
         error = new Error();

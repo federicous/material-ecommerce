@@ -11,74 +11,82 @@ function ccyFormat(num) {
 const CartTable = ({cart, removeFromCart, total, }) => {
 	return (
     <TableContainer component={Paper} sx={{ marginTop: "1rem", flex:'40%' }}>
-      <Table className="table" aria-label="spanning table">
+      <Table className="table" aria-label="spanning table" sx={{pr:"0px"}}>
         <TableHead>
-          <TableRow>
+          {/* <TableRow>
             <TableCell align="center" colSpan={4}>
               Details
             </TableCell>
             <TableCell align="right">Price</TableCell>
-          </TableRow>
+          </TableRow> */}
           <TableRow>
-            <TableCell>Desc</TableCell>
-            <TableCell align="right"></TableCell>
-            <TableCell align="right">Qty.</TableCell>
-            <TableCell align="right">Unit</TableCell>
-            <TableCell align="right">Sum</TableCell>
+            <TableCell align="center" sx={{pr:"0px"}}>Item</TableCell>
+            <TableCell align="center" sx={{pr:"0px"}}></TableCell>
+            <TableCell align="center" sx={{pr:"0px"}}>Cant.</TableCell>
+            <TableCell align="center" sx={{pr:"0px"}}>P.Unit</TableCell>
+            <TableCell align="center">S.Total</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {cart.map((row) => (
-            <TableRow key={row.sku}>
-              <TableCell
-                sx={{
-                  fontSize: 16,
-                  mt: 1,
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "left",
-                  alignItems: "center",
-                }}
+            <TableRow key={row._id}>
+              <TableCell align="right" sx={{pr:"0px"}}
+                // sx={{
+                //   fontSize: 16,
+                //   // mt: 1,
+                //   m:0,
+                //   p:0,
+                //   width: "100%",
+                //   display: "flex",
+                //   flexDirection: "column",
+                //   justifyContent: "left",
+                //   alignItems: "center",
+                // }}
               >
                 <Box
                   component="span"
                   sx={{
                     fontSize: 12,
+                    m:0,
+                    p:0,
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-evenly",
                     alignItems: "center",
+                    textAlign:'justify'
                   }}
                 >
                   <Box>
                   <CardMedia
                     component="img"
-                    image={row.image}
+                    // image={row.image}
+                    image={`http://localhost:8088/images/${row.image}`}
                     alt="notebook"
-                    sx={{ height: 90, marginBottom: "1rem" }}
+
+                    sx={{ height: {xs:50, sm:90}, marginBottom: "1rem" }}
                   />
                   </Box>
-                {row.manufacturer} ({row.modelNumber})
+                  {row.label} ({row.code})
                 </Box>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={{pr:"0px"}}>
                 <Link sx={{cursor:"pointer"}} onClick={() => removeFromCart(cart.indexOf(row))}>
                 <DeleteForever />
                 </Link>
               </TableCell>
-              <TableCell align="right">{row.qty}</TableCell>
-              <TableCell align="right">{row.regularPrice}</TableCell>
-              <TableCell align="right">
-                {ccyFormat(row.regularPrice * row.qty)}
+              <TableCell align="center" sx={{pr:"0px"}}>{row.qty}</TableCell>
+              <TableCell align="center" sx={{pr:"0px"}}>{row.price}</TableCell>
+              <TableCell align="center">
+                {ccyFormat(row.price * row.qty)}
               </TableCell>
             </TableRow>
           ))}
 
           <TableRow>
             <TableCell rowSpan={3} />
-            <TableCell colSpan={3}>Total</TableCell>
-            <TableCell align="right">{ccyFormat(parseFloat(total))}</TableCell>
+            <TableCell colSpan={2}></TableCell>
+            <TableCell colSpan={1}>TOTAL</TableCell>
+            <TableCell align="center">{ccyFormat(parseFloat(total))}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

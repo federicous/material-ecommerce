@@ -8,8 +8,14 @@ const CartContextProvider = ({children}) => {
 	const [total, setTotal] = useState(0)
 	
 	function addToCart(productAdd, counter) {
-		if (cart.some(product=>product.sku===productAdd.sku)) {
-			let productIndex=cart.findIndex(product=>product.sku===productAdd.sku)
+		// if (cart.some(product=>product.sku===productAdd.sku)) {
+		// 	let productIndex=cart.findIndex(product=>product.sku===productAdd.sku)
+		// 	if ((cart[productIndex].qty+counter)<=cart[productIndex].quantityLimit) {
+		// 		cart[productIndex].qty+=counter
+		// 		setCart([...cart])
+		
+		if (cart.some(product=>product._id===productAdd._id)) {
+			let productIndex=cart.findIndex(product=>product._id===productAdd._id)
 			if ((cart[productIndex].qty+counter)<=cart[productIndex].quantityLimit) {
 				cart[productIndex].qty+=counter
 				setCart([...cart])
@@ -21,6 +27,8 @@ const CartContextProvider = ({children}) => {
 			productAdd.qty=counter
 			setCart([...cart, productAdd])
 		}
+		console.log("addtocoart");
+		console.log(cart);
 	}
 	
 	function removeFromCart(productIndex) {
@@ -36,7 +44,7 @@ const CartContextProvider = ({children}) => {
 	useEffect(() => {
 		let suma=0;
 		for (const item of cart) {
-			suma=item.qty*item.regularPrice+suma
+			suma=item.qty*item.price+suma
 		}
 		setTotal(suma)		
 

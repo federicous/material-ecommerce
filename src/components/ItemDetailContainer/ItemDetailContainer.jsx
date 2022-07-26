@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { CircularProgress, Grid, Typography } from '@material-ui/core';
 import ItemDetail from '../ItemDetail/ItemDetail';
 import { useParams } from 'react-router';
-import { getFirestore } from '../../services/getFirebase';
+// import { getFirestore } from '../../services/getFirebase';
 import { Box } from '@material-ui/system';
 import Return from '../utils/Return';
 import axios from "axios";
@@ -88,11 +88,11 @@ const ItemDetailContainer = ({initial}) => {
         >
           {!loading && products.length ? (
             products.map((item) => (
-              <Grid item key={item.sku} xs={12} sm={4} md={3}>
+              <Grid item key={item._id} xs={12} sm={4} md={3}>
                 <Box sx={{ width:"fit-content" }}>
                 <ItemDetail
                   product={item}
-                  sku={item.id}
+                  sku={item._id}
                   initial={item.stock ? initial : item.stock}
                   name={`${item.name}`}
                   model={item.label}
