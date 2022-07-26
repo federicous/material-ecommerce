@@ -17,28 +17,28 @@ const ItemCount = ({initial, sku, stock, product}) => {
 	const [result, setResult] = useState(stock)
 
 	function addItem() {
-		if (contador < result) {
+		if (Number(contador) < Number(result)) {
 			setContador(Number(contador)+1)
 		}
 	}
 
 	function removeItem() {
-		if (contador>1) {
+		if (Number(contador)>1) {
 			setContador(Number(contador)-1)		
 		}
 	}
 
 	function addCart(counter) {
-		if (counter<=stock) {
-			addToCart(product, counter)
-			setResult(stock-counter)
-			setContador(initial)	
+		if (Number(counter)<=Number(stock)) {
+			addToCart(product, Number(counter))
+			setResult(Number(stock)-Number(counter))
+			setContador(Number(initial))
 			setVisibilty(false)
 		}
 	}
 
 	function setContadorFunction(value) {
-		if (contador<stock) {
+		if (Number(contador)<Number(stock)) {
 			setContador(Number(value))
 		} else {
 			setContador(Number(stock)-1)

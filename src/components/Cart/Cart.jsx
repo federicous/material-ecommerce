@@ -6,8 +6,11 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import CartTable from '../CartTable.jsx/CartTable';
 import Form2 from '../Form/Form2';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import axios from "axios";
 // import Return from '../utils/Return';
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 const style = {
   position: 'absolute',
@@ -34,60 +37,41 @@ export default function Cart() {
 	const cartContext = useContext(CartContext);
 	const {cart, total, removeFromCart, cleanCart}= cartContext;  
 
-  // La funcion ordenGenerate guarda en Firebase los datos de los productos comprados y del cliente, también actualiza el stock
-    let order = {};
-    const orderGenerate = (data) => { // "data" viene del formulario
-      order.date = firebase.firestore.Timestamp.fromDate(new Date());
-      order.buyer = {
-        name: data.firstName + " " + data.lastName,
-        phone: data.phone,
-        email: data.email,
-      };
-      order.total = total;
-      order.items = cart.map((cartItem) => {
-        const id = cartItem.sku;
-        const nombre = cartItem.modelNumber;
-        const precio = cartItem.regularPrice * cartItem.qty;
 
-        return { id, nombre, precio };
-      });
-      
-      // Ahora guardo la orden generada en Firebase:
-      const db = getFirestore();
-      const orderQuery = db.collection("orders");
-      orderQuery
-        .add(order)
-        .then((result) => setModalResult(result.id))
-        .then(() => handleOpen())
-        .catch((error) => console.log(error));
+  // get token generated on login
 
+  const token = cookies.get("token");
 
-      //Traigo los items comprados para actualizar stock
-      const itemsToUpdate = db.collection('Items').where(
-          firebase.firestore.FieldPath.documentId(), 'in', cart.map(i=> i.id)
-      )
-
-      const batch = db.batch();
-      
-      // por cada item restar del stock la cantidad de el carrito
-      itemsToUpdate.get()
-      .then( collection=>{
-          collection.docs.forEach(docSnapshot => {
-              batch.update(docSnapshot.ref, {
-              quantityLimit: docSnapshot.data().quantityLimit - cart.find(item => item.id === docSnapshot.id).qty
-              })
-          })
-          batch.commit().catch((error) => console.log(error));
-      })
+  const orderGenerate = (event) => {  
+    event.preventDefault();
+    let data = event.target;
+    console.log("target data");
+    console.log(data);
+    let someProducts = [];
+    // set configurations
+    const configuration = {
+      method: "post",
+      url: `/api/order`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data:{data},
     };
+  
+    // make the API call
+    axios(configuration)
+      .then((result) => {
+        // setProducts([result.data]);
+      })
+      .catch((error) => {
+        error = new Error();
+      })
+      // .finally(()=>{setLoading(false)})
+  }
+  
+  // // La funcion ordenGenerate guarda en Firebase los datos de los productos comprados y del cliente, también actualiza el stock
+  //   let order = {};
 
-    useEffect(() => {
-      console.log("cart: log");
-      console.log(cart);
-      console.log(total);
-
-    }, [cart]);
-    
     
   return (
     <>
@@ -97,9 +81,12 @@ export default function Cart() {
         // sx={{fontSize: 20, display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap', width:"100%"}} >
         sx={{fontSize: 20, display: "flex", flexDirection:"column", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap', width:"100%"}} >
           <CartTable cart={cart} removeFromCart={removeFromCart} total={total}/>
-          <Form2
+          <Button  onClick={(event)=>orderGenerate(event)}>
+
+          </Button>
+          {/* <Form2
            orderGenerate={orderGenerate}
-          />
+          /> */}
       <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">

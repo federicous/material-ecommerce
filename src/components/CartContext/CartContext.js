@@ -1,4 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
+import axios from "axios";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 export const CartContext = createContext();
 
@@ -6,6 +9,29 @@ const CartContextProvider = ({children}) => {
 
 	const [cart, setCart] = useState([])
 	const [total, setTotal] = useState(0)
+
+	const token = cookies.get("token");
+
+	function apiCartUpdate(newCart) {
+		const configuration = {
+			method: "post",
+			url: `/carrito`,
+			headers: {
+			  Authorization: `Bearer ${token}`,
+			},
+			data: newCart,
+		      };
+		    
+		      // make the API call
+		      axios(configuration)
+			.then((result) => {
+				console.log(result);
+			  // setProducts([result.data]);
+			})
+			.catch((error) => {
+			  error = new Error();
+			})
+	}
 	
 	function addToCart(productAdd, counter) {
 		// if (cart.some(product=>product.sku===productAdd.sku)) {
@@ -16,8 +42,9 @@ const CartContextProvider = ({children}) => {
 		
 		if (cart.some(product=>product._id===productAdd._id)) {
 			let productIndex=cart.findIndex(product=>product._id===productAdd._id)
-			if ((cart[productIndex].qty+counter)<=cart[productIndex].quantityLimit) {
+			if ((cart[productIndex].qty+counter)<=cart[productIndex].stock) {
 				cart[productIndex].qty+=counter
+				apiCartUpdate([...cart])
 				setCart([...cart])
 			}else{
 				alert("out of stock")
@@ -25,19 +52,20 @@ const CartContextProvider = ({children}) => {
 		
 		} else {
 			productAdd.qty=counter
+			apiCartUpdate([...cart,productAdd])
 			setCart([...cart, productAdd])
 		}
-		console.log("addtocoart");
-		console.log(cart);
 	}
 	
 	function removeFromCart(productIndex) {
 		let aux= cart
 		aux.splice(productIndex,1)
+		apiCartUpdate([...aux])
 		setCart([...aux])
 	}
 
 	function cleanCart() {
+		apiCartUpdate([])
 		setCart([])
 	}
 

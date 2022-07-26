@@ -21,7 +21,7 @@ const ItemList = ({ products }) => {
             // 	price={item.regularPrice}
             // 	/>
             // </Grid>
-            <Grid item key={item._id} xs={12} sm={4} md={3}>
+            <Grid item key={item._id} xs={6} sm={4} md={3}>
               <Item
                 sku={item._id ? item._id : item.id }
                 model={item.label}

@@ -1,5 +1,6 @@
 import React from 'react'
-import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia, Link, } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia, Link, Typography } from '@material-ui/core';
+import { Link as DomLink } from 'react-router-dom';
 import { DeleteForever } from '@material-ui/icons';
 import 'firebase/firestore';
 import './CartTable.css';
@@ -43,6 +44,7 @@ const CartTable = ({cart, removeFromCart, total, }) => {
                 //   alignItems: "center",
                 // }}
               >
+                 <DomLink to={`/detail/${row._id}`}>
                 <Box
                   component="span"
                   sx={{
@@ -53,7 +55,7 @@ const CartTable = ({cart, removeFromCart, total, }) => {
                     flexDirection: "column",
                     justifyContent: "space-evenly",
                     alignItems: "center",
-                    textAlign:'justify'
+                    textAlign:'center'
                   }}
                 >
                   <Box>
@@ -63,15 +65,16 @@ const CartTable = ({cart, removeFromCart, total, }) => {
                     image={`http://localhost:8088/images/${row.image}`}
                     alt="notebook"
 
-                    sx={{ height: {xs:50, sm:90}, marginBottom: "1rem" }}
+                    sx={{ height: {xs:60, sm:90}, marginBottom: "1rem" }}
                   />
                   </Box>
-                  {row.label} ({row.code})
+                  <Typography sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} variant="caption">{row.name} ({row.code})</Typography>                  
                 </Box>
+                </DomLink>
               </TableCell>
               <TableCell align="right" sx={{pr:"0px"}}>
-                <Link sx={{cursor:"pointer"}} onClick={() => removeFromCart(cart.indexOf(row))}>
-                <DeleteForever />
+                <Link sx={{cursor:"pointer", justifyContent:"center"}} onClick={() => removeFromCart(cart.indexOf(row))}>
+                  <DeleteForever />
                 </Link>
               </TableCell>
               <TableCell align="center" sx={{pr:"0px"}}>{row.qty}</TableCell>

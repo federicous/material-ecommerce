@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card,CardActions,CardContent,CardMedia,Container,Typography,Box, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { fontSize } from '@material-ui/system';
 
 const Item = ({name, description, img, stock, model,sku}) => {
 	return (
@@ -25,15 +26,15 @@ const Item = ({name, description, img, stock, model,sku}) => {
           </Link>
         </Container>
         <CardContent sx={{ margin: "0" }}>
-          <Typography gutterBottom variant="body" component="div">
+          <Typography gutterBottom sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} variant="caption" component="div">
             {name}
           </Typography>
-          <Typography gutterBottom variant="body2" component="div">
-            Model: {model}
+          <Typography gutterBottom sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} variant="caption" color="text.secondary" component="div">
+            {model}
           </Typography>
           <Link to={`/detail/${sku}`}>
-            <Typography variant="body2" color="text.secondary">
-              {description}
+            <Typography sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} variant="caption" color="text.secondary">
+              Código: {description}
             </Typography>
           </Link>
         </CardContent>
@@ -43,16 +44,16 @@ const Item = ({name, description, img, stock, model,sku}) => {
             flexDirection: "column",
           }}
         >
-          <Typography variant="body2">(Stock: {stock})</Typography>
+          <Typography sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} variant="caption">(Stock: {stock})</Typography>
           <Box>
-            <Link to={`/detail/${sku}`}>
+            <Link to={`/detail/${sku}`} style={{ textDecoration:"none", color:"inherit"}}>
               <Button
                 size="medium"
                 variant="contained"
                 color="success"
-                sx={{ fontSize: 12, width: "100%" }}
+                sx={{ fontSize:{xs:"xsmall",sm:"small",md:"medium"}, width: "100%" }}
               >
-                Detalles
+               <Typography sx={{fontSize:{xs:"xsmall",sm:"small"}}} variant="caption">Detalles</Typography>
               </Button>
             </Link>
           </Box>
