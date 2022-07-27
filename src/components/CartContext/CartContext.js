@@ -15,7 +15,7 @@ const CartContextProvider = ({children}) => {
 	function apiCartUpdate(newCart) {
 		const configuration = {
 			method: "post",
-			url: `/carrito`,
+			url: `/api/cart`,
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},
@@ -26,20 +26,13 @@ const CartContextProvider = ({children}) => {
 		      axios(configuration)
 			.then((result) => {
 				console.log(result);
-			  // setProducts([result.data]);
 			})
 			.catch((error) => {
 			  error = new Error();
 			})
 	}
 	
-	function addToCart(productAdd, counter) {
-		// if (cart.some(product=>product.sku===productAdd.sku)) {
-		// 	let productIndex=cart.findIndex(product=>product.sku===productAdd.sku)
-		// 	if ((cart[productIndex].qty+counter)<=cart[productIndex].quantityLimit) {
-		// 		cart[productIndex].qty+=counter
-		// 		setCart([...cart])
-		
+	function addToCart(productAdd, counter) {	
 		if (cart.some(product=>product._id===productAdd._id)) {
 			let productIndex=cart.findIndex(product=>product._id===productAdd._id)
 			if ((cart[productIndex].qty+counter)<=cart[productIndex].stock) {
@@ -77,6 +70,27 @@ const CartContextProvider = ({children}) => {
 		setTotal(suma)		
 
 	}, [cart])
+
+	useEffect(() => {
+		const configuration = {
+			method: "get",
+			url: `/api/cart`,
+			headers: {
+			  Authorization: `Bearer ${token}`,
+			},
+		      };
+		    
+		      // make the API call
+		      axios(configuration)
+			.then((result) => {
+				setCart([...result.data])
+			})
+			.catch((error) => {
+			  error = new Error();
+			})
+	
+	}, [])
+	
 
 	return (
 		<CartContext.Provider value={{

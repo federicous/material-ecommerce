@@ -44,18 +44,20 @@ const CartTable = ({cart, removeFromCart, total, }) => {
                 //   alignItems: "center",
                 // }}
               >
-                 <DomLink to={`/detail/${row._id}`}>
+                 <DomLink to={`/detail/${row._id}`} >
                 <Box
                   component="span"
                   sx={{
                     fontSize: 12,
-                    m:0,
-                    p:0,
+                    // m:0,
+                    // p:0,
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "space-evenly",
+                    justifyContent: "center",
                     alignItems: "center",
-                    textAlign:'center'
+                    textAlign:'center',
+                    maxWidth:"250px",
+                    margin:"auto"
                   }}
                 >
                   <Box>
@@ -72,7 +74,7 @@ const CartTable = ({cart, removeFromCart, total, }) => {
                 </Box>
                 </DomLink>
               </TableCell>
-              <TableCell align="right" sx={{pr:"0px"}}>
+              <TableCell align="center" sx={{pr:"0px"}}>
                 <Link sx={{cursor:"pointer", justifyContent:"center"}} onClick={() => removeFromCart(cart.indexOf(row))}>
                   <DeleteForever />
                 </Link>
