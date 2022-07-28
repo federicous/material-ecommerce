@@ -43,16 +43,18 @@ export default function TemporaryDrawer() {
     >
       <List>
         {navList.map((item) => (
-          <ListItem key={item.id}>
-            <Link to={`/category/${item.value}`} style={{ textDecoration:"none", color:"inherit"}}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <ListItem key={item}>
+            <Link to={`/category/${item}`} style={{ textDecoration:"none", color:"inherit"}}>
                 <Button sx={{ color: "black" }} variant="text">
-                  {item.name}
+                <Typography variant="compliant" component="div" sx={{ flexGrow: 1,textAlign:"left" }}>
+                  {item}
+                  </Typography>
                 </Button>
-              </Typography>
             </Link>
           </ListItem>
         ))}
+
+
         <Divider />
         <ListItem>
           <Logout />

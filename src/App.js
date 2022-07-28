@@ -9,10 +9,39 @@ import CartContextProvider from './components/CartContext/CartContext';
 import Return from './components/utils/Return';
 import Login from './components/Login/Login';
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
+// import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { createTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { useMemo } from 'react';
+import { blue, green } from '@material-ui/core/colors';
+
 
 function App() {
+  // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const prefersDarkMode = true;
+
+  let theme =  createTheme({
+        palette: {
+          type: prefersDarkMode ? 'dark' : 'light',
+          mode: 'dark',
+          primary: {
+            // main: '#1565c0',
+            main: blue[800]
+          },
+          secondary: {
+            main: '#1565c0',
+          },
+          success: {
+            main: green[800]
+          }
+        },
+      });
+
+  theme = responsiveFontSizes(theme);
 
   return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline/>
     <CartContextProvider>
       <BrowserRouter>
         <NavBar />
@@ -40,6 +69,8 @@ function App() {
         </Container>
       </BrowserRouter>
     </CartContextProvider>
+    </ThemeProvider>
+
   );
 }
 

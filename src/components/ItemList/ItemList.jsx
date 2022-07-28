@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import Item from "../Item/Item";
+import { Box } from "@material-ui/system";
 
 const ItemList = ({ products }) => {
   const productsList = products;
@@ -22,7 +23,10 @@ const ItemList = ({ products }) => {
             // 	/>
             // </Grid>
             <Grid item key={item._id} xs={6} sm={4} md={3}>
+              <Box  sx={{ width:"fit-content" }}>
               <Item
+                product={item}
+                initial={item.stock ? 1 : item.stock}
                 sku={item._id ? item._id : item.id }
                 model={item.label}
                 name={`${item.name}`}
@@ -31,6 +35,19 @@ const ItemList = ({ products }) => {
                 stock={item.stock}
                 price={item.price}
               />
+
+              </Box>
+              {/* <Item
+                product={item}
+                initial={item.stock ? 1 : item.stock}
+                sku={item._id ? item._id : item.id }
+                model={item.label}
+                name={`${item.name}`}
+                description={item.code}
+                img={item.image}
+                stock={item.stock}
+                price={item.price}
+              /> */}
             </Grid>
           ))}
       </Grid>

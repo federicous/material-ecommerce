@@ -68,7 +68,7 @@ export default function HomePage2() {
         marginTop: "2rem",
       }}
     >
-      {navList.map((item) => (
+      {/* {navList.map((item) => (
         <ImageButton
           focusRipple
           key={item.name}
@@ -97,7 +97,38 @@ export default function HomePage2() {
             </Image>
           </Link>
         </ImageButton>
-      ))}
+      ))} */}
+
+{/* {navList.map((item) => (
+        <ImageButton
+          focusRipple
+          key={item.name}
+          style={{
+            width: "33%",
+          }}
+        >
+          <Link key={item.id} to={`/category/${item.value}`}>
+            <ImageSrc style={{ backgroundImage: `url(${item.image})` }} />
+            <ImageBackdrop className="MuiImageBackdrop-root" />
+            <Image>
+              <Typography
+                component="span"
+                variant="subtitle1"
+                color="inherit"
+                sx={{
+                  position: "relative",
+                  p: 4,
+                  pt: 2,
+                  pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
+                }}
+              >
+                {item.name}
+                <ImageMarked className="MuiImageMarked-root" />
+              </Typography>
+            </Image>
+          </Link>
+        </ImageButton>
+      ))} */}
       <Box
         sx={{
           display: "flex",

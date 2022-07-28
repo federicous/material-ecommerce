@@ -2,8 +2,9 @@ import React from 'react'
 import { Card,CardActions,CardContent,CardMedia,Container,Typography,Box, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { fontSize } from '@material-ui/system';
+import ItemCount2 from '../ItemCount/ItemCount2'
 
-const Item = ({name, description, img, stock, model,sku}) => {
+const Item = ({product, name, description, img, stock, model,sku}) => {
 	return (
     <>
       <Card
@@ -22,10 +23,10 @@ const Item = ({name, description, img, stock, model,sku}) => {
           }}
         >
           <Link to={`/detail/${sku}`}>
-            <CardMedia component="img" image={`images/${img}`} alt="notebook" />
+            <CardMedia component="img" image={`http://localhost:3000/images/${img}`} alt="notebook" />
           </Link>
         </Container>
-        <CardContent sx={{ margin: "0" }}>
+        <CardContent sx={{ margin: 0,p:{xs:1,md:2} }}>
           <Typography gutterBottom sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} variant="caption" component="div">
             {name}
           </Typography>
@@ -46,7 +47,7 @@ const Item = ({name, description, img, stock, model,sku}) => {
         >
           <Typography sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} variant="caption">(Stock: {stock})</Typography>
           <Box>
-            <Link to={`/detail/${sku}`} style={{ textDecoration:"none", color:"inherit"}}>
+            {/* <Link to={`/detail/${sku}`} style={{ textDecoration:"none", color:"inherit"}}>
               <Button
                 size="medium"
                 variant="contained"
@@ -54,8 +55,14 @@ const Item = ({name, description, img, stock, model,sku}) => {
                 sx={{ fontSize:{xs:"xsmall",sm:"small",md:"medium"}, width: "100%" }}
               >
                <Typography sx={{fontSize:{xs:"xsmall",sm:"small"}}} variant="caption">Detalles</Typography>
+
               </Button>
-            </Link>
+            </Link> */}
+            <ItemCount2
+            product={product}
+            initial={1}
+            stock={stock}
+          />
           </Box>
         </CardActions>
       </Card>

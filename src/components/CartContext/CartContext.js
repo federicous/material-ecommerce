@@ -24,9 +24,9 @@ const CartContextProvider = ({children}) => {
 		    
 		      // make the API call
 		      axios(configuration)
-			.then((result) => {
-				console.log(result);
-			})
+			// .then((result) => {
+			// 	console.log(result);
+			// })
 			.catch((error) => {
 			  error = new Error();
 			})

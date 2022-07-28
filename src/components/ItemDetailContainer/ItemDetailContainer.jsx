@@ -12,7 +12,6 @@ const cookies = new Cookies();
 const ItemDetailContainer = ({initial}) => {
 
 	const {sku} = useParams()
-  console.log(sku);
 	const [products, setProducts] = useState([])
 	const [loading, setLoading] = useState(true)
 
@@ -26,9 +25,8 @@ const ItemDetailContainer = ({initial}) => {
   
   useEffect(() => {
     // get token generated on login
-    console.log(sku);
     const token = cookies.get("token");
-    let someProducts = [];
+    // let someProducts = [];
     // set configurations
     const configuration = {
       method: "get",
@@ -41,19 +39,7 @@ const ItemDetailContainer = ({initial}) => {
     // make the API call
     axios(configuration)
       .then((result) => {
-        console.log(result.data);
-        console.log(sku);
-        console.log(`consulta backend2`);
-        // someProducts = allProducts.slice(4, 12);
-
-        console.log(`consulta backend3`);
-        console.log(someProducts);
         setProducts([result.data]);
-        // redirect user to the auth page
-        // window.location.href = "/auth";
-        console.log(`consulta backend`);
-        console.log(someProducts);
-        // setLogin(true);
       })
       .catch((error) => {
         error = new Error();

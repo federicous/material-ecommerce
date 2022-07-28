@@ -7,7 +7,12 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../CartContext/CartContext';
 import { navList } from '../utils/navList';
 import TemporaryDrawer from './TemporaryDrawer';
-import Logout from '../Logout/Logout'
+import Logout from '../Logout/Logout';
+import Category from '../Category/Category'
+import Category2 from '../Category/Category2'
+import { grey } from '@material-ui/core/colors';
+import Busqueda from '../Busqueda/Busqueda'
+// import Category3 from '../Category/Category3'
 
 export default function NavBar() {
 	const cartContext = useContext(CartContext);
@@ -19,14 +24,13 @@ export default function NavBar() {
     let total=0;
     for (const prod of cart) {
       total+=prod.qty
-      console.log(cart);
     }
     setQuantity(total)
   }, [cart])
 
 return (
   <Box sx={{ flexGrow: 1 }}>
-    <AppBar position="fixed">
+    <AppBar position="fixed" color='primary' enableColorOnDark>
       <Toolbar className="toolBar">
 
         <div className="logo">
@@ -43,7 +47,7 @@ return (
           <></>
         ):(
           <>
-          {navList.map((item) => (
+          {/* {navList.map((item) => (
             <Link key={item.id} to={`/category/${item.value}`} style={{ textDecoration:"none", color:"inherit"}}>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 <Button sx={{ color: "white" }} variant="text">
@@ -51,7 +55,24 @@ return (
                 </Button>
               </Typography>
             </Link>
-          ))}
+          ))} */}
+
+          {/* <Category/> */}
+          <Category2/>
+          {/* <Category3/> */}
+
+          <Busqueda/>
+
+          {/* {navList.map((item) => (
+            <Link key={item} to={`/category/${item}`} style={{ textDecoration:"none", color:"inherit"}}>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Button sx={{ color: "white" }} variant="text">
+                  {item}
+                </Button>
+              </Typography>
+            </Link>
+          ))} */}
+
                 <Logout />
           </>
         )}

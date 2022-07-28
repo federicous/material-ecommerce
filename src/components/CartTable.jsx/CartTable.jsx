@@ -44,7 +44,7 @@ const CartTable = ({cart, removeFromCart, total, }) => {
                 //   alignItems: "center",
                 // }}
               >
-                 <DomLink to={`/detail/${row._id}`} >
+                 <DomLink to={`/detail/${row._id}`} style={{textDecoration: "none"}}>
                 <Box
                   component="span"
                   sx={{
@@ -70,7 +70,7 @@ const CartTable = ({cart, removeFromCart, total, }) => {
                     sx={{ height: {xs:60, sm:90}, marginBottom: "1rem" }}
                   />
                   </Box>
-                  <Typography sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} variant="caption">{row.name} ({row.code})</Typography>                  
+                  <Typography sx={{textDecoration: "none", fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} color="primary" variant="caption">{row.name} ({row.code})</Typography>                  
                 </Box>
                 </DomLink>
               </TableCell>
