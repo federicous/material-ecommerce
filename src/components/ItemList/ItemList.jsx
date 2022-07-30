@@ -1,13 +1,16 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import Item from "../Item/Item";
 import { Box } from "@material-ui/system";
+
 
 const ItemList = ({ products }) => {
   const productsList = products;
 
   return (
     <>
+    {productsList.length
+    ?
       <Grid container spacing={2} sx={{ marginTop: "0.1rem" }}>
         {productsList &&
           productsList.map((item) => (
@@ -51,6 +54,13 @@ const ItemList = ({ products }) => {
             </Grid>
           ))}
       </Grid>
+      :
+      <Box sx={{marginTop:"2rem"}}>
+        <Typography variant="h4">
+          Sin resultados
+        </Typography>
+      </Box>
+      }
     </>
   );
 };

@@ -4,7 +4,6 @@ import { InputBase } from '@material-ui/core';
 import { useState, useEffect } from 'react';
 import Cookies from "universal-cookie";
 import axios from "axios";
-import { Link, useNavigate } from 'react-router-dom';
 
 const cookies = new Cookies();
 
@@ -52,56 +51,39 @@ const Search = styled('div')(({ theme }) => ({
 export default function Busqueda() {
 
 	const [patron, setPatron] = useState("");
-	// const [filteredResults, setFilteredResults] = useState([]);
-	let navigate = useNavigate();
+	const [filteredResults, setFilteredResults] = useState([]);
 
-	// useEffect(() => {
-	// 	console.log(filteredResults);
-	// }, [filteredResults])
-
-	// const token = cookies.get("token");
-
-	// const handleBusqueda = (event) => {
-	// 	// event.preventDefault();
-	// 	// setPatron(event.target.value)
-	// 	if (event.key === 'Enter') {
-	// 		let patron = event.target.value
-	// 		// set configurations
-	// 		const configuration = {
-	// 		method: "get",
-	// 		url: `/api/search/${patron}`,
-	// 		headers: {
-	// 		Authorization: `Bearer ${token}`,
-	// 		},		  
-	// 		};
-		
-	// 		// make the API call
-	// 		axios(configuration)
-	// 		.then((result) => {
-	// 			setFilteredResults([result.data])
-	// 		})
-	// 		.catch((error) => {
-	// 		error = new Error();
-	// 		})
-	// 		// .finally(()=>{setLoading(false)})
-	// 	} 
-	// }
-
-	async function handleSubmit(event) {
-		// event.preventDefault();
-		// await submitForm(event.target);
-		// navigate(`/search/${event.target.value}`, { replace: true });
-
-		setPatron(event.target.value)
-	      }
 	useEffect(() => {
-		if (patron) {
-			navigate(`/search/${patron}`, { replace: true });	
-		} else {
-			navigate(`/`, { replace: true });
-		}
-	}, [patron])
-	
+		console.log(filteredResults);
+	}, [filteredResults])
+
+	const token = cookies.get("token");
+
+	const handleBusqueda = (event) => {
+		// event.preventDefault();
+		// setPatron(event.target.value)
+		if (event.key === 'Enter') {
+			let patron = event.target.value
+			// set configurations
+			const configuration = {
+			method: "get",
+			url: `/api/search/${patron}`,
+			headers: {
+			Authorization: `Bearer ${token}`,
+			},		  
+			};
+		
+			// make the API call
+			axios(configuration)
+			.then((result) => {
+				setFilteredResults([result.data])
+			})
+			.catch((error) => {
+			error = new Error();
+			})
+			// .finally(()=>{setLoading(false)})
+		} 
+	}
 
   return (
 <Search>
@@ -114,11 +96,8 @@ export default function Busqueda() {
 //   onChange={(e) => handleBusqueda(e)}
 //   onChange={handleBusqueda}
 //   onSubmit={handleBusqueda}
-	// onChange={(e)=>setPatron(e.target.value)}
-//   onKeyDown={handleBusqueda}
-//   onFocus={()=> console.log("enfocado")}
-// onFocus={()=> <Link to={`/search/`}></Link>}
-onChange={handleSubmit}
+	onChange={(e)=>setPatron(e.target.value)}
+  onKeyDown={handleBusqueda}
 />
 </Search>
   )
