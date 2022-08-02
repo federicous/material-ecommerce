@@ -1,7 +1,7 @@
 import React from 'react'
-import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia, Link, Typography } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia, Link, Typography, Button } from '@material-ui/core';
 import { Link as DomLink } from 'react-router-dom';
-import { DeleteForever } from '@material-ui/icons';
+import { Delete } from '@material-ui/icons';
 import 'firebase/firestore';
 import './CartTable.css';
 
@@ -76,7 +76,9 @@ const CartTable = ({cart, removeFromCart, total, }) => {
               </TableCell>
               <TableCell align="center" sx={{pr:"0px"}}>
                 <Link sx={{cursor:"pointer", justifyContent:"center"}} onClick={() => removeFromCart(cart.indexOf(row))}>
-                  <DeleteForever />
+                  <Button color='error' variant='contained' sx={{minWidth:"fit-content", p:"6px"}}>
+                    <Delete />
+                  </Button>
                 </Link>
               </TableCell>
               <TableCell align="center" sx={{pr:"0px"}}>{row.qty}</TableCell>
