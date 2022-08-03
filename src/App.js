@@ -13,18 +13,29 @@ import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
 // import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { useMemo } from 'react';
+import { useMemo, useContext, useEffect } from 'react';
 import { blue, green } from '@material-ui/core/colors';
+import { CartContext } from './components/CartContext/CartContext';
 
 
 function App() {
   // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const prefersDarkMode = true;
 
+  const cartContext = useContext(CartContext);
+	const {modeTheme}= cartContext;
+
+  //  useEffect(() => {
+  //    console.log("use effect en app");
+  //  console.log(modeTheme);
+  //  }, [modeTheme])
+   
+
   let theme =  createTheme({
         palette: {
           type: prefersDarkMode ? 'dark' : 'light',
-          mode: 'dark',
+          // mode: 'dark',
+          mode: modeTheme,
           primary: {
             // main: '#1565c0',
             main: blue[800]
@@ -41,37 +52,37 @@ function App() {
   theme = responsiveFontSizes(theme);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline/>
-    <CartContextProvider>
-      <BrowserRouter>
-        <NavBar />
-        <Container
-          sx={{
-            marginTop: "80px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Routes>
-            <Route exact path="/"  element={<Login />}/>
-            <Route path="/" element={<ProtectedRoutes />}>
-              <Route path="/home" element={<HomePage2 />} />
-              <Route exact path="/category/:category" element={<ItemListContainer />} />
-              <Route exact path="/search/:patron" element={<ItemListContainerSearch />} />
-              <Route exact path="/detail/:sku" element={< ItemDetailContainer
-                  greeting="Lista de productos"
-                  initial={1} />} />
-              <Route exact path="/cart" element={<Cart />} />     
-            </Route>
-            <Route exact path="*" element={<Return />} /> 
-          </Routes>
-        </Container>
-      </BrowserRouter>
-    </CartContextProvider>
-    </ThemeProvider>
+    // <CartContextProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline/>
+        <BrowserRouter>
+          <NavBar />
+          <Container
+            sx={{
+              marginTop: "80px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Routes>
+              <Route exact path="/"  element={<Login />}/>
+              <Route path="/" element={<ProtectedRoutes />}>
+                <Route path="/home" element={<HomePage2 />} />
+                <Route exact path="/category/:category" element={<ItemListContainer />} />
+                <Route exact path="/search/:patron" element={<ItemListContainerSearch />} />
+                <Route exact path="/detail/:sku" element={< ItemDetailContainer
+                    greeting="Lista de productos"
+                    initial={1} />} />
+                <Route exact path="/cart" element={<Cart />} />     
+              </Route>
+              <Route exact path="*" element={<Return />} /> 
+            </Routes>
+          </Container>
+        </BrowserRouter>
+      </ThemeProvider>
+    // </CartContextProvider>
 
   );
 }

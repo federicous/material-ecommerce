@@ -4,13 +4,40 @@ import { Link as DomLink } from 'react-router-dom';
 import { Delete } from '@material-ui/icons';
 import 'firebase/firestore';
 import './CartTable.css';
+import axios from "axios";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 function ccyFormat(num) {
 	return `${num.toFixed(2)}`;
       }
 
+const token = cookies.get("token");
+
+let handleOrden = () => {
+  const configuration = {
+    method: "post",
+    url: `/api/order`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+        };
+        // make the API call
+        axios(configuration)
+    .then((result) => {
+      console.log(result.data);
+      // setProducts([...result.data.allProducts])
+      // setPagesCant(Math.ceil(result.data.total/pageSize))
+    })
+    .catch((error) => {
+      error = new Error();
+    })
+}
+
 const CartTable = ({cart, removeFromCart, total, }) => {
 	return (
+    <>
     <TableContainer component={Paper} sx={{ marginTop: "1rem", flex:'40%' }}>
       <Table className="table" aria-label="spanning table" sx={{pr:"0px"}}>
         <TableHead>
@@ -70,7 +97,7 @@ const CartTable = ({cart, removeFromCart, total, }) => {
                     sx={{ height: {xs:60, sm:90}, marginBottom: "1rem" }}
                   />
                   </Box>
-                  <Typography sx={{textDecoration: "none", fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} color="primary" variant="caption">{row.name} ({row.code})</Typography>                  
+                  <Typography sx={{textDecoration: "none", fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} color="text.primary" variant="caption">{row.name} ({row.code})</Typography>                  
                 </Box>
                 </DomLink>
               </TableCell>
@@ -98,6 +125,12 @@ const CartTable = ({cart, removeFromCart, total, }) => {
         </TableBody>
       </Table>
     </TableContainer>
+    <Button sx={{my:3}} variant='contained' 
+    onClick={handleOrden}
+    >
+      Enviar orden
+    </Button>
+    </>
   );
 }
 

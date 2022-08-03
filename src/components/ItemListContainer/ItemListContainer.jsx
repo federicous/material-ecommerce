@@ -2,53 +2,55 @@
 import ItemList from '../ItemList/ItemList'
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router';
-import { getFirestore } from '../../services/getFirebase';
-import { Typography } from '@material-ui/core'
+import { Typography, Box, Pagination, Stack } from '@material-ui/core'
 import axios from "axios";
 import Cookies from "universal-cookie";
+
 const cookies = new Cookies();
 
 const ItemListContainer = () => {
 
 	const {category} = useParams()
 	const [products, setProducts] = useState([])
-    
-	// useEffect(() => {
-	// 	const db = getFirestore()
-	// 	db.collection('Items').where('categoryId', '==', category).get()
-	// 	.then(respuesta => setProducts(respuesta.docs.map(item=>({id: item.id, ...item.data()}))))
-	// }, [category])
+	const [page, setPage] = React.useState(1);
+	let pageSize = 10;
+	const [pagesCant, setPagesCant] = useState(10)
+
+	const handleChange = (event, value) => {
+		setPage(value);
+	      };
 
 	const token = cookies.get("token");
 	
 	useEffect(() => {
 		const configuration = {
 			method: "get",
-			url: `/api/products/category/${category}`,
+			url: `/api/products/category/${category}?page=${page}&pageSize=${pageSize}`,
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},
 		      };
-		    
 		      // make the API call
 		      axios(configuration)
 			.then((result) => {
-				console.log(result.data);
-				setProducts([...result.data])
+				setProducts([...result.data.allProducts])
+				setPagesCant(Math.ceil(result.data.total/pageSize))
 			})
 			.catch((error) => {
 			  error = new Error();
 			})
-
-		// const db = getFirestore()
-		// db.collection('Items').where('categoryId', '==', category).get()
-		// .then(respuesta => setProducts(respuesta.docs.map(item=>({id: item.id, ...item.data()}))))
-	}, [category])
+	}, [category, page])
 
 	return (
 		<>
 		<Typography variant='h5'>{category}</Typography>
 			<ItemList products={products} />
+			<Box sx={{my:2}}>
+				<Stack spacing={2}>
+					{/* <Typography>Page: {page}</Typography> */}
+					<Pagination count={pagesCant} page={page} onChange={handleChange} />
+				</Stack>
+      			</Box>
 		</>
 	)
 }

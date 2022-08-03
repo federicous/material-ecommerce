@@ -88,10 +88,6 @@ export default function Busqueda() {
 	// }
 
 	async function handleSubmit(event) {
-		// event.preventDefault();
-		// await submitForm(event.target);
-		// navigate(`/search/${event.target.value}`, { replace: true });
-
 		setPatron(event.target.value)
 	      }
 	useEffect(() => {
@@ -104,23 +100,16 @@ export default function Busqueda() {
 	
 
   return (
-<Search>
-<SearchIconWrapper>
-  <SearchIcon />
-</SearchIconWrapper>
-<StyledInputBase
-  placeholder="Search…"
-  inputProps={{ 'aria-label': 'search' }}
-//   onChange={(e) => handleBusqueda(e)}
-//   onChange={handleBusqueda}
-//   onSubmit={handleBusqueda}
-	// onChange={(e)=>setPatron(e.target.value)}
-//   onKeyDown={handleBusqueda}
-//   onFocus={()=> console.log("enfocado")}
-// onFocus={()=> <Link to={`/search/`}></Link>}
-onChange={handleSubmit}
-/>
-</Search>
+	<Search>
+	<SearchIconWrapper>
+		<SearchIcon />
+	</SearchIconWrapper>
+	<StyledInputBase
+		placeholder="Search…"
+		inputProps={{ 'aria-label': 'search' }}
+		onChange={handleSubmit}
+	/>
+	</Search>
   )
 
   }

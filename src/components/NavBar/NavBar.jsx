@@ -12,6 +12,7 @@ import Category from '../Category/Category'
 import Category2 from '../Category/Category2'
 import { grey } from '@material-ui/core/colors';
 import Busqueda from '../Busqueda/Busqueda'
+import ModeTheme from '../ModeTheme/ModeTheme';
 // import Category3 from '../Category/Category3'
 
 export default function NavBar() {
@@ -34,48 +35,25 @@ return (
       <Toolbar className="toolBar">
 
         <div className="logo">
-        <Link style={{textDecoration: "none", color: "inherit", display: "flex", flexDirection: "row", alignItems: "center",}}
-            to={`/home`}
-          >
-            <BrandIcon />
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, marginRight: "2rem" }}>
-              Tecnalink
-            </Typography>
-        </Link>
+          <Link style={{textDecoration: "none", color: "inherit", display: "flex", flexDirection: "row", alignItems: "center",}}
+              to={`/home`}
+            >
+              <BrandIcon />
+              {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1, marginRight: "2rem" }}>
+                Tecnalink
+              </Typography> */}
+          </Link>
 
-        {isMobile ? (
-          <></>
-        ):(
-          <>
-          {/* {navList.map((item) => (
-            <Link key={item.id} to={`/category/${item.value}`} style={{ textDecoration:"none", color:"inherit"}}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                <Button sx={{ color: "white" }} variant="text">
-                  {item.name}
-                </Button>
-              </Typography>
-            </Link>
-          ))} */}
-
-          {/* <Category/> */}
-          <Category2/>
-          {/* <Category3/> */}
-
-          <Busqueda/>
-
-          {/* {navList.map((item) => (
-            <Link key={item} to={`/category/${item}`} style={{ textDecoration:"none", color:"inherit"}}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                <Button sx={{ color: "white" }} variant="text">
-                  {item}
-                </Button>
-              </Typography>
-            </Link>
-          ))} */}
-
-                <Logout />
-          </>
-        )}
+          {isMobile ? (
+            <></>
+          ):(
+            <>
+            <Category2/>
+            <Busqueda/>
+            <ModeTheme/>
+            <Logout />
+            </>
+          )}
 
         </div>
         <div>

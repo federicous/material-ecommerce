@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Box, Pagination, Stack  } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { navList } from "../utils/navList";
 import {
@@ -11,60 +11,54 @@ import {
 } from "../utils/homePageUtils";
 // import { getFirestore } from "../../services/getFirebase";
 import ItemList from "../ItemList/ItemList";
+import ItemListContainer from "../ItemListContainer/ItemListContainer";
 import axios from "axios";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 export default function HomePage2() {
   const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+	let pageSize = 10;
+	const [pagesCant, setPagesCant] = useState(10)
 
-  // useEffect(() => {
-  //   let someProducts = [];
-  //   const db = getFirestore();
-  //   db.collection("Items")
-  //     .get()
-  //     .then((respuesta) => {
-  //       let allProducts = respuesta.docs.map((item) => ({
-  //         id: item.id,
-  //         ...item.data(),
-  //       }));
-  //       someProducts = allProducts.slice(4, 12);
-  //       setProducts(someProducts);
-  //     });
-  // }, []);
+	const handleChange = (event, value) => {
+		setPage(value);
+	      };
+  
+  const token = cookies.get("token");
 
-  useEffect(() => {
-    // get token generated on login
-    const token = cookies.get("token");
-    let someProducts = [];
-    // set configurations
-    const configuration = {
-      method: "get",
-      url: "/api/product",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    // make the API call
-    axios(configuration)
-      .then((result) => {
-        setProducts(result.data);
-      })
-      .catch((error) => {
-        error = new Error();
-      });
-  }, []);
+    useEffect(() => {
+      const configuration = {
+        method: "get",
+        url: `/api/products?page=${page}&pageSize=${pageSize}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+        // make the API call
+        axios(configuration)
+        .then((result) => {
+          setProducts([...result.data.allProducts])
+          setPagesCant(Math.ceil(result.data.total/pageSize))
+        })
+        .catch((error) => {
+          error = new Error();
+        })
+    }, [page])
 
   return (
     <>
-    <Typography variant={"h5"}>Categories</Typography>
-    <Box
+    {/* <Typography variant={"h5"}>Categories</Typography> */}
+    <Box component="span" 
       sx={{
         display: "flex",
-        flexWrap: "wrap",
+        flexWrap: "wrap", 
+        justifyContent: "center",
+        alignItems: "center",
         minWidth: 300,
         width: "100%",
+        flexDirection: "column",
         marginTop: "2rem",
       }}
     >
@@ -129,7 +123,7 @@ export default function HomePage2() {
           </Link>
         </ImageButton>
       ))} */}
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -139,11 +133,18 @@ export default function HomePage2() {
           marginTop: "2rem",
         }}
       >
-        <Typography variant={"h5"}>Products</Typography>
-      </Box>
-      <Box>
+      </Box> */}
+      {/* <Box  sx={{ display: "flex", justifyContent: "center", flexDirection:"column"}}> */}
+        <Typography variant={"h5"}>Productos</Typography>
         <ItemList products={products} />
-      </Box>
+        <Box sx={{my:2}}>
+          <Stack spacing={2}>
+            {/* <Typography>Page: {page}</Typography> */}
+            <Pagination count={pagesCant} page={page} onChange={handleChange} />
+          </Stack>
+   			</Box>
+        {/* <ItemListContainer products={products} /> */}
+      {/* </Box> */}
     </Box>
     </>
   );

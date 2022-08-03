@@ -12,6 +12,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { navList } from "../utils/navList";
 import Logout from "../Logout/Logout";
+import ModeTheme from "../ModeTheme/ModeTheme";
 
 export default function TemporaryDrawer() {
   const [state, setState] = React.useState({
@@ -45,7 +46,7 @@ export default function TemporaryDrawer() {
         {navList.map((item) => (
           <ListItem key={item}>
             <Link to={`/category/${item}`} style={{ textDecoration:"none", color:"inherit"}}>
-                <Button sx={{ color: "black" }} variant="text">
+                <Button sx={{ color: "text.primary" }} variant="text">
                 <Typography variant="compliant" component="div" sx={{ flexGrow: 1,textAlign:"left" }}>
                   {item}
                   </Typography>
@@ -53,8 +54,8 @@ export default function TemporaryDrawer() {
             </Link>
           </ListItem>
         ))}
-
-
+        <Divider />
+        <ModeTheme/>
         <Divider />
         <ListItem>
           <Logout />
