@@ -29,6 +29,7 @@ export default function HomePage2() {
   const token = cookies.get("token");
 
     useEffect(() => {
+      let cancel = false;
       const configuration = {
         method: "get",
         url: `/api/products?page=${page}&pageSize=${pageSize}`,
@@ -39,12 +40,16 @@ export default function HomePage2() {
         // make the API call
         axios(configuration)
         .then((result) => {
+          if (cancel) return;
           setProducts([...result.data.allProducts])
           setPagesCant(Math.ceil(result.data.total/pageSize))
         })
         .catch((error) => {
           error = new Error();
         })
+        return () => { 
+          cancel = true;
+        }
     }, [page])
 
   return (

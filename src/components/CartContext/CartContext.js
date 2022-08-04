@@ -10,12 +10,7 @@ const CartContextProvider = ({children}) => {
 	const [modeTheme, setModeTheme] = useState("dark")
 	const [cart, setCart] = useState([])
 	const [total, setTotal] = useState(0)
-
-	// function changeMode(mode) {
-	// 	setModeTheme(mode)
-	// 	console.log("en contexto");
-	// 	console.log(mode);
-	// }
+	const [user, setUser] = useState("");
 
 	const token = cookies.get("token");
 
@@ -108,7 +103,9 @@ const CartContextProvider = ({children}) => {
 			cleanCart,
 			total,
 			setModeTheme,
-			modeTheme,			
+			modeTheme,	
+			setUser,
+			user,		
 		}}>
 			{children}
 		</CartContext.Provider>

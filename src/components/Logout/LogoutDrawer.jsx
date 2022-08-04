@@ -1,5 +1,5 @@
-// import React, { useEffect, useState } from "react";
-import { Box, Button } from "@material-ui/core";
+import { MenuItem, ListItemIcon, ListItem } from "@material-ui/core";
+import { ExitToApp } from '@material-ui/icons';
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -16,11 +16,12 @@ export default function AuthComponent() {
 
   return (
     <>
-      <Box>
-        <Button type="submit" color="error" variant="contained" onClick={() => logout()}>
-          Logout
-        </Button>
-      </Box>
+            <ListItem onClick={() => logout()}>
+              <ListItemIcon>
+                <ExitToApp fontSize="small" />
+              </ListItemIcon>
+            Logout
+            </ListItem>
     </>
   );
 }

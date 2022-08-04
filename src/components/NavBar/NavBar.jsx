@@ -13,13 +13,19 @@ import Category2 from '../Category/Category2'
 import { grey } from '@material-ui/core/colors';
 import Busqueda from '../Busqueda/Busqueda'
 import ModeTheme from '../ModeTheme/ModeTheme';
-// import Category3 from '../Category/Category3'
+import Account from '../Account/Account'
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
+const usuarioCookie = cookies.get("user");  
+
 
 export default function NavBar() {
 	const cartContext = useContext(CartContext);
-	const {cart}= cartContext;
+	const {cart, user}= cartContext;
   const [quantity, setQuantity] = useState(0)
   const isMobile = useMediaQuery('(max-width:900px)');
+  const [usuario, setUsuario] = useState("")
 
   useEffect(() => {
     let total=0;
@@ -28,6 +34,12 @@ export default function NavBar() {
     }
     setQuantity(total)
   }, [cart])
+
+  useEffect(() => {
+    setUsuario(usuarioCookie)
+    console.log("navbar log useeffect");
+  }, [user,cart])
+  
 
 return (
   <Box sx={{ flexGrow: 1 }}>
@@ -48,10 +60,11 @@ return (
             <></>
           ):(
             <>
-            <Category2/>
+            {usuario ? <Category2/> : <></>}
+            {/* <Category2/> */}
             <Busqueda/>
-            <ModeTheme/>
-            <Logout />
+            {/* <ModeTheme/>
+            <Logout /> */}
             </>
           )}
 
@@ -59,20 +72,37 @@ return (
         <div>
           {isMobile ? (
             <Box style={{textDecoration: "none", color: "inherit", display: "flex", flexDirection: "row", alignItems: "center",}}  >
-        <Link to={`/cart`} style={{ textDecoration: "none", color: "inherit" }}>
-        <Badge badgeContent={quantity} color="error">
-          <ShoppingCart />
-        </Badge>
-      </Link>
-      <TemporaryDrawer/>
-      </Box>
-          ):(
-            <Link to={`/cart`} style={{ textDecoration: "none", color: "inherit" }}>
-            <Badge badgeContent={quantity} color="error">
-              <ShoppingCart />
-            </Badge>
-          </Link>
-          )}
+              <Link to={`/cart`} style={{ textDecoration: "none", color: "inherit" }}>
+                <Badge badgeContent={quantity} color="error">
+                  <ShoppingCart />
+                </Badge>
+              </Link>
+              <TemporaryDrawer/>
+            </Box>
+                ):(
+                  <>
+                  {usuario ? 
+                                     <Box style={{textDecoration: "none", color: "inherit", display: "flex", flexDirection: "row", alignItems: "center",}}>
+                                     <Link to={`/cart`} style={{ textDecoration: "none", color: "inherit" }}>
+                                       <Badge badgeContent={quantity} color="error">
+                                         <ShoppingCart />
+                                       </Badge>
+                                     </Link>
+                                     <Account/>
+                                   </Box>
+                  
+                  : <></>}
+                    {/* <Box style={{textDecoration: "none", color: "inherit", display: "flex", flexDirection: "row", alignItems: "center",}}>
+                      <Link to={`/cart`} style={{ textDecoration: "none", color: "inherit" }}>
+                        <Badge badgeContent={quantity} color="error">
+                          <ShoppingCart />
+                        </Badge>
+                      </Link>
+                      <Account/>
+                    </Box> */}
+
+                  </>
+                )}
         </div>
       </Toolbar>
     </AppBar>

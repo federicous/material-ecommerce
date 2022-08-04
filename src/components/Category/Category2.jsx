@@ -1,12 +1,21 @@
 import React from "react";
 import { InputLabel, MenuItem, FormControl, Select, Typography, Button, Box, Menu, Grow, Paper,Popper,MenuList,  Stack, ClickAwayListener  } from "@material-ui/core";
-import { navList } from '../utils/navList';
+// import { navList } from '../utils/navList';
 import { Link } from 'react-router-dom';
 import { KeyboardArrowDown } from '@material-ui/icons'
+import axios from "axios";
+import { CartContext } from '../CartContext/CartContext';
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
+const token = cookies.get("token");  
 
 export default function MenuListComposition() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const [navList, setNavList] = React.useState([])
+  const cartContext = React.useContext(CartContext);
+	const {user}= cartContext;
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -38,6 +47,30 @@ export default function MenuListComposition() {
 
     prevOpen.current = open;
   }, [open]);
+
+  React.useEffect(() => {
+    if (cookies.get("user")) {
+      console.log("user dio true");
+      const configuration = {
+        method: "get",
+        url: `/api/categorias/label`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+            };
+  
+            // make the API call
+            axios(configuration)
+        .then((result) => {
+          console.log(result.data);
+          setNavList([...result.data])
+        })
+        .catch((error) => {
+          error = new Error();
+        })
+    }
+
+  }, [user]);
 
   return (
     <Stack direction="row" spacing={2}>

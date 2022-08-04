@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 // import { Form } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
@@ -9,35 +9,25 @@ import {
   FormControl,
   Alert,
   Stack,
-  // createTheme,
-  // ThemeProvider,
-  // CssBaseline,
 } from "@material-ui/core";
 import axios from "axios";
+import { CartContext } from '../CartContext/CartContext';
 import Cookies from "universal-cookie";
 import HomePage2 from "../HomePage2/HomePage2";
+
 const cookies = new Cookies();
-
-// Definición del theme
-// const theme = createTheme({
-//   spacing: 4,
-//   palette: {
-//     mode: "light",
-//   },
-// });
-
-// theme.spacing(4); // `${8 * 2}px` = '16px'
 
 export default function Login() {
   // initial state
+	const cartContext = useContext(CartContext);
+	const {setUser}= cartContext;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
   
-  const location = useLocation();
-  const navigate = useNavigate();
   const token = cookies.get("token");
-
+  let navigate = useNavigate();
 
   const handleSubmit = (e) => {
     // prevent the form from refreshing the whole page
@@ -57,7 +47,9 @@ export default function Login() {
     axios(configuration)
       .then((result) => {
         setLogin(true);
-        window.location.href = "home";
+        setUser(cookies.get("user"));
+        // navigate(`/`, { replace: true });
+        window.location.href = "/";
       })
       .catch((error) => {
         error = new Error();
