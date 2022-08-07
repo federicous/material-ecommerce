@@ -74,11 +74,11 @@ const ItemDetailContainer = ({initial}) => {
         >
           {!loading && products.length ? (
             products.map((item) => (
-              <Grid item key={item._id} xs={12} sm={4} md={3}>
+              <Grid item key={item._id ? item._id : item.id} xs={12} sm={4} md={3}>
                 <Box sx={{ width:"fit-content" }}>
                 <ItemDetail
                   product={item}
-                  sku={item._id}
+                  sku={item._id ? item._id : item.id}
                   initial={item.stock ? initial : item.stock}
                   name={`${item.name}`}
                   model={item.label}

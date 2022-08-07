@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ListItemIcon, MenuItem } from '@material-ui/core'
+import { ListItemIcon, MenuItem, ListItem} from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles';
 import { CartContext } from '../CartContext/CartContext';
 import { Brightness4, Brightness7 } from '@material-ui/icons';
@@ -21,12 +21,12 @@ export default function ModeTheme() {
 
   return (
 	<>
-	<MenuItem onClick={colorMode.toggleColorMode} >
+	<ListItem onClick={colorMode.toggleColorMode} >
 		<ListItemIcon>		
 			{theme.palette.mode === 'dark' ? <Brightness7 fontSize="small"/> : <Brightness4 fontSize="small"/>}
 		</ListItemIcon>		
 			{theme.palette.mode} mode	
-	</MenuItem>
+	</ListItem>
 	</>
       );
 }

@@ -35,20 +35,39 @@ const CartContextProvider = ({children}) => {
 	}
 	
 	function addToCart(productAdd, counter) {	
-		if (cart.some(product=>product._id===productAdd._id)) {
-			let productIndex=cart.findIndex(product=>product._id===productAdd._id)
-			if ((cart[productIndex].qty+counter)<=cart[productIndex].stock) {
-				cart[productIndex].qty+=counter
-				apiCartUpdate([...cart])
-				setCart([...cart])
-			}else{
-				alert("out of stock")
+
+		if (productAdd._id) { // Verifico si es mongo o si es sql
+			if (cart.some(product=>product._id===productAdd._id)) {
+				let productIndex=cart.findIndex(product=>product._id===productAdd._id)
+				if ((cart[productIndex].qty+counter)<=cart[productIndex].stock) {
+					cart[productIndex].qty+=counter
+					apiCartUpdate([...cart])
+					setCart([...cart])
+				}else{
+					alert("out of stock")
+				}
+			
+			} else {
+				productAdd.qty=counter
+				apiCartUpdate([...cart,productAdd])
+				setCart([...cart, productAdd])
 			}
-		
 		} else {
-			productAdd.qty=counter
-			apiCartUpdate([...cart,productAdd])
-			setCart([...cart, productAdd])
+			if (cart.some(product=>product.id===productAdd.id)) {
+				let productIndex=cart.findIndex(product=>product.id===productAdd.id)
+				if ((cart[productIndex].qty+counter)<=cart[productIndex].stock) {
+					cart[productIndex].qty+=counter
+					apiCartUpdate([...cart])
+					setCart([...cart])
+				}else{
+					alert("out of stock")
+				}
+			
+			} else {
+				productAdd.qty=counter
+				apiCartUpdate([...cart,productAdd])
+				setCart([...cart, productAdd])
+			}
 		}
 	}
 	

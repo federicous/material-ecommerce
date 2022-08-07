@@ -57,7 +57,7 @@ const CartTable = ({cart, removeFromCart, total, }) => {
         </TableHead>
         <TableBody>
           {cart.map((row) => (
-            <TableRow key={row._id}>
+            <TableRow key={row._id ? row._id : row.id}>
               <TableCell align="right" sx={{pr:"0px"}}
                 // sx={{
                 //   fontSize: 16,
@@ -71,7 +71,7 @@ const CartTable = ({cart, removeFromCart, total, }) => {
                 //   alignItems: "center",
                 // }}
               >
-                 <DomLink to={`/detail/${row._id}`} style={{textDecoration: "none"}}>
+                 <DomLink to={`/detail/${row._id ? row._id : row.id}`} style={{textDecoration: "none"}}>
                 <Box
                   component="span"
                   sx={{

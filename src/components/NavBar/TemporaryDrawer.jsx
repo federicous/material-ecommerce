@@ -6,6 +6,7 @@ import {
   ListItem,
   ListItemIcon,
   Typography,
+  SwipeableDrawer,
 } from "@material-ui/core";
 import { Menu, ExitToApp} from "@material-ui/icons";
 import { Box } from "@material-ui/system";
@@ -13,8 +14,8 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 // import { navList } from "../utils/navList";
 import LogoutDrawer from "../Logout/LogoutDrawer";
-import ModeTheme from "../ModeTheme/ModeTheme";
-import Account from '../Account/Account'
+import ModeTheme2 from "../ModeTheme/ModeTheme2";
+import AccountDrawer from '../Account/AccountDrawer'
 import axios from "axios";
 import { CartContext } from '../CartContext/CartContext';
 import Cookies from "universal-cookie";
@@ -62,6 +63,7 @@ export default function TemporaryDrawer() {
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
+      event &&
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
     ) {
@@ -79,10 +81,10 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-      <ListItem>
-      <Account/>
-      </ListItem>
-        {navList.map((item) => (
+        <ListItem>
+        <AccountDrawer/>
+        </ListItem>
+          {navList.map((item) => (
           // <ListItem key={item}>
           //   <Link to={`/category/${item}`} style={{ textDecoration:"none", color:"inherit"}}>
           //       <Button sx={{ color: "text.primary" }} variant="text">
@@ -93,29 +95,15 @@ export default function TemporaryDrawer() {
           //   </Link>
 
             <ListItem key={item} sx={{color:'text.primary'}}
-            
             component={Link}   to={`/category/${item}`} style={{ textDecoration:"none"}}
             >
-            {/* <Link to={`/category/${item}`} style={{ textDecoration:"none", color:"inherit"}}> */}
-                {/* <Button sx={{ color: "text.primary" }} variant="text"> */}
-                {/* <Typography variant="compliant" component="div" sx={{ flexGrow: 1,textAlign:"left" }}> */}
-                  {item}
-                  {/* </Typography> */}
-                {/* </Button> */}
-            {/* </Link> */}
-
-
-
-
-          </ListItem>
-        ))}
+              {item}
+            </ListItem>
+          ))}
         <Divider />
-        <ModeTheme/>
+        <ModeTheme2/>
         <Divider />
-
-
-<LogoutDrawer/>
-
+        <LogoutDrawer/>
       </List>
     </Box>
   );
@@ -130,13 +118,14 @@ export default function TemporaryDrawer() {
         >
           <Menu fontSize="large" />
         </Button>
-        <Drawer
+        <SwipeableDrawer
           anchor={anchor}
           open={state[anchor]}
           onClose={toggleDrawer(anchor, false)}
+          onOpen={toggleDrawer(anchor, true)}
         >
           {list(anchor)}
-        </Drawer>
+        </SwipeableDrawer>
       </React.Fragment>
     </div>
   );
