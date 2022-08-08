@@ -93,6 +93,7 @@ const CartContextProvider = ({children}) => {
 	}, [cart])
 
 	useEffect(() => {
+		let cancel = false;
 		const configuration = {
 			method: "get",
 			url: `/api/cart`,
@@ -104,12 +105,15 @@ const CartContextProvider = ({children}) => {
 		      // make the API call
 		      axios(configuration)
 			.then((result) => {
+				if (cancel) return;
 				setCart([...result.data])
 			})
 			.catch((error) => {
 			  error = new Error();
 			})
-	
+			return () => { 
+				cancel = true;
+			      }
 	}, [])
 	
 

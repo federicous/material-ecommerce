@@ -1,9 +1,6 @@
 import React, {useContext, useState, useEffect } from 'react'
 import {Box, Modal, Typography, useMediaQuery, Button  } from '@material-ui/core';
 import { CartContext } from '../CartContext/CartContext';
-import { getFirestore } from '../../services/getFirebase';
-import firebase from 'firebase/app'
-import 'firebase/firestore'
 import CartTable from '../CartTable.jsx/CartTable';
 import Form2 from '../Form/Form2';
 import { Link } from 'react-router-dom';
@@ -69,10 +66,6 @@ export default function Cart() {
       // .finally(()=>{setLoading(false)})
   }
   
-  // // La funcion ordenGenerate guarda en Firebase los datos de los productos comprados y del cliente, también actualiza el stock
-  //   let order = {};
-
-    
   return (
     <>
     <Typography variant={"h5"}>Cart</Typography>

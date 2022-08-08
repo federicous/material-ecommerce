@@ -2,7 +2,6 @@ import React from 'react'
 import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia, Link, Typography, Button } from '@material-ui/core';
 import { Link as DomLink } from 'react-router-dom';
 import { Delete } from '@material-ui/icons';
-import 'firebase/firestore';
 import './CartTable.css';
 import axios from "axios";
 import Cookies from "universal-cookie";
@@ -16,6 +15,7 @@ function ccyFormat(num) {
 const token = cookies.get("token");
 
 let handleOrden = () => {
+  let cancel = false;
   const configuration = {
     method: "post",
     url: `/api/order`,
@@ -26,6 +26,7 @@ let handleOrden = () => {
         // make the API call
         axios(configuration)
     .then((result) => {
+      if (cancel) return;
       console.log(result.data);
       // setProducts([...result.data.allProducts])
       // setPagesCant(Math.ceil(result.data.total/pageSize))
@@ -33,6 +34,9 @@ let handleOrden = () => {
     .catch((error) => {
       error = new Error();
     })
+    return () => { 
+      cancel = true;
+    }
 }
 
 const CartTable = ({cart, removeFromCart, total, }) => {

@@ -49,6 +49,7 @@ export default function MenuListComposition() {
   }, [open]);
 
   React.useEffect(() => {
+    let cancel = false;
     if (cookies.get("user")) {
       console.log("user dio true");
       const configuration = {
@@ -62,12 +63,16 @@ export default function MenuListComposition() {
             // make the API call
             axios(configuration)
         .then((result) => {
+          if (cancel) return;
           console.log(result.data);
           setNavList([...result.data])
         })
         .catch((error) => {
           error = new Error();
         })
+        return () => { 
+          cancel = true;
+        }
     }
 
   }, [user]);

@@ -23,6 +23,7 @@ const ItemListContainer = () => {
 	const token = cookies.get("token");
 	
 	useEffect(() => {
+		let cancel = false;
 		const configuration = {
 			method: "get",
 			url: `/api/products/category/${category}?page=${page}&pageSize=${pageSize}`,
@@ -33,12 +34,16 @@ const ItemListContainer = () => {
 		      // make the API call
 		      axios(configuration)
 			.then((result) => {
+				if (cancel) return;
 				setProducts([...result.data.allProducts])
 				setPagesCant(Math.ceil(result.data.total/pageSize))
 			})
 			.catch((error) => {
 			  error = new Error();
 			})
+			return () => { 
+				cancel = true;
+			      }
 	}, [category, page])
 
 	return (

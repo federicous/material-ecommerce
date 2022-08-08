@@ -1,17 +1,7 @@
 import { useEffect, useState } from "react";
 import { Typography, Box, Pagination, Stack  } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { navList } from "../utils/navList";
-import {
-  ImageButton,
-  ImageSrc,
-  Image,
-  ImageBackdrop,
-  ImageMarked,
-} from "../utils/homePageUtils";
 // import { getFirestore } from "../../services/getFirebase";
 import ItemList from "../ItemList/ItemList";
-import ItemListContainer from "../ItemListContainer/ItemListContainer";
 import axios from "axios";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();

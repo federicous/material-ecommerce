@@ -29,8 +29,8 @@ export default function TemporaryDrawer() {
 	const {user}= cartContext;
 
   React.useEffect(() => {
+    let cancel = false;
     if (cookies.get("user")) {
-      console.log("user dio true");
       const configuration = {
         method: "get",
         url: `/api/categorias/label`,
@@ -42,12 +42,15 @@ export default function TemporaryDrawer() {
             // make the API call
             axios(configuration)
         .then((result) => {
-          console.log(result.data);
+          if (cancel) return;
           setNavList([...result.data])
         })
         .catch((error) => {
           error = new Error();
         })
+        return () => { 
+          cancel = true;
+        }
     }
 
   }, [user]);
@@ -84,6 +87,12 @@ export default function TemporaryDrawer() {
         <ListItem>
         <AccountDrawer/>
         </ListItem>
+        <ListItem>
+          <Link to={`/searchDrawer/`} style={{ textDecoration:"none"}}>
+            Busqueda
+          </Link>
+        </ListItem>
+
           {navList.map((item) => (
           // <ListItem key={item}>
           //   <Link to={`/category/${item}`} style={{ textDecoration:"none", color:"inherit"}}>

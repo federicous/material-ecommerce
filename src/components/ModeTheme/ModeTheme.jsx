@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { AppBar, Box, Toolbar, Typography,  Badge, Button, useMediaQuery,IconButton } from '@material-ui/core'
+import { Box, IconButton } from '@material-ui/core'
 // import IconButton from '@mui/material/IconButton';
-import { useTheme, createTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import { CartContext } from '../CartContext/CartContext';
 import { Brightness4, Brightness7 } from '@material-ui/icons';
 

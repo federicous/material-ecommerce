@@ -4,13 +4,16 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router';
 // import { getFirestore } from '../../services/getFirebase';
 import { Typography, Box, Pagination, Stack } from '@material-ui/core'
+import Busqueda from '../Busqueda/Busqueda'
 import axios from "axios";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 const ItemListContainer = () => {
 
-	const {patron} = useParams()
+	// const {patron} = useParams()
+	let patron = "wemb"
+
 	const [products, setProducts] = useState([])
 	const [page, setPage] = React.useState(1);
 	let pageSize = 10;
@@ -23,6 +26,7 @@ const ItemListContainer = () => {
 	const token = cookies.get("token");
 
 	useEffect(() => {
+		console.log("entro al search drawer");
 		let cancel = false;
 		const configuration = {
 			method: "get",
@@ -46,30 +50,10 @@ const ItemListContainer = () => {
 			      }
 	}, [patron, page])
 	
-	// useEffect(() => {
-	// 	const configuration = {
-	// 		method: "get",
-	// 		url: `/api/search/${patron}`,
-	// 		headers: {
-	// 		  Authorization: `Bearer ${token}`,
-	// 		},
-	// 	      };
-		    
-	// 	      // make the API call
-	// 	      axios(configuration)
-	// 		.then((result) => {
-	// 			console.log(result.data);
-	// 			setProducts([...result.data])
-	// 		})
-	// 		.catch((error) => {
-	// 		  error = new Error();
-	// 		})
-
-	// }, [patron])
-
 	return (
 		<>
 		<Typography variant='h5'>Busqueda: "{patron}"</Typography>
+		<Busqueda/>
 			<ItemList products={products} />
 			<Box sx={{my:2}}>
 				<Stack spacing={2}>

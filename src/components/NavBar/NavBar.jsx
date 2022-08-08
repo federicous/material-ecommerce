@@ -1,18 +1,13 @@
 import React, {useContext, useState, useEffect} from 'react'
-import { AppBar, Box, Toolbar, Typography,  Badge, Button, useMediaQuery, } from '@material-ui/core'
+import { AppBar, Box, Toolbar, Badge, useMediaQuery, } from '@material-ui/core'
 import { ShoppingCart } from '@material-ui/icons';
 import BrandIcon from '../BrandIcon/BrandIcon';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../CartContext/CartContext';
-import { navList } from '../utils/navList';
 import TemporaryDrawer from './TemporaryDrawer';
-import Logout from '../Logout/Logout';
-import Category from '../Category/Category'
 import Category2 from '../Category/Category2'
-import { grey } from '@material-ui/core/colors';
 import Busqueda from '../Busqueda/Busqueda'
-import ModeTheme from '../ModeTheme/ModeTheme';
 import Account from '../Account/Account'
 import Cookies from "universal-cookie";
 
@@ -37,7 +32,6 @@ export default function NavBar() {
 
   useEffect(() => {
     setUsuario(usuarioCookie)
-    console.log("navbar log useeffect");
   }, [user,cart])
   
 
