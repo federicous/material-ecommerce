@@ -21,12 +21,12 @@ export default function ModeTheme() {
 
   return (
 	<>
-	<MenuItem onClick={colorMode.toggleColorMode} >
-		<ListItemIcon>		
-			{theme.palette.mode === 'dark' ? <Brightness7 sx={{mr:2}} fontSize="small"/> : <Brightness4 sx={{mr:2}} fontSize="small"/>}
+	<ListItem onClick={colorMode.toggleColorMode} >
+		<ListItemIcon sx={{mr:1}}>		
+			{theme.palette.mode === 'dark' ? <Brightness7 sx={{mr:1}} fontSize="small"/> : <Brightness4 sx={{mr:1}} fontSize="small"/>}
 			{theme.palette.mode} mode
 		</ListItemIcon>		
-	</MenuItem>
+	</ListItem>
 	</>
       );
 }

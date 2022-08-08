@@ -13,7 +13,7 @@ const ItemListContainer = () => {
 	const {category} = useParams()
 	const [products, setProducts] = useState([])
 	const [page, setPage] = React.useState(1);
-	let pageSize = 10;
+	let pageSize = 12;
 	const [pagesCant, setPagesCant] = useState(10)
 
 	const handleChange = (event, value) => {

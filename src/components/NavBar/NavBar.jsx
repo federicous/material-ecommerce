@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react'
-import { AppBar, Box, Toolbar, Badge, useMediaQuery, } from '@material-ui/core'
+import { AppBar, Box, Toolbar, Badge, useMediaQuery, IconButton } from '@material-ui/core'
 import { ShoppingCart } from '@material-ui/icons';
 import BrandIcon from '../BrandIcon/BrandIcon';
 import './NavBar.css';
@@ -78,9 +78,11 @@ return (
                   {usuario ? 
                                      <Box style={{textDecoration: "none", color: "inherit", display: "flex", flexDirection: "row", alignItems: "center",}}>
                                      <Link to={`/cart`} style={{ textDecoration: "none", color: "inherit" }}>
-                                       <Badge badgeContent={quantity} color="error">
-                                         <ShoppingCart />
-                                       </Badge>
+                                        <IconButton>
+                                          <Badge badgeContent={quantity} color="error">
+                                            <ShoppingCart />
+                                          </Badge>
+                                        </IconButton>
                                      </Link>
                                      <Account/>
                                    </Box>

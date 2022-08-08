@@ -18,9 +18,8 @@ export default function AuthComponent() {
     <>
             <ListItem onClick={() => logout()}>
               <ListItemIcon>
-                <ExitToApp fontSize="small" />
+                <ExitToApp sx={{mr:1}} fontSize="small" />Logout
               </ListItemIcon>
-            Logout
             </ListItem>
     </>
   );

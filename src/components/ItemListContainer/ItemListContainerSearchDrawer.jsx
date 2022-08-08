@@ -4,19 +4,22 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router';
 // import { getFirestore } from '../../services/getFirebase';
 import { Typography, Box, Pagination, Stack } from '@material-ui/core'
-import Busqueda from '../Busqueda/Busqueda'
+import BusquedaDrawer from '../Busqueda/BusquedaDrawer'
+import BusquedaDrawerWhite from '../Busqueda/BusquedaDrawerWhite'
 import axios from "axios";
+import { useTheme } from '@material-ui/core/styles';
 import Cookies from "universal-cookie";
+
 const cookies = new Cookies();
 
 const ItemListContainer = () => {
-
-	// const {patron} = useParams()
-	let patron = "wemb"
+	const theme = useTheme();
+	const {patron} = useParams()
+	// let patron = "wemb"
 
 	const [products, setProducts] = useState([])
 	const [page, setPage] = React.useState(1);
-	let pageSize = 10;
+	let pageSize = 12;
 	const [pagesCant, setPagesCant] = useState(10)
 
 	const handleChange = (event, value) => {
@@ -52,8 +55,9 @@ const ItemListContainer = () => {
 	
 	return (
 		<>
-		<Typography variant='h5'>Busqueda: "{patron}"</Typography>
-		<Busqueda/>
+		{/* <Typography variant='h5'>Busqueda: "{patron}"</Typography> */}
+		{theme.palette.mode == "dark" ? <BusquedaDrawer/> : <BusquedaDrawerWhite/>
+		}
 			<ItemList products={products} />
 			<Box sx={{my:2}}>
 				<Stack spacing={2}>

@@ -8,13 +8,13 @@ import {
   Typography,
   SwipeableDrawer,
 } from "@material-ui/core";
-import { Menu, ExitToApp} from "@material-ui/icons";
+import { Menu, ExitToApp, Search } from "@material-ui/icons";
 import { Box } from "@material-ui/system";
 import * as React from "react";
 import { Link } from "react-router-dom";
 // import { navList } from "../utils/navList";
 import LogoutDrawer from "../Logout/LogoutDrawer";
-import ModeTheme2 from "../ModeTheme/ModeTheme2";
+import ModeThemeDrawer from "../ModeTheme/ModeThemeDrawer";
 import AccountDrawer from '../Account/AccountDrawer'
 import axios from "axios";
 import { CartContext } from '../CartContext/CartContext';
@@ -87,22 +87,14 @@ export default function TemporaryDrawer() {
         <ListItem>
         <AccountDrawer/>
         </ListItem>
+        <Link to={`/searchDrawer/`} style={{ textDecoration:"none"}}>
         <ListItem>
-          <Link to={`/searchDrawer/`} style={{ textDecoration:"none"}}>
-            Busqueda
-          </Link>
+            <ListItemIcon>
+            <Search sx={{mr:1}}/> Busqueda
+            </ListItemIcon>           
         </ListItem>
-
+        </Link>
           {navList.map((item) => (
-          // <ListItem key={item}>
-          //   <Link to={`/category/${item}`} style={{ textDecoration:"none", color:"inherit"}}>
-          //       <Button sx={{ color: "text.primary" }} variant="text">
-          //       <Typography variant="compliant" component="div" sx={{ flexGrow: 1,textAlign:"left" }}>
-          //         {item}
-          //         </Typography>
-          //       </Button>
-          //   </Link>
-
             <ListItem key={item} sx={{color:'text.primary'}}
             component={Link}   to={`/category/${item}`} style={{ textDecoration:"none"}}
             >
@@ -110,7 +102,7 @@ export default function TemporaryDrawer() {
             </ListItem>
           ))}
         <Divider />
-        <ModeTheme2/>
+        <ModeThemeDrawer/>
         <Divider />
         <LogoutDrawer/>
       </List>

@@ -6,14 +6,12 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom';
 
-const cookies = new Cookies();
-
 const Search = styled('div')(({ theme }) => ({
 	position: 'relative',
 	borderRadius: theme.shape.borderRadius,
-	backgroundColor: alpha(theme.palette.common.white, 0.15),
+	backgroundColor: alpha(theme.palette.common.black, 0.15),
 	'&:hover': {
-	  backgroundColor: alpha(theme.palette.common.white, 0.25),
+	  backgroundColor: alpha(theme.palette.common.black, 0.25),
 	},
 	marginRight: theme.spacing(2),
 	marginLeft: 0,
@@ -59,14 +57,15 @@ export default function Busqueda() {
 	      }
 	useEffect(() => {
 		if (patron) {
-			navigate(`/search/${patron}`, { replace: true });	
+			navigate(`/searchDrawer/${patron}`, { replace: true });	
 		} else {
-			navigate(`/`, { replace: true });
+			navigate(`/searchDrawer`, { replace: true });
 		}
 	}, [patron])
+	
 
   return (
-	<Search>
+	<Search sx={{mr:0, mt:1}}>
 	<SearchIconWrapper>
 		<SearchIcon />
 	</SearchIconWrapper>

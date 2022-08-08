@@ -74,6 +74,7 @@ function App() {
                 <Route exact path="/category/:category" element={<ItemListContainer />} />
                 <Route exact path="/search/:patron" element={<ItemListContainerSearch />} />
                 <Route exact path="/searchDrawer" element={<ItemListContainerSearchDrawer />} />
+                <Route exact path="/searchDrawer/:patron" element={<ItemListContainerSearchDrawer />} />
                 <Route exact path="/detail/:sku" element={< ItemDetailContainer
                     greeting="Lista de productos"
                     initial={1} />} />
