@@ -17,7 +17,7 @@ const CartContextProvider = ({children}) => {
 	function apiCartUpdate(newCart) {
 		const configuration = {
 			method: "post",
-			url: `http://localhost:8088/api/cart`,
+			url: `http://app.sitecnia.com:8088/api/cart`,
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},
@@ -96,7 +96,7 @@ const CartContextProvider = ({children}) => {
 		let cancel = false;
 		const configuration = {
 			method: "get",
-			url: `http://localhost:8088/api/cart`,
+			url: `http://app.sitecnia.com:8088/api/cart`,
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},

@@ -18,7 +18,7 @@ let handleOrden = () => {
   let cancel = false;
   const configuration = {
     method: "post",
-    url: `http://localhost:8088/api/order`,
+    url: `http://app.sitecnia.com:8088/api/order`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -95,7 +95,7 @@ const CartTable = ({cart, removeFromCart, total, }) => {
                   <CardMedia
                     component="img"
                     // image={row.image}
-                    image={`http://localhost:8088/images/${row.image}`}
+                    image={`http://app.sitecnia.com:8088/images/${row.image}`}
                     alt="notebook"
 
                     sx={{ height: {xs:60, sm:90}, marginBottom: "1rem" }}

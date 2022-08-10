@@ -20,7 +20,7 @@ const Item = ({initial, name, model, description, img, stock, price, product}) =
             alignItems: "center",
           }}
         >
-          <CardMedia component="img" image={`http://localhost:8088/images/${img ? img : "sin_imagen.jpg"}`} alt="sin imagen"/>
+          <CardMedia component="img" image={`http://app.sitecnia.com:8088/images/${img ? img : "sin_imagen.jpg"}`} alt="sin imagen"/>
         </Container>
         <CardContent sx={{ margin: "0" }}>
           <Typography gutterBottom variant="body" component="div">

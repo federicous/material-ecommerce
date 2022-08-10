@@ -23,7 +23,7 @@ const ItemDetailContainer = ({initial}) => {
     // set configurations
     const configuration = {
       method: "get",
-      url: `http://localhost:8088/api/product/${sku}`,
+      url: `http://app.sitecnia.com:8088/api/product/${sku}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

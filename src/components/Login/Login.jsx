@@ -36,7 +36,7 @@ export default function Login() {
     // set configurations
     const configuration = {
       method: "post",
-      url: "http://localhost:8088/login",
+      url: "http://app.sitecnia.com:8088/login",
       data: {
         email,
         password,

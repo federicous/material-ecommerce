@@ -26,7 +26,7 @@ const ItemListContainer = () => {
 		let cancel = false;
 		const configuration = {
 			method: "get",
-			url: `http://localhost:8088/api/search/${patron}?page=${page}&pageSize=${pageSize}`,
+			url: `http://app.sitecnia.com:8088/api/search/${patron}?page=${page}&pageSize=${pageSize}`,
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},

@@ -48,7 +48,7 @@ export default function Cart() {
     // set configurations
     const configuration = {
       method: "post",
-      url: `http://localhost:8088/api/order`,
+      url: `http://app.sitecnia.com:8088/api/order`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
