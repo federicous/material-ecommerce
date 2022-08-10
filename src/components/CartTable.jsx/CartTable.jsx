@@ -18,7 +18,7 @@ let handleOrden = () => {
   let cancel = false;
   const configuration = {
     method: "post",
-    url: `/api/order`,
+    url: `http://localhost:8088/api/order`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

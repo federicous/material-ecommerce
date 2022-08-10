@@ -47,7 +47,7 @@ export default function TemporaryDrawer() {
     if (cookies.get("user")) {
       const configuration = {
         method: "get",
-        url: `/api/categorias/label`,
+        url: `http://localhost:8088/api/categorias/label`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

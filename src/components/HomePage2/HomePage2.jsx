@@ -22,7 +22,7 @@ export default function HomePage2() {
       let cancel = false;
       const configuration = {
         method: "get",
-        url: `/api/products?page=${page}&pageSize=${pageSize}`,
+        url: `http://localhost:8088/api/products?page=${page}&pageSize=${pageSize}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

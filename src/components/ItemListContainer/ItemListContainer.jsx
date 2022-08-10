@@ -26,7 +26,7 @@ const ItemListContainer = () => {
 		let cancel = false;
 		const configuration = {
 			method: "get",
-			url: `/api/products/category/${category}?page=${page}&pageSize=${pageSize}`,
+			url: `http://localhost:8088/api/products/category/${category}?page=${page}&pageSize=${pageSize}`,
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},
