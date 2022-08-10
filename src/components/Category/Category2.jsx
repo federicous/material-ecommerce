@@ -91,7 +91,7 @@ export default function MenuListComposition() {
           endIcon={<KeyboardArrowDown />}
           sx={{color:"inherit"}}
         >
-          Categorias
+          BREMEN / WEMBLEY
         </Button>
 
         <Popper

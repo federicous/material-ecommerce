@@ -10,8 +10,8 @@ export default function AccountMenu() {
   return (
           <>
 
-              <ListItemIcon>
-                <Avatar sx={{ width: 34, height: 34 }} />
+              <ListItemIcon sx={{mr:1, minWidth: 28}}>
+                <Avatar sx={{ width: 28, height: 28, ml:0 }} />
               </ListItemIcon>
             {user}
 

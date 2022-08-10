@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { fontSize } from '@material-ui/system';
 import ItemCount2 from '../ItemCount/ItemCount2'
 
-const Item = ({product, name, description, img, stock, model,sku}) => {
+const Item = ({product, name, description, img, stock, model,sku, price}) => {
 	return (
     <>
       <Card
@@ -23,7 +23,7 @@ const Item = ({product, name, description, img, stock, model,sku}) => {
           }}
         >
           <Link to={`/detail/${sku}`}>
-            <CardMedia component="img" image={`http://localhost:3000/images/${img}`} alt="notebook" />
+            <CardMedia component="img" image={`http://localhost:3000/images/${img ? img : "sin_imagen.jpg"}`} alt="sin imagen" />
           </Link>
         </Container>
         <CardContent sx={{ margin: 0,p:{xs:1,md:2} }}>
@@ -37,6 +37,9 @@ const Item = ({product, name, description, img, stock, model,sku}) => {
             <Typography sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} variant="caption" color="text.secondary">
               Código: {description}
             </Typography>
+            <Typography sx={{ fontWeight: "bold", textDecoration: "none", color:"text.primary" }} variant="h6">
+            $ {price}
+          </Typography>
           </Link>
         </CardContent>
         <CardActions

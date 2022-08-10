@@ -59,6 +59,7 @@ export default function Cart() {
     axios(configuration)
       .then((result) => {
         // setProducts([result.data]);
+        console.log(result);
       })
       .catch((error) => {
         error = new Error();
@@ -68,7 +69,7 @@ export default function Cart() {
   
   return (
     <>
-    <Typography variant={"h5"}>Cart</Typography>
+    <Typography variant={"h5"}>Carrito</Typography>
       {total ? (
         <Box
         // sx={{fontSize: 20, display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap', width:"100%"}} >
@@ -96,11 +97,11 @@ export default function Cart() {
       ) : (
         <Box sx={{fontSize: 12, display: "flex", flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", margin: "50px",}} >
           <Typography sx={{fontSize: 20, display: "flex", flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", margin: "10px",}} >
-            Empty Cart !!!
+            Carrito vacío !!!
           </Typography>
           <Link to={`/`} style={{ textDecoration:"none", color:"inherit"}}>
 			    	<Button size="small" variant="contained" color="primary"  sx={{ fontSize: 12, width:"100%",  }}
-			    	>Return</Button>
+			    	>Volver</Button>
 			    </Link>	
             
         </Box>

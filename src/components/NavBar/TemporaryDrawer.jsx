@@ -4,11 +4,14 @@ import {
   Drawer,
   List,
   ListItem,
+  ListItemButton,
   ListItemIcon,
+  ListItemText,
+  Collapse,
   Typography,
   SwipeableDrawer,
 } from "@material-ui/core";
-import { Menu, ExitToApp, Search } from "@material-ui/icons";
+import { Menu, ExitToApp, Search, Inbox,ExpandLess, ExpandMore, StarBorder  } from "@material-ui/icons";
 import { Box } from "@material-ui/system";
 import * as React from "react";
 import { Link } from "react-router-dom";
@@ -23,10 +26,21 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const token = cookies.get("token");  
 
+function capitalizeFirstLetter(string) {
+  let cadena = string.toLowerCase()
+  return cadena.charAt(0).toUpperCase() + cadena.slice(1);
+}
+
 export default function TemporaryDrawer() {
   const [navList, setNavList] = React.useState([])
   const cartContext = React.useContext(CartContext);
 	const {user}= cartContext;
+
+  const [open, setOpen] = React.useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
 
   React.useEffect(() => {
     let cancel = false;
@@ -80,31 +94,69 @@ export default function TemporaryDrawer() {
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      // onClick={toggleDrawer(anchor, false)}
+      // onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <ListItem>
+        <ListItem
+          onClick={toggleDrawer(anchor, false)}
+          onKeyDown={toggleDrawer(anchor, false)}
+        >
         <AccountDrawer/>
         </ListItem>
+        <Divider />
         <Link to={`/searchDrawer/`} style={{ textDecoration:"none"}}>
-        <ListItem>
+        <ListItem
+          onClick={toggleDrawer(anchor, false)}
+          onKeyDown={toggleDrawer(anchor, false)}
+        >
             <ListItemIcon>
             <Search sx={{mr:1}}/> Busqueda
             </ListItemIcon>           
         </ListItem>
+        <Divider />
         </Link>
-          {navList.map((item) => (
+          {/* {navList.map((item) => (
             <ListItem key={item} sx={{color:'text.primary'}}
             component={Link}   to={`/category/${item}`} style={{ textDecoration:"none"}}
+            onClick={toggleDrawer(anchor, false)}
+            onKeyDown={toggleDrawer(anchor, false)}
             >
-              {item}
+              {capitalizeFirstLetter(item)}
             </ListItem>
           ))}
+        <Divider /> */}
+
+      <ListItem button onClick={handleClick}>
+        <ListItemText primary="BREMEN/WEMBLEY" />
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding
+          onClick={toggleDrawer(anchor, false)}
+          onKeyDown={toggleDrawer(anchor, false)}
+        >
+          {navList.map((item) => (
+            <ListItem key={item} sx={{color:'text.primary', ml:2}}
+            component={Link}   to={`/category/${item}`} style={{ textDecoration:"none"}}
+            onClick={toggleDrawer(anchor, false)}
+            onKeyDown={toggleDrawer(anchor, false)}
+            >
+              {capitalizeFirstLetter(item)}
+            </ListItem>
+          ))}
+        </List>
+      </Collapse>
         <Divider />
-        <ModeThemeDrawer/>
+        <ModeThemeDrawer
+          onClick={toggleDrawer(anchor, false)}
+          onKeyDown={toggleDrawer(anchor, false)}
+        />
         <Divider />
-        <LogoutDrawer/>
+        <LogoutDrawer
+          onClick={toggleDrawer(anchor, false)}
+          onKeyDown={toggleDrawer(anchor, false)}
+        />
       </List>
     </Box>
   );
