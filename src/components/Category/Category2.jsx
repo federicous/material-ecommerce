@@ -58,10 +58,11 @@ export default function MenuListComposition() {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-            };
+        withCredentials: true,
+      };
   
             // make the API call
-            axios(configuration)
+        axios(configuration)
         .then((result) => {
           if (cancel) return;
           console.log(result.data);

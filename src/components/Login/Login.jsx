@@ -48,6 +48,12 @@ export default function Login() {
       .then((result) => {
         setLogin(true);
         setUser(cookies.get("user"));
+        cookies.set("token", result.data.token, {
+          path: "/",
+        });
+        cookies.set("user", result.data.email, {
+          path: "/",
+        });
         // navigate(`/`, { replace: true });
         window.location.href = "/";
       })

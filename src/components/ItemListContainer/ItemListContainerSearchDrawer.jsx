@@ -37,6 +37,7 @@ const ItemListContainer = () => {
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},
+			withCredentials: true,
 		      };
 		      // make the API call
 		      axios(configuration)

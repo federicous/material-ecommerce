@@ -51,10 +51,11 @@ export default function TemporaryDrawer() {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-            };
+        withCredentials: true,
+      };
   
             // make the API call
-            axios(configuration)
+        axios(configuration)
         .then((result) => {
           if (cancel) return;
           setNavList([...result.data])

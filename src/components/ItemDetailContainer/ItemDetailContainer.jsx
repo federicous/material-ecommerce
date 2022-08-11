@@ -27,6 +27,7 @@ const ItemDetailContainer = ({initial}) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      withCredentials: true,
     };
 
     // make the API call

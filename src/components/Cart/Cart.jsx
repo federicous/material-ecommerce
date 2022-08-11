@@ -53,6 +53,7 @@ export default function Cart() {
         Authorization: `Bearer ${token}`,
       },
       data:{data},
+      withCredentials: true,
     };
   
     // make the API call

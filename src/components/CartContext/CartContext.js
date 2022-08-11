@@ -22,6 +22,7 @@ const CartContextProvider = ({children}) => {
 			  Authorization: `Bearer ${token}`,
 			},
 			data: newCart,
+			withCredentials: true,
 		      };
 		    
 		      // make the API call
@@ -100,6 +101,7 @@ const CartContextProvider = ({children}) => {
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},
+			withCredentials: true,
 		      };
 		    
 		      // make the API call

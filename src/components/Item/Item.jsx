@@ -23,7 +23,7 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
           }}
         >
           <Link to={`/detail/${sku}`}>
-            <CardMedia component="img" image={`http://localhost:3000/images/${img ? img : "sin_imagen.jpg"}`} alt="sin imagen" />
+            <CardMedia component="img" image={`http://app.sitecnia.com:8088/images/${img ? img : "sin_imagen.jpg"}`} alt="sin imagen" />
           </Link>
         </Container>
         <CardContent sx={{ margin: 0,p:{xs:1,md:2} }}>
