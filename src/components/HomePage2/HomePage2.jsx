@@ -3,6 +3,7 @@ import { Typography, Box, Pagination, Stack  } from "@material-ui/core";
 // import { getFirestore } from "../../services/getFirebase";
 import ItemList from "../ItemList/ItemList";
 import axios from "axios";
+import {config} from "../../config/config"
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -22,7 +23,7 @@ export default function HomePage2() {
       let cancel = false;
       const configuration = {
         method: "get",
-        url: `http://app.sitecnia.com:8088/api/products?page=${page}&pageSize=${pageSize}`,
+        url: `${config.SERVER}/api/products?page=${page}&pageSize=${pageSize}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

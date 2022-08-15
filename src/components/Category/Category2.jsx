@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { KeyboardArrowDown } from '@material-ui/icons'
 import axios from "axios";
 import { CartContext } from '../CartContext/CartContext';
+import {config} from "../../config/config";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
@@ -54,7 +55,7 @@ export default function MenuListComposition() {
       console.log("user dio true");
       const configuration = {
         method: "get",
-        url: `http://app.sitecnia.com:8088/api/categorias/label`,
+        url: `${config.SERVER}/api/categorias/label`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

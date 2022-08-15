@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card,CardActions,CardContent,CardMedia,Container,Typography } from '@material-ui/core';
 import ItemCount from '../ItemCount/ItemCount'
+import {config} from "../../config/config";
 
 const Item = ({initial, name, model, description, img, stock, price, product}) => {
 	return (
@@ -20,7 +21,7 @@ const Item = ({initial, name, model, description, img, stock, price, product}) =
             alignItems: "center",
           }}
         >
-          <CardMedia component="img" image={`http://app.sitecnia.com:8088/images/${img ? img : "sin_imagen.jpg"}`} alt="sin imagen"/>
+          <CardMedia component="img" image={`${config.SERVER}/images/${img ? img : "sin_imagen.jpg"}`} alt="sin imagen"/>
         </Container>
         <CardContent sx={{ margin: "0" }}>
           <Typography gutterBottom variant="body" component="div">

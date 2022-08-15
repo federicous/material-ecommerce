@@ -5,6 +5,7 @@ import CartTable from '../CartTable.jsx/CartTable';
 import Form2 from '../Form/Form2';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import {config} from "../../config/config";
 // import Return from '../utils/Return';
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
@@ -48,7 +49,7 @@ export default function Cart() {
     // set configurations
     const configuration = {
       method: "post",
-      url: `http://app.sitecnia.com:8088/api/order`,
+      url: `${config.SERVER}/api/order`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

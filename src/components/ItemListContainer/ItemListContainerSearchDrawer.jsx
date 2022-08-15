@@ -9,6 +9,7 @@ import BusquedaDrawerWhite from '../Busqueda/BusquedaDrawerWhite'
 import axios from "axios";
 import { useTheme } from '@material-ui/core/styles';
 import Cookies from "universal-cookie";
+import {config} from "../../config/config"
 
 const cookies = new Cookies();
 
@@ -33,7 +34,7 @@ const ItemListContainer = () => {
 		let cancel = false;
 		const configuration = {
 			method: "get",
-			url: `http://app.sitecnia.com:8088/api/search/${patron}?page=${page}&pageSize=${pageSize}`,
+			url: `${config.SERVER}/api/search/${patron}?page=${page}&pageSize=${pageSize}`,
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},

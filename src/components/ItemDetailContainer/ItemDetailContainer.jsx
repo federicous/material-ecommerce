@@ -6,6 +6,7 @@ import { useParams } from 'react-router';
 import { Box } from '@material-ui/system';
 import Return from '../utils/Return';
 import axios from "axios";
+import {config} from "../../config/config"
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -23,7 +24,7 @@ const ItemDetailContainer = ({initial}) => {
     // set configurations
     const configuration = {
       method: "get",
-      url: `http://app.sitecnia.com:8088/api/product/${sku}`,
+      url: `${config.SERVER}/api/product/${sku}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

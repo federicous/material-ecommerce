@@ -20,6 +20,7 @@ import LogoutDrawer from "../Logout/LogoutDrawer";
 import ModeThemeDrawer from "../ModeTheme/ModeThemeDrawer";
 import AccountDrawer from '../Account/AccountDrawer'
 import axios from "axios";
+import {config} from "../../config/config";
 import { CartContext } from '../CartContext/CartContext';
 import Cookies from "universal-cookie";
 
@@ -47,7 +48,7 @@ export default function TemporaryDrawer() {
     if (cookies.get("user")) {
       const configuration = {
         method: "get",
-        url: `http://app.sitecnia.com:8088/api/categorias/label`,
+        url: `${config.SERVER}/api/categorias/label`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

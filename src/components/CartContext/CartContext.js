@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react'
 import axios from "axios";
+import {config} from "../../config/config";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -17,7 +18,7 @@ const CartContextProvider = ({children}) => {
 	function apiCartUpdate(newCart) {
 		const configuration = {
 			method: "post",
-			url: `http://app.sitecnia.com:8088/api/cart`,
+			url: `${config.SERVER}/api/cart`,
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},
@@ -97,7 +98,7 @@ const CartContextProvider = ({children}) => {
 		let cancel = false;
 		const configuration = {
 			method: "get",
-			url: `http://app.sitecnia.com:8088/api/cart`,
+			url: `${config.SERVER}/api/cart`,
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},

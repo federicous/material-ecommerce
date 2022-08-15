@@ -5,6 +5,7 @@ import { useParams } from 'react-router';
 // import { getFirestore } from '../../services/getFirebase';
 import { Typography, Box, Pagination, Stack } from '@material-ui/core'
 import axios from "axios";
+import {config} from "../../config/config"
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -26,7 +27,7 @@ const ItemListContainer = () => {
 		let cancel = false;
 		const configuration = {
 			method: "get",
-			url: `http://app.sitecnia.com:8088/api/search/${patron}?page=${page}&pageSize=${pageSize}`,
+			url: `${config.SERVER}/api/search/${patron}?page=${page}&pageSize=${pageSize}`,
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},

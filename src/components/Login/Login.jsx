@@ -9,11 +9,13 @@ import {
   FormControl,
   Alert,
   Stack,
+  Container,
 } from "@material-ui/core";
 import axios from "axios";
 import { CartContext } from '../CartContext/CartContext';
 import Cookies from "universal-cookie";
 import HomePage2 from "../HomePage2/HomePage2";
+import {config} from "../../config/config"
 
 const cookies = new Cookies();
 
@@ -25,7 +27,8 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
-  
+  const [loginFail, setLoginFail] = useState(false)
+
   const token = cookies.get("token");
   let navigate = useNavigate();
 
@@ -36,7 +39,7 @@ export default function Login() {
     // set configurations
     const configuration = {
       method: "post",
-      url: "http://app.sitecnia.com:8088/login",
+      url: `${config.SERVER}/login`,
       data: {
         email,
         password,
@@ -58,6 +61,7 @@ export default function Login() {
         window.location.href = "/";
       })
       .catch((error) => {
+        setLoginFail(true);
         error = new Error();
       });
 
@@ -71,8 +75,8 @@ export default function Login() {
       {/* <ThemeProvider theme={theme}> */}
         {/* <CssBaseline /> */}
         <h2>Login</h2>
-        <Box>
         <form onSubmit={(e) => handleSubmit(e)}>
+        <Container sx={{display:"flex", flexDirection:"column"}}>
           {/* email */}
           <FormGroup>
             <FormControl sx={{ mb: 2 }}>
@@ -114,14 +118,18 @@ export default function Login() {
           <>
             <Stack sx={{ width: "100%",  mb: 2}} spacing={2}>
               {login ? (
-                <Alert severity="success">You Are Logged in Successfully</Alert>
+                  <Alert severity="success">Autenticación Correcta</Alert>
               ) : (
-                <Alert severity="error">You Are Not Logged in</Alert>
+                loginFail ? (
+                <Alert severity="error">Error de Autenticación</Alert>
+                ) : (
+                  <><Alert severity="info">Ingrese sus credenciales</Alert></>
+                )     
               )}
             </Stack>
           </>
+        </Container>
         </form>
-        </Box>
       {/* </ThemeProvider> */}
     </>)
     }

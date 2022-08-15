@@ -4,6 +4,7 @@ import { Link as DomLink } from 'react-router-dom';
 import { Delete } from '@material-ui/icons';
 import './CartTable.css';
 import axios from "axios";
+import {config} from "../../config/config";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
@@ -18,7 +19,7 @@ let handleOrden = () => {
   let cancel = false;
   const configuration = {
     method: "post",
-    url: `http://app.sitecnia.com:8088/api/order`,
+    url: `${config.SERVER}/api/order`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -96,7 +97,7 @@ const CartTable = ({cart, removeFromCart, total, }) => {
                   <CardMedia
                     component="img"
                     // image={row.image}
-                    image={`http://app.sitecnia.com:8088/images/${row.image}`}
+                    image={`${config.SERVER}/images/${row.image}`}
                     alt="notebook"
 
                     sx={{ height: {xs:60, sm:90}, marginBottom: "1rem" }}
