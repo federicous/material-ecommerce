@@ -34,10 +34,10 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
           </Link>
         </Container>
         <CardContent sx={{ margin: 0,p:{xs:1,md:2} }}>
-          <Typography gutterBottom sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}}  variant="body" component="div">
+          <Typography gutterBottom sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}}}  variant="body" component="div">
             {capitalizeFirstLetter(name)}
           </Typography>
-          <Typography gutterBottom sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}}  variant="body2" color="text.secondary" component="div">
+          <Typography gutterBottom sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}}}  variant="body2" color="text.secondary" component="div">
             {capitalizeFirstLetter(model)}
           </Typography>
           <Link to={`/detail/${sku}`}>

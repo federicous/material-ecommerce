@@ -98,7 +98,7 @@ export default function MenuListComposition() {
           endIcon={<KeyboardArrowDown />}
           sx={{color:"inherit"}}
         >
-          <Typography gutterBottom sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}}  variant="body" component="div">
+          <Typography gutterBottom sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}}}  variant="body" component="div">
           BREMEN / WEMBLEY
           </Typography>
         </Button>

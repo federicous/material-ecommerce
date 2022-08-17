@@ -50,7 +50,7 @@ function App() {
         },
         typography: {
           // Tell MUI what's the font-size on the html element is.
-          htmlFontSize: 18,
+          htmlFontSize: 16,
           fontFamily: ['Open sans', 'sans-serif'].join(','),
           // fontFamily: ['Lato', 'sans-serif'].join(','),
           // fontFamily: ['Quicksand', 'sans-serif'].join(','),

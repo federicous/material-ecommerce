@@ -108,7 +108,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal}) => {
                     sx={{ height: {xs:60, sm:90}, marginBottom: "1rem" }}
                   />
                   </Box>
-                  <Typography sx={{textDecoration: "none", fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} color="text.primary" variant="caption">{capitalizeFirstLetter(row.name)} ({row.code})</Typography>                  
+                  <Typography sx={{textDecoration: "none", fontSize:{xs:"x-small",sm:"small",md:"medium"}}} color="text.primary" variant="caption">{capitalizeFirstLetter(row.name)} ({row.code})</Typography>                  
                 </Box>
                 </DomLink>
               </TableCell>
