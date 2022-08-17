@@ -12,6 +12,7 @@ const CartContextProvider = ({children}) => {
 	const [cart, setCart] = useState([])
 	const [total, setTotal] = useState(0)
 	const [user, setUser] = useState("");
+	const [ivaTotal, setIvaTotal] = useState(0)
 
 	const token = cookies.get("token");
 
@@ -88,9 +89,14 @@ const CartContextProvider = ({children}) => {
 	useEffect(() => {
 		let suma=0;
 		for (const item of cart) {
-			suma=item.qty*item.price+suma
+			suma=parseFloat(item.qty)*parseFloat(item.price)+parseFloat(suma)
 		}
-		setTotal(suma)		
+		setTotal(suma);
+		let sumaIva=0;
+		for (const item of cart) {
+			sumaIva=(parseFloat(item.qty)*parseFloat(item.price)*parseFloat(item.iva)/100)+parseFloat(sumaIva)
+		}
+		setIvaTotal(sumaIva);
 
 	}, [cart])
 
@@ -128,6 +134,7 @@ const CartContextProvider = ({children}) => {
 			removeFromCart,
 			cleanCart,
 			total,
+			ivaTotal,
 			setModeTheme,
 			modeTheme,	
 			setUser,

@@ -33,7 +33,7 @@ export default function Cart() {
     cleanCart()
   }
 	const cartContext = useContext(CartContext);
-	const {cart, total, removeFromCart, cleanCart}= cartContext;  
+	const {cart, total, removeFromCart, cleanCart, ivaTotal}= cartContext;  
 
 
   // get token generated on login
@@ -76,7 +76,7 @@ export default function Cart() {
         <Box
         // sx={{fontSize: 20, display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap', width:"100%"}} >
         sx={{fontSize: 20, display: "flex", flexDirection:"column", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap', width:"100%"}} >
-          <CartTable cart={cart} removeFromCart={removeFromCart} total={total}/>
+          <CartTable cart={cart} removeFromCart={removeFromCart} total={total} ivaTotal={ivaTotal}/>
           <Button  onClick={(event)=>orderGenerate(event)}>
 
           </Button>

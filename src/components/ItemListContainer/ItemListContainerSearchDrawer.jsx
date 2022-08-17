@@ -30,7 +30,6 @@ const ItemListContainer = () => {
 	const token = cookies.get("token");
 
 	useEffect(() => {
-		console.log("entro al search drawer");
 		let cancel = false;
 		const configuration = {
 			method: "get",

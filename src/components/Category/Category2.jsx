@@ -39,6 +39,11 @@ export default function MenuListComposition() {
     }
   }
 
+  function capitalizeFirstLetter(string) {
+    let cadena = string.toLowerCase()
+    return cadena.charAt(0).toUpperCase() + cadena.slice(1);
+  }
+
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
@@ -93,7 +98,9 @@ export default function MenuListComposition() {
           endIcon={<KeyboardArrowDown />}
           sx={{color:"inherit"}}
         >
+          <Typography gutterBottom sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}}  variant="body" component="div">
           BREMEN / WEMBLEY
+          </Typography>
         </Button>
 
         <Popper
@@ -125,7 +132,7 @@ export default function MenuListComposition() {
                       // component={<Link key={item}  to={`/category/${item}`} style={{ textDecoration:"none"}}></Link>}
                       component={Link}   to={`/category/${item}`} style={{ textDecoration:"none"}}
                       >
-                        {item}
+                        {capitalizeFirstLetter(item)}
 
                       </MenuItem>
                     ))}

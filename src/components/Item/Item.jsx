@@ -5,6 +5,11 @@ import { fontSize } from '@material-ui/system';
 import ItemCount2 from '../ItemCount/ItemCount2'
 import {config} from "../../config/config";
 
+function capitalizeFirstLetter(string) {
+  let cadena = string.toLowerCase()
+  return cadena.charAt(0).toUpperCase() + cadena.slice(1);
+}
+
 const Item = ({product, name, description, img, stock, model,sku, price}) => {
 	return (
     <>
@@ -21,21 +26,22 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
           sx={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <Link to={`/detail/${sku}`}>
-            <CardMedia component="img" image={`${config.SERVER}/images/${img ? img : "sin_imagen.jpg"}`} alt="sin imagen" />
+            <CardMedia component="img" image={`${config.SERVER}/images/${img ? img : "sin_imagen.jpg"}`} sx={{height:{xs:"150px",sm:"200px"}, width:"100%", objectFit:"cover"}} alt="sin imagen" />
           </Link>
         </Container>
         <CardContent sx={{ margin: 0,p:{xs:1,md:2} }}>
-          <Typography gutterBottom sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} variant="caption" component="div">
-            {name}
+          <Typography gutterBottom sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}}  variant="body" component="div">
+            {capitalizeFirstLetter(name)}
           </Typography>
-          <Typography gutterBottom sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} variant="caption" color="text.secondary" component="div">
-            {model}
+          <Typography gutterBottom sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}}  variant="body2" color="text.secondary" component="div">
+            {capitalizeFirstLetter(model)}
           </Typography>
           <Link to={`/detail/${sku}`}>
-            <Typography sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} variant="caption" color="text.secondary">
+            <Typography  variant="caption" color="text.secondary">
               Código: {description}
             </Typography>
             <Typography sx={{ fontWeight: "bold", textDecoration: "none", color:"text.primary" }} variant="h6">
@@ -49,7 +55,7 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
             flexDirection: "column",
           }}
         >
-          <Typography sx={{fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} variant="caption">(Stock: {stock})</Typography>
+          <Typography variant="caption">(Stock: {stock})</Typography>
           <Box>
             {/* <Link to={`/detail/${sku}`} style={{ textDecoration:"none", color:"inherit"}}>
               <Button

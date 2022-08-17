@@ -16,7 +16,7 @@ const ItemList = ({ products }) => {
         {productsList &&
           productsList.map((item) => (
             <Grid item key={item._id ? item._id : item.id} xs={6} sm={4} md={3}>
-              <Box  sx={{ width:"fit-content" }}>
+              <Box  sx={{ width:"auto" }}>
               <Item
                 product={item}
                 initial={item.stock ? 1 : item.stock}

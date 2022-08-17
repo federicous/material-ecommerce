@@ -48,6 +48,26 @@ function App() {
             main: green[800]
           }
         },
+        typography: {
+          // Tell MUI what's the font-size on the html element is.
+          htmlFontSize: 18,
+          fontFamily: ['Open sans', 'sans-serif'].join(','),
+          // fontFamily: ['Lato', 'sans-serif'].join(','),
+          // fontFamily: ['Quicksand', 'sans-serif'].join(','),
+          // fontFamily: ['Nunito', 'sans-serif'].join(','),
+          // fontFamily: [
+          //   '-apple-system',
+          //   'BlinkMacSystemFont',
+          //   '"Segoe UI"',
+          //   'Roboto',
+          //   '"Helvetica Neue"',
+          //   'Arial',
+          //   'sans-serif',
+          //   '"Apple Color Emoji"',
+          //   '"Segoe UI Emoji"',
+          //   '"Segoe UI Symbol"',
+          // ].join(','),
+        },
       });
 
   theme = responsiveFontSizes(theme);

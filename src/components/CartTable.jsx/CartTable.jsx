@@ -41,7 +41,12 @@ let handleOrden = () => {
     }
 }
 
-const CartTable = ({cart, removeFromCart, total, }) => {
+function capitalizeFirstLetter(string) {
+  let cadena = string.toLowerCase()
+  return cadena.charAt(0).toUpperCase() + cadena.slice(1);
+}
+
+const CartTable = ({cart, removeFromCart, total, ivaTotal}) => {
 	return (
     <>
     <TableContainer component={Paper} sx={{ marginTop: "1rem", flex:'40%' }}>
@@ -103,7 +108,7 @@ const CartTable = ({cart, removeFromCart, total, }) => {
                     sx={{ height: {xs:60, sm:90}, marginBottom: "1rem" }}
                   />
                   </Box>
-                  <Typography sx={{textDecoration: "none", fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} color="text.primary" variant="caption">{row.name} ({row.code})</Typography>                  
+                  <Typography sx={{textDecoration: "none", fontSize:{xs:"xsmall",sm:"small",md:"medium"}}} color="text.primary" variant="caption">{capitalizeFirstLetter(row.name)} ({row.code})</Typography>                  
                 </Box>
                 </DomLink>
               </TableCell>
@@ -122,11 +127,31 @@ const CartTable = ({cart, removeFromCart, total, }) => {
             </TableRow>
           ))}
 
+          {/* <TableRow>
+            <TableCell rowSpan={1} />
+            <TableCell colSpan={2}></TableCell>
+            <TableCell colSpan={1}>Sub Total</TableCell>
+            <TableCell align="center">{ccyFormat(parseFloat(total))}</TableCell>
+          </TableRow>
           <TableRow>
             <TableCell rowSpan={3} />
             <TableCell colSpan={2}></TableCell>
-            <TableCell colSpan={1}>TOTAL</TableCell>
+            <TableCell colSpan={1}>Sub Total</TableCell>
             <TableCell align="center">{ccyFormat(parseFloat(total))}</TableCell>
+          </TableRow> */}
+          <TableRow>
+            <TableCell rowSpan={3} />
+            <TableCell colSpan={3}>Subtotal</TableCell>
+            <TableCell align="center">{ccyFormat(parseFloat(total))}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={3}>IVA</TableCell>
+            {/* <TableCell align="right">{``}</TableCell> */}
+            <TableCell align="center">{ccyFormat(parseFloat(ivaTotal))}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={3}>TOTAL</TableCell>
+            <TableCell align="center">{ccyFormat(parseFloat(total)+parseFloat(ivaTotal))}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
