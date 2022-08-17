@@ -41,7 +41,7 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
             {capitalizeFirstLetter(model)}
           </Typography>
           <Link to={`/detail/${sku}`}>
-            <Typography  variant="caption" color="text.secondary">
+            <Typography sx={{fontSize:{xs:"x-small",sm:"small"}}}  variant="caption" color="text.secondary">
               Código: {description}
             </Typography>
             <Typography sx={{ fontWeight: "bold", textDecoration: "none", color:"text.primary" }} variant="h6">
@@ -55,7 +55,7 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
             flexDirection: "column",
           }}
         >
-          <Typography variant="caption">(Stock: {stock})</Typography>
+          <Typography sx={{fontSize:{xs:"x-small",sm:"small"}}} variant="caption">(Stock: {stock})</Typography>
           <Box>
             {/* <Link to={`/detail/${sku}`} style={{ textDecoration:"none", color:"inherit"}}>
               <Button
