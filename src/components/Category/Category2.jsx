@@ -99,7 +99,7 @@ export default function MenuListComposition() {
           sx={{color:"inherit"}}
         >
           <Typography gutterBottom sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}}}  variant="body" component="div">
-          BREMEN / WEMBLEY
+          Bremen / Wembley
           </Typography>
         </Button>
 

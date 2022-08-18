@@ -2,7 +2,7 @@ import React from 'react'
 import { Card,CardActions,CardContent,CardMedia,Container,Typography,Box, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { fontSize } from '@material-ui/system';
-import ItemCount2 from '../ItemCount/ItemCount2'
+import ItemCountHorizontal from '../ItemCount/ItemCountHorizontal'
 import {config} from "../../config/config";
 
 function capitalizeFirstLetter(string) {
@@ -16,7 +16,8 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
       <Card
         sx={{
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "row",
+          // flexDirection: "column",
           justifyContent: "center",
           textAlign: "center",
           paddingY: "20px",
@@ -30,10 +31,11 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
           }}
         >
           <Link to={`/detail/${sku}`}>
-            {/* <CardMedia component="img" image={`${config.SERVER}/images/${img ? img : "sin_imagen.jpg"}`} alt="sin imagen" /> */}
-            <CardMedia component="img" image={`${config.SERVER}/images/${img ? img : "sin_imagen.jpg"}`} sx={{height:{xs:"150px",sm:"200px"}, width:"100%", objectFit:"cover"}} alt="sin imagen" />
+            <CardMedia component="img" image={`${config.SERVER}/images/${img ? img : "sin_imagen.jpg"}`} sx={{minHeight:"90px", minWidth:"90px"}} alt="sin imagen" />
+            {/* <CardMedia component="img" image={`${config.SERVER}/images/${img ? img : "sin_imagen.jpg"}`} sx={{height:{xs:"150px",sm:"200px"}, width:"100%", objectFit:"cover"}} alt="sin imagen" /> */}
           </Link>
         </Container>
+        <Box>
         <CardContent sx={{ margin: 0,p:{xs:1,md:2} }}>
           <Typography gutterBottom sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}}}  variant="body" component="div">
             {capitalizeFirstLetter(name)}
@@ -69,13 +71,15 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
 
               </Button>
             </Link> */}
-            <ItemCount2
+            <ItemCountHorizontal
             product={product}
             initial={1}
             stock={stock}
           />
           </Box>
         </CardActions>
+        </Box>
+       
       </Card>
     </>
   );

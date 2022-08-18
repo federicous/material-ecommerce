@@ -1,8 +1,10 @@
 import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import Item from "../Item/Item";
+import ItemHorizontal from "../Item/ItemHorizontal";
 import PaginationLink from "../Pagination/Pagination";
 import { Box } from "@material-ui/system";
+import "./ItemList.css"
 
 
 const ItemList = ({ products }) => {
@@ -15,9 +17,10 @@ const ItemList = ({ products }) => {
       <Grid container spacing={2} sx={{ marginTop: "0.1rem" }}>
         {productsList &&
           productsList.map((item) => (
-            <Grid item key={item._id ? item._id : item.id} xs={6} sm={4} md={3}>
+            <Grid item key={item._id ? item._id : item.id} xs={12} sm={4} md={3}>
               <Box  sx={{ width:"auto" }}>
-              <Item
+                <div className="item">
+                <Item
                 product={item}
                 initial={item.stock ? 1 : item.stock}
                 sku={item._id ? item._id : item.id }
@@ -28,6 +31,21 @@ const ItemList = ({ products }) => {
                 stock={item.stock}
                 price={item.price}
               />
+                </div>
+                <div className="itemHorizontal">
+                <ItemHorizontal
+                product={item}
+                initial={item.stock ? 1 : item.stock}
+                sku={item._id ? item._id : item.id }
+                model={item.label}
+                name={`${item.name}`}
+                description={item.code}
+                img={item.image}
+                stock={item.stock}
+                price={item.price}
+              />
+                </div>
+
               </Box>
             </Grid>
           ))}

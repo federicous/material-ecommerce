@@ -1,0 +1,17 @@
+@media (max-width: 600px) {
+	.item {
+	  display: none;
+	}
+	/* .itemHorizontal {
+	  display: block;	
+	} */
+      }
+
+/* .itemHorizontal {
+	display: none;
+} */
+      @media (min-width: 600px) {
+	.itemHorizontal {
+	  display: none;	
+	}
+      }
