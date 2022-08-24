@@ -11,7 +11,7 @@ const cookies = new Cookies();
 
 const ItemListContainer = () => {
 
-	const {category,lista} = useParams()
+	const {category, brand} = useParams()
 	const [products, setProducts] = useState([])
 	const [page, setPage] = React.useState(1);
 	let pageSize = 12;
@@ -30,7 +30,7 @@ const ItemListContainer = () => {
 		const configuration = {
 			method: "get",
 			// url: `${config.SERVER}/api/products/category/${category}?page=${page}&pageSize=${pageSize}`,
-			url: `${config.SERVER}/api/products/${lista}/category/${category}?page=${page}&pageSize=${pageSize}`,
+			url: `${config.SERVER}/api/products/brand/${brand}?page=${page}&pageSize=${pageSize}`,
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},
@@ -53,7 +53,7 @@ const ItemListContainer = () => {
 
 	return (
 		<>
-		<Typography variant='h5'>{category}</Typography>
+		<Typography variant='h5'>{brand.toUpperCase()}</Typography>
 			<ItemList products={products} />
 			<Box sx={{my:2}}>
 				<Stack spacing={2}>

@@ -1,11 +1,11 @@
 import { useEffect, useState, useContext } from "react";
-import { Typography, Box, Pagination, Stack  } from "@material-ui/core";
+import { Typography, Box, Pagination, Stack, useMediaQuery   } from "@material-ui/core";
 // import { getFirestore } from "../../services/getFirebase";
 import ItemList from "../ItemList/ItemList";
 import { Link } from 'react-router-dom';
 import { navList } from '../utils/navList';
 import { ImageButton, ImageSrc, Image,ImageBackdrop, ImageMarked  } from '../utils/homePageUtils';
-import { CartContext } from '../CartContext/CartContext';
+// import { CartContext } from '../CartContext/CartContext';
 import axios from "axios";
 import {config} from "../../config/config"
 import Cookies from "universal-cookie";
@@ -18,9 +18,10 @@ export default function HomePage2() {
 	let pageSize = 12;
 	const [pagesCant, setPagesCant] = useState(10)
   // const [navList, setNavList] = useState([])
-  const cartContext = useContext(CartContext);
-	const {user}= cartContext;
-
+  // const cartContext = useContext(CartContext);
+	// const {user}= cartContext;
+  const isMobile = useMediaQuery('(max-width:600px)');
+ 
 	const handleChange = (event, value) => {
 		setPage(value);
 	      };
@@ -52,37 +53,6 @@ export default function HomePage2() {
         }
     }, [page])
 
-    // useEffect(() => {
-    //   let cancel = false;
-    //   if (cookies.get("user")) {
-    //     console.log("user dio true");
-    //     const configuration = {
-    //       method: "get",
-    //       // url: `${config.SERVER}/api/categorias/label`,
-    //       url: `${config.SERVER}/api/categorias/lista`,
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //       withCredentials: true,
-    //     };
-    
-    //           // make the API call
-    //       axios(configuration)
-    //       .then((result) => {
-    //         if (cancel) return;
-    //         console.log(result.data);
-    //         setNavList([...result.data])
-    //       })
-    //       .catch((error) => {
-    //         error = new Error();
-    //       })
-    //       return () => { 
-    //         cancel = true;
-    //       }
-    //   }
-  
-    // }, [user]);
-
   return (
     <>
     {/* <Typography variant={"h5"}>Categories</Typography> */}
@@ -107,7 +77,8 @@ export default function HomePage2() {
           }}
           sx={{mb:3}}
         >
-          <Link key={item.id} to={`/category/${item.value}`}>
+          {/* <Link key={item.id} to={`/category/${item.value}`}> */}
+          <Link key={item.id} to={`/brand/${item.value.toLowerCase()}`}>
             <ImageSrc style={{ backgroundImage: `url(${item.image})` }} />
             <ImageBackdrop className="MuiImageBackdrop-root" />
             <Image>
@@ -130,57 +101,19 @@ export default function HomePage2() {
         </ImageButton>
       ))}
 
-{/* {navList.map((item) => (
-        <ImageButton
-          focusRipple
-          key={item.name}
-          style={{
-            width: "33%",
-          }}
-        >
-          <Link key={item.id} to={`/category/${item.value}`}>
-            <ImageSrc style={{ backgroundImage: `url(${item.image})` }} />
-            <ImageBackdrop className="MuiImageBackdrop-root" />
-            <Image>
-              <Typography
-                component="span"
-                variant="subtitle1"
-                color="inherit"
-                sx={{
-                  position: "relative",
-                  p: 4,
-                  pt: 2,
-                  pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
-                }}
-              >
-                {item.name}
-                <ImageMarked className="MuiImageMarked-root" />
-              </Typography>
-            </Image>
-          </Link>
-        </ImageButton>
-      ))} */}
-      {/* <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          minWidth: 300,
-          width: "100%",
-          marginTop: "2rem",
-        }}
-      >
-      </Box>
-
-      {/* <Box  sx={{ display: "flex", justifyContent: "center", flexDirection:"column"}}> */}
-        <Typography variant={"h5"}>Productos</Typography>
-        <ItemList products={products} />
-        <Box sx={{my:2}}>
-          <Stack spacing={2}>
-            {/* <Typography>Page: {page}</Typography> */}
-            <Pagination count={pagesCant} page={page} onChange={handleChange} />
-          </Stack>
-   			</Box>
+ {isMobile ? (
+    <></>
+    ):(
+    <>
+            <Typography variant={"h5"}>Productos</Typography>
+            <ItemList products={products} />
+            <Box sx={{my:2}}>
+              <Stack spacing={2}>
+                <Pagination count={pagesCant} page={page} onChange={handleChange} />
+              </Stack>
+            </Box>
+    </>
+  )}
         {/* <ItemListContainer products={products} /> */}
       {/* </Box> */}
     </Box>
