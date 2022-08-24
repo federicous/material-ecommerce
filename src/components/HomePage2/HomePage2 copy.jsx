@@ -1,25 +1,17 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { Typography, Box, Pagination, Stack  } from "@material-ui/core";
 // import { getFirestore } from "../../services/getFirebase";
 import ItemList from "../ItemList/ItemList";
-import { Link } from 'react-router-dom';
-import { navList } from '../utils/navList';
-import { ImageButton, ImageSrc, Image,ImageBackdrop, ImageMarked  } from '../utils/homePageUtils';
-import { CartContext } from '../CartContext/CartContext';
 import axios from "axios";
 import {config} from "../../config/config"
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
-
 
 export default function HomePage2() {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
 	let pageSize = 12;
 	const [pagesCant, setPagesCant] = useState(10)
-  // const [navList, setNavList] = useState([])
-  const cartContext = useContext(CartContext);
-	const {user}= cartContext;
 
 	const handleChange = (event, value) => {
 		setPage(value);
@@ -52,37 +44,6 @@ export default function HomePage2() {
         }
     }, [page])
 
-    // useEffect(() => {
-    //   let cancel = false;
-    //   if (cookies.get("user")) {
-    //     console.log("user dio true");
-    //     const configuration = {
-    //       method: "get",
-    //       // url: `${config.SERVER}/api/categorias/label`,
-    //       url: `${config.SERVER}/api/categorias/lista`,
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //       withCredentials: true,
-    //     };
-    
-    //           // make the API call
-    //       axios(configuration)
-    //       .then((result) => {
-    //         if (cancel) return;
-    //         console.log(result.data);
-    //         setNavList([...result.data])
-    //       })
-    //       .catch((error) => {
-    //         error = new Error();
-    //       })
-    //       return () => { 
-    //         cancel = true;
-    //       }
-    //   }
-  
-    // }, [user]);
-
   return (
     <>
     {/* <Typography variant={"h5"}>Categories</Typography> */}
@@ -94,18 +55,17 @@ export default function HomePage2() {
         alignItems: "center",
         minWidth: 300,
         width: "100%",
-        flexDirection: "row",
+        flexDirection: "column",
         marginTop: "2rem",
       }}
     >
-      {navList.map((item) => (
+      {/* {navList.map((item) => (
         <ImageButton
           focusRipple
           key={item.name}
           style={{
             width: "33%",
           }}
-          sx={{mb:3}}
         >
           <Link key={item.id} to={`/category/${item.value}`}>
             <ImageSrc style={{ backgroundImage: `url(${item.image})` }} />
@@ -128,7 +88,7 @@ export default function HomePage2() {
             </Image>
           </Link>
         </ImageButton>
-      ))}
+      ))} */}
 
 {/* {navList.map((item) => (
         <ImageButton
@@ -170,8 +130,7 @@ export default function HomePage2() {
           marginTop: "2rem",
         }}
       >
-      </Box>
-
+      </Box> */}
       {/* <Box  sx={{ display: "flex", justifyContent: "center", flexDirection:"column"}}> */}
         <Typography variant={"h5"}>Productos</Typography>
         <ItemList products={products} />

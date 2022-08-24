@@ -21,8 +21,8 @@ export default function ModeTheme() {
 
   return (
 	<>
-	<ListItem onClick={colorMode.toggleColorMode} >
-		<ListItemIcon sx={{mr:1}}>		
+	<ListItem onClick={colorMode.toggleColorMode} sx={{display:"flex", justifyContent:"center"}} >
+		<ListItemIcon sx={{mr:1, alignItems:"center", color:"text.primary"}}>		
 			{theme.palette.mode === 'dark' ? <Brightness7 sx={{mr:1}} fontSize="small"/> : <Brightness4 sx={{mr:1}} fontSize="small"/>}
 			{theme.palette.mode} mode
 		</ListItemIcon>		

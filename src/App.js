@@ -1,5 +1,6 @@
 import NavBar from './components/NavBar/NavBar';
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
+import ItemListContainerBrand from './components/ItemListContainer/ItemListContainerBrand';
 import ItemListContainerSearch from './components/ItemListContainer/ItemListContainerSearch';
 import ItemListContainerSearchDrawer from './components/ItemListContainer/ItemListContainerSearchDrawer';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -92,6 +93,8 @@ function App() {
               <Route path="/" element={<ProtectedRoutes />}>
                 <Route path="/home" element={<HomePage2 />} />
                 <Route exact path="/category/:category" element={<ItemListContainer />} />
+                <Route exact path="/brand/:brand" element={<ItemListContainerBrand />} />
+                <Route exact path="/:lista/category/:category" element={<ItemListContainer />} />
                 <Route exact path="/search/:patron" element={<ItemListContainerSearch />} />
                 <Route exact path="/searchDrawer" element={<ItemListContainerSearchDrawer />} />
                 <Route exact path="/searchDrawer/:patron" element={<ItemListContainerSearchDrawer />} />

@@ -15,6 +15,8 @@ function ccyFormat(num) {
 
 const token = cookies.get("token");
 
+let dolar = 132;
+
 let handleOrden = () => {
   let cancel = false;
   const configuration = {
@@ -102,13 +104,15 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal}) => {
                   <CardMedia
                     component="img"
                     // image={row.image}
-                    image={`${config.SERVER}/images/${row.image}`}
-                    alt="notebook"
+                    image={`${config.SERVER}/images/${row.image ? row.image : "sin_imagen.jpg"}`}
+                    alt="imagen_producto"
 
                     sx={{ height: {xs:60, sm:90}, marginBottom: "1rem" }}
                   />
                   </Box>
-                  <Typography sx={{textDecoration: "none", fontSize:{xs:"x-small",sm:"small",md:"medium"}}} color="text.primary" variant="caption">{capitalizeFirstLetter(row.name)} ({row.code})</Typography>                  
+                  <Typography sx={{textDecoration: "none", fontSize:{xs:"x-small",sm:"small",md:"medium"}}} color="text.primary" variant="caption">{capitalizeFirstLetter(`${
+                      [row.name,row.color,row.linea,row.presentacion,`${row.contenido ? (""+row.contenido) : ""}`].filter(Boolean).join("|")
+                      }`)} ({row.code})</Typography>                  
                 </Box>
                 </DomLink>
               </TableCell>
@@ -120,9 +124,9 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal}) => {
                 </Link>
               </TableCell>
               <TableCell align="center" sx={{pr:"0px"}}>{row.qty}</TableCell>
-              <TableCell align="center" sx={{pr:"0px"}}>{row.price}</TableCell>
+              <TableCell align="center" sx={{pr:"0px"}}>{row.price ? row.price : row.usd*dolar}</TableCell>
               <TableCell align="center">
-                {ccyFormat(row.price * row.qty)}
+                {ccyFormat((row.price ? row.price : row.usd*dolar) * row.qty)}
               </TableCell>
             </TableRow>
           ))}

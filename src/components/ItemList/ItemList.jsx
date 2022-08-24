@@ -6,6 +6,11 @@ import PaginationLink from "../Pagination/Pagination";
 import { Box } from "@material-ui/system";
 import "./ItemList.css"
 
+let dolar=132;
+
+function ccyFormat(num) {
+	return `${num.toFixed(2)}`;
+      }
 
 const ItemList = ({ products }) => {
   const productsList = products;
@@ -20,30 +25,35 @@ const ItemList = ({ products }) => {
             <Grid item key={item._id ? item._id : item.id} xs={12} sm={4} md={3}>
               <Box  sx={{ width:"auto" }}>
                 <div className="item">
-                <Item
-                product={item}
-                initial={item.stock ? 1 : item.stock}
-                sku={item._id ? item._id : item.id }
-                model={item.label}
-                name={`${item.name}`}
-                description={item.code}
-                img={item.image}
-                stock={item.stock}
-                price={item.price}
-              />
+                    <Item
+                    product={item}
+                    initial={item.stock ? 1 : item.stock}
+                    sku={item._id ? item._id : item.id }
+                    model={item.label}
+                    name={`${
+                      [item.name,item.color,item.linea,item.presentacion,`${item.contenido ? (""+item.contenido) : ""}`].filter(Boolean).join("|")
+                      }`}
+                    description={item.code}
+                    img={item.image}
+                    stock={item.stock}
+                    price={ccyFormat(item.price ? item.price : item.usd*dolar) }
+                  />
+
                 </div>
                 <div className="itemHorizontal">
-                <ItemHorizontal
-                product={item}
-                initial={item.stock ? 1 : item.stock}
-                sku={item._id ? item._id : item.id }
-                model={item.label}
-                name={`${item.name}`}
-                description={item.code}
-                img={item.image}
-                stock={item.stock}
-                price={item.price}
-              />
+                    <ItemHorizontal
+                    product={item}
+                    initial={item.stock ? 1 : item.stock}
+                    sku={item._id ? item._id : item.id }
+                    model={item.label}
+                    name={`${
+                      [item.name,item.color,item.linea,item.presentacion,`${item.contenido ? (""+item.contenido) : ""}`].filter(Boolean).join("|")
+                      }`}
+                    description={item.code}
+                    img={item.image}
+                    stock={item.stock}
+                    price={ccyFormat(item.price ? item.price : item.usd*dolar) }
+                  />
                 </div>
 
               </Box>

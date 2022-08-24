@@ -89,12 +89,12 @@ const CartContextProvider = ({children}) => {
 	useEffect(() => {
 		let suma=0;
 		for (const item of cart) {
-			suma=parseFloat(item.qty)*parseFloat(item.price)+parseFloat(suma)
+			suma=parseFloat(item.qty)*parseFloat(item.price ? item.price : item.usd)+parseFloat(suma)
 		}
 		setTotal(suma);
 		let sumaIva=0;
 		for (const item of cart) {
-			sumaIva=(parseFloat(item.qty)*parseFloat(item.price)*parseFloat(item.iva)/100)+parseFloat(sumaIva)
+			sumaIva=(parseFloat(item.qty)*parseFloat(item.price ? item.price : item.usd)*parseFloat(item.iva)/100)+parseFloat(sumaIva)
 		}
 		setIvaTotal(sumaIva);
 

@@ -80,49 +80,48 @@ export default function TemporaryDrawer() {
 
   const list = (anchor) => (
     <Box
-      sx={{ height:"100%" , width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
       // onClick={toggleDrawer(anchor, false)}
       // onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List sx={{height:"100%", pb:"0px"}}>
-        <Box sx={{height:"100%", display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
+      <List>
+        <Box sx={{}}>
           <Box>
+          <ListItem
+            onClick={toggleDrawer(anchor, false)}
+            onKeyDown={toggleDrawer(anchor, false)}
+          >
+            <AccountDrawer/>
+          </ListItem>
+          <Divider />
+          <Link to={`/searchDrawer/`} style={{ textDecoration:"none"}}>
             <ListItem
               onClick={toggleDrawer(anchor, false)}
               onKeyDown={toggleDrawer(anchor, false)}
             >
-              <AccountDrawer/>
+                <ListItemIcon>
+                <Search sx={{mr:1}}/> Busqueda
+                </ListItemIcon>           
             </ListItem>
             <Divider />
-            <Link to={`/searchDrawer/`} style={{ textDecoration:"none"}}>
-              <ListItem
-                onClick={toggleDrawer(anchor, false)}
-                onKeyDown={toggleDrawer(anchor, false)}
-              >
-                  <ListItemIcon sx={{color:"text.primary"}}>
-                  <Search sx={{mr:1}}/> Busqueda
-                  </ListItemIcon>           
-              </ListItem>
-              <Divider />
-            </Link>
+          </Link>
 
-            {navList.map((item) => (        
-                <CategoryCollapse key={item} lista={item} toggleDrawer={toggleDrawer} anchor={anchor} />
-            ))}
-           <Divider />  
+          {navList.map((item) => (        
+              <CategoryCollapse key={item} lista={item} toggleDrawer={toggleDrawer} anchor={anchor} />
+          ))} 
           </Box>
           <Box>
-            <Divider />
-            <ModeThemeDrawer
-              onClick={toggleDrawer(anchor, false)}
-              onKeyDown={toggleDrawer(anchor, false)}
-            />
-            <Divider />
-            <LogoutDrawer
-              onClick={toggleDrawer(anchor, false)}
-              onKeyDown={toggleDrawer(anchor, false)}
-            />
+          <Divider />
+          <ModeThemeDrawer
+            onClick={toggleDrawer(anchor, false)}
+            onKeyDown={toggleDrawer(anchor, false)}
+          />
+          <Divider />
+          <LogoutDrawer
+            onClick={toggleDrawer(anchor, false)}
+            onKeyDown={toggleDrawer(anchor, false)}
+          />
           </Box>
         </Box>
       </List>

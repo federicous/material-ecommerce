@@ -11,7 +11,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const token = cookies.get("token");  
 
-export default function MenuListComposition({lista}) {
+export default function MenuListComposition() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [navList, setNavList] = React.useState([])
@@ -54,15 +54,14 @@ export default function MenuListComposition({lista}) {
     prevOpen.current = open;
   }, [open]);
 
-  // let lista= "bremen";
-
   React.useEffect(() => {
     let cancel = false;
     if (cookies.get("user")) {
+      console.log("user dio true");
       const configuration = {
         method: "get",
         // url: `${config.SERVER}/api/categorias/label`,
-        url: `${config.SERVER}/api/categorias/${lista}/label`,
+        url: `${config.SERVER}/api/categorias/tekbond/label`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -73,6 +72,7 @@ export default function MenuListComposition({lista}) {
         axios(configuration)
         .then((result) => {
           if (cancel) return;
+          console.log(result.data);
           setNavList([...result.data])
         })
         .catch((error) => {
@@ -100,7 +100,7 @@ export default function MenuListComposition({lista}) {
           sx={{color:"inherit"}}
         >
           <Typography gutterBottom sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}, mb:"0px"}}  variant="body" component="div">
-          {lista}
+          Tekbond
           </Typography>
         </Button>
 
@@ -131,7 +131,7 @@ export default function MenuListComposition({lista}) {
                     {navList.map((item) => (
                       <MenuItem onClick={handleClose} key={item} value={item}  
                       // component={<Link key={item}  to={`/category/${item}`} style={{ textDecoration:"none"}}></Link>}
-                      component={Link}   to={`/${lista}/category/${item}`} style={{ textDecoration:"none"}}
+                      component={Link}   to={`/category/${item}`} style={{ textDecoration:"none"}}
                       >
                         {capitalizeFirstLetter(item)}
 

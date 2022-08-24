@@ -7,13 +7,16 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../CartContext/CartContext';
 import TemporaryDrawer from './TemporaryDrawer';
 import Category2 from '../Category/Category2'
+import CategoryTekbond from '../Category/CategoryTekbond'
 import Busqueda from '../Busqueda/Busqueda'
 import Account from '../Account/Account'
 import Cookies from "universal-cookie";
+import {config} from "../../config/config";
+import axios from "axios";
 
 const cookies = new Cookies();
 const usuarioCookie = cookies.get("user");  
-
+const token = cookies.get("token");  
 
 export default function NavBar() {
 	const cartContext = useContext(CartContext);
@@ -21,6 +24,7 @@ export default function NavBar() {
   const [quantity, setQuantity] = useState(0)
   const isMobile = useMediaQuery('(max-width:900px)');
   const [usuario, setUsuario] = useState("")
+  const [navList, setNavList] = React.useState([])
 
   useEffect(() => {
     let total=0;
@@ -34,6 +38,34 @@ export default function NavBar() {
     setUsuario(usuarioCookie)
   }, [user,cart])
   
+  React.useEffect(() => {
+    let cancel = false;
+    if (cookies.get("user")) {
+      const configuration = {
+        method: "get",
+        // url: `${config.SERVER}/api/categorias/label`,
+        url: `${config.SERVER}/api/categorias/lista`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      };
+  
+            // make the API call
+        axios(configuration)
+        .then((result) => {
+          if (cancel) return;
+          setNavList([...result.data])
+        })
+        .catch((error) => {
+          error = new Error();
+        })
+        return () => { 
+          cancel = true;
+        }
+    }
+
+  }, [user]);
 
 return (
   <Box sx={{ flexGrow: 1 }}>
@@ -54,7 +86,12 @@ return (
             <></>
           ):(
             <>
-            {usuario ? <Category2/> : <></>}
+            {usuario ? <>             
+              {/* <Category2 lista="bremen"/> <CategoryTekbond/>  */}
+              {navList.map((item) => (
+                <Category2 key={item} lista={item}/>
+                        ))}            
+            </> : <></>}
             {/* <Category2/> */}
             <Busqueda/>
             {/* <ModeTheme/>
