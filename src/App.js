@@ -18,6 +18,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { useMemo, useContext, useEffect } from 'react';
 import { blue, green } from '@material-ui/core/colors';
 import { CartContext } from './components/CartContext/CartContext';
+import AlertMessage from './components/AlertMessage/AlertMessage';
 
 
 function App() {
@@ -102,6 +103,7 @@ function App() {
                     greeting="Lista de productos"
                     initial={1} />} />
                 <Route exact path="/cart" element={<Cart />} />     
+                <Route exact path="/alert/:message" element={<AlertMessage />} />     
               </Route>
               <Route exact path="*" element={<Return />} /> 
             </Routes>

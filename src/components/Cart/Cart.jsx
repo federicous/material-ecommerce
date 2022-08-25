@@ -76,7 +76,7 @@ export default function Cart() {
         <Box
         // sx={{fontSize: 20, display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap', width:"100%"}} >
         sx={{fontSize: 20, display: "flex", flexDirection:"column", justifyContent: "space-between", alignItems: "center", margin: "0px", flexWrap:'wrap', width:"100%"}} >
-          <CartTable cart={cart} removeFromCart={removeFromCart} total={total} ivaTotal={ivaTotal}/>
+          <CartTable cart={cart} removeFromCart={removeFromCart} total={total} ivaTotal={ivaTotal} cleanCart={cleanCart}/>
           <Button  onClick={(event)=>orderGenerate(event)}>
 
           </Button>

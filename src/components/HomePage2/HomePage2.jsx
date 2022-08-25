@@ -91,6 +91,7 @@ export default function HomePage2() {
                   p: 4,
                   pt: 2,
                   pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
+                  textShadow:"2px 2px 5px black",
                 }}
               >
                 {item.name}
