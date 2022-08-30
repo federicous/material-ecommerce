@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Typography, Box, Pagination, Stack, useMediaQuery   } from "@material-ui/core";
+import { Typography, Box, Pagination, Stack, useMediaQuery, Backdrop, CircularProgress, Alert, AlertTitle  } from "@material-ui/core";
 // import { getFirestore } from "../../services/getFirebase";
 import ItemList from "../ItemList/ItemList";
 import { Link } from 'react-router-dom';
@@ -15,6 +15,14 @@ const cookies = new Cookies();
 export default function HomePage2() {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
+  const [errorMessage, setErrorMessage] = useState(false);
+  // Backdrop or Loading spinner 
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
 	let pageSize = 12;
 	const [pagesCant, setPagesCant] = useState(10)
   // const [navList, setNavList] = useState([])
@@ -30,6 +38,7 @@ export default function HomePage2() {
 
     useEffect(() => {
       let cancel = false;
+      setOpen(true)
       const configuration = {
         method: "get",
         url: `${config.SERVER}/api/products?page=${page}&pageSize=${pageSize}`,
@@ -44,8 +53,11 @@ export default function HomePage2() {
           if (cancel) return;
           setProducts([...result.data.allProducts])
           setPagesCant(Math.ceil(result.data.total/pageSize))
+          setOpen(false)
         })
         .catch((error) => {
+          setErrorMessage(true)
+          setOpen(false)
           error = new Error();
         })
         return () => { 
@@ -102,22 +114,39 @@ export default function HomePage2() {
         </ImageButton>
       ))}
 
- {isMobile ? (
+ {isMobile || open ? (
     <></>
     ):(
     <>
-            <Typography variant={"h5"}>Productos</Typography>
+      {errorMessage ? (<>
+        
+        <Alert severity="error">
+        <AlertTitle>Error</AlertTitle>
+        No se pudieron cargar los datos — <strong>Falló la conexión</strong>
+        </Alert>
+
+      </>) : (<>
+        <Typography variant={"h5"}>Productos</Typography>
             <ItemList products={products} />
             <Box sx={{my:2}}>
               <Stack spacing={2}>
                 <Pagination count={pagesCant} page={page} onChange={handleChange} />
               </Stack>
             </Box>
+      </>)}
     </>
   )}
         {/* <ItemListContainer products={products} /> */}
       {/* </Box> */}
     </Box>
+
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+        >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 }
