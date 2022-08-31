@@ -10,6 +10,8 @@ import {
   Alert,
   Stack,
   Container,
+  Backdrop,
+  CircularProgress,
 } from "@material-ui/core";
 import axios from "axios";
 import { CartContext } from '../CartContext/CartContext';
@@ -28,6 +30,12 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
   const [loginFail, setLoginFail] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(false);
+  // Backdrop or Loading spinner 
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const token = cookies.get("token");
   let navigate = useNavigate();
@@ -35,6 +43,8 @@ export default function Login() {
   const handleSubmit = (e) => {
     // prevent the form from refreshing the whole page
     e.preventDefault();
+
+    setOpen(true)
 
     // set configurations
     const configuration = {
@@ -58,10 +68,13 @@ export default function Login() {
           path: "/",
         });
         // navigate(`/`, { replace: true });
+        setOpen(false)
         window.location.href = "/";
       })
       .catch((error) => {
         setLoginFail(true);
+        setErrorMessage(true)
+        setOpen(false)
         error = new Error();
       });
 
@@ -133,6 +146,13 @@ export default function Login() {
       {/* </ThemeProvider> */}
     </>)
     }
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+        >
+        <CircularProgress color="inherit" />
+      </Backdrop>
      </>         
   );
 }

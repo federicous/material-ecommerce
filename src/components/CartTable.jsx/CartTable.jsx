@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia, Link, Typography, Button } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia, Link, Typography, Button, Backdrop, CircularProgress } from '@material-ui/core';
 import { Link as DomLink, useNavigate } from 'react-router-dom';
 import { Delete } from '@material-ui/icons';
 import './CartTable.css';
@@ -25,10 +25,16 @@ function capitalizeFirstLetter(string) {
 
 const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
 
-  const [identificador, setIdentificador] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState(false);
+	// Backdrop or Loading spinner 
+	const [open, setOpen] = React.useState(false);
+	const handleClose = () => {
+	  setOpen(false);
+	};
   let navigate = useNavigate();
 
   let handleOrden = () => {
+    setOpen(true)
     let cancel = false;
     const configuration = {
       method: "post",
@@ -45,11 +51,13 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
         console.log(result.data);
         // setProducts([...result.data.allProducts])
         // setPagesCant(Math.ceil(result.data.total/pageSize))
-        setIdentificador(result.data.ordenId)
         // cleanCart();
+        setOpen(false)
         navigate(`/alert/${result.data.ordenId}`, { replace: true });
       })
       .catch((error) => {
+        setErrorMessage(true)
+        setOpen(false)
         error = new Error();
       })
       return () => { 
@@ -161,6 +169,13 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
       >
         Enviar orden
       </Button>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+        >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 }

@@ -61,11 +61,16 @@ const ItemList = ({ products }) => {
           ))}
       </Grid>
       :
-      <Box sx={{marginTop:"2rem"}}>
-        <Typography variant="h4">
-          Sin resultados
-        </Typography>
-      </Box>
+      ( productsList.length !== 0 ? <>
+        <Box sx={{marginTop:"2rem"}}>
+          <Typography variant="h4">
+            Sin resultados
+          </Typography>
+        </Box>
+      
+      </>:<></>
+
+      )
       }
     </>
   );

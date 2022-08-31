@@ -2,7 +2,7 @@
 import ItemList from '../ItemList/ItemList'
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router';
-import { Typography, Box, Pagination, Stack } from '@material-ui/core'
+import { Typography, Box, Pagination, Stack, CircularProgress } from '@material-ui/core'
 import axios from "axios";
 import {config} from "../../config/config"
 import Cookies from "universal-cookie";
@@ -16,6 +16,12 @@ const ItemListContainer = () => {
 	const [page, setPage] = React.useState(1);
 	let pageSize = 12;
 	const [pagesCant, setPagesCant] = useState(10)
+	const [errorMessage, setErrorMessage] = useState(false);
+	// Backdrop or Loading spinner 
+	const [open, setOpen] = useState(false);
+	const handleClose = () => {
+	  setOpen(false);
+	};
 
 	const handleChange = (event, value) => {
 		setPage(value);
@@ -27,6 +33,7 @@ const ItemListContainer = () => {
 	
 	useEffect(() => {
 		let cancel = false;
+		setOpen(true)
 		const configuration = {
 			method: "get",
 			// url: `${config.SERVER}/api/products/category/${category}?page=${page}&pageSize=${pageSize}`,
@@ -42,8 +49,11 @@ const ItemListContainer = () => {
 				if (cancel) return;
 				setProducts([...result.data.allProducts])
 				setPagesCant(Math.ceil(result.data.total/pageSize))
+				setOpen(false)
 			})
 			.catch((error) => {
+				setErrorMessage(true)
+				setOpen(false)
 			  error = new Error();
 			})
 			return () => { 
@@ -54,13 +64,22 @@ const ItemListContainer = () => {
 	return (
 		<>
 		<Typography variant='h5'>{category}</Typography>
-			<ItemList products={products} />
-			<Box sx={{my:2}}>
-				<Stack spacing={2}>
-					{/* <Typography>Page: {page}</Typography> */}
-					<Pagination count={pagesCant} page={page} onChange={handleChange} />
-				</Stack>
-      			</Box>
+
+			{open ? (<>
+				<Box sx={{ display: 'flex', mt:"30vh", height:"100%" }}>
+					<CircularProgress />
+				</Box>
+			
+			</>) : (<>
+				<ItemList products={products} />
+				<Box sx={{my:2}}>
+					<Stack spacing={2}>
+						{/* <Typography>Page: {page}</Typography> */}
+						<Pagination count={pagesCant} page={page} onChange={handleChange} />
+					</Stack>
+				</Box>
+			</>)}
+		
 		</>
 	)
 }
