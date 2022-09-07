@@ -4,9 +4,10 @@ import Item from "../Item/Item";
 import ItemHorizontal from "../Item/ItemHorizontal";
 import PaginationLink from "../Pagination/Pagination";
 import { Box } from "@material-ui/system";
-import "./ItemList.css"
+import "./ItemList.css";
+import {config} from "../../config/config";
 
-let dolar=132;
+let dolar = config.DOLAR;
 
 function ccyFormat(num) {
 	return `${num.toFixed(2)}`;
@@ -31,7 +32,7 @@ const ItemList = ({ products }) => {
                     sku={item._id ? item._id : item.id }
                     model={item.label}
                     name={`${
-                      [item.name,item.color,item.linea,item.presentacion,`${item.contenido ? (""+item.contenido) : ""}`].filter(Boolean).join("|")
+                      [item.name,item.color,item.linea,item.presentacion,`${item.contenido ? (""+item.contenido) : ""}`].filter(Boolean).join(" | ")
                       }`}
                     description={item.code}
                     img={item.image}
