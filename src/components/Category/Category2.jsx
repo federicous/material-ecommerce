@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { KeyboardArrowDown } from '@material-ui/icons'
 import axios from "axios";
 import { CartContext } from '../CartContext/CartContext';
+// import {config} from "../../config/config";
 import {config} from "../../config/config";
 import Cookies from "universal-cookie";
 
@@ -98,6 +99,7 @@ export default function MenuListComposition({lista}) {
           onClick={handleToggle}
           endIcon={<KeyboardArrowDown />}
           sx={{color:"inherit"}}
+          variant="filled"
         >
           <Typography gutterBottom sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}, mb:"0px"}}  variant="body" component="div">
           {lista}

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card,CardActions,CardContent,CardMedia,Container,Typography } from '@material-ui/core';
 import ItemCount from '../ItemCount/ItemCount'
+// import {config} from "../../config/config";
 import {config} from "../../config/config";
 
 const Item = ({initial, name, model, description, img, stock, price, product}) => {

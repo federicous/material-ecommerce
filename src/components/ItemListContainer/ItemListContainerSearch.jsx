@@ -5,6 +5,7 @@ import { useParams } from 'react-router';
 // import { getFirestore } from '../../services/getFirebase';
 import { Typography, Box, Pagination, Stack, CircularProgress  } from '@material-ui/core'
 import axios from "axios";
+// import {config} from "../../config/config"
 import {config} from "../../config/config"
 import Cookies from "universal-cookie";
 const cookies = new Cookies();

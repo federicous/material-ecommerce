@@ -11,8 +11,10 @@ import CategoryTekbond from '../Category/CategoryTekbond'
 import Busqueda from '../Busqueda/Busqueda'
 import Account from '../Account/Account'
 import Cookies from "universal-cookie";
+// import {config} from "../../config/config";
 import {config} from "../../config/config";
 import axios from "axios";
+import OrderButton from '../Order/OrderButton';
 
 const cookies = new Cookies();
 const usuarioCookie = cookies.get("user");  
@@ -114,6 +116,7 @@ return (
                   <>
                   {usuario ? 
                                      <Box style={{textDecoration: "none", color: "inherit", display: "flex", flexDirection: "row", alignItems: "center",}}>
+                                      <OrderButton/>
                                      <Link to={`/cart`} style={{ textDecoration: "none", color: "inherit" }}>
                                         <IconButton>
                                           <Badge badgeContent={quantity} color="error">

@@ -17,6 +17,7 @@ import axios from "axios";
 import { CartContext } from '../CartContext/CartContext';
 import Cookies from "universal-cookie";
 import HomePage2 from "../HomePage2/HomePage2";
+// import {config} from "../../config/config"
 import {config} from "../../config/config"
 
 const cookies = new Cookies();

@@ -1,8 +1,11 @@
 import React, { createContext, useState, useEffect } from 'react'
 import axios from "axios";
+// import {config} from "../../config/config";
 import {config} from "../../config/config";
 import Cookies from "universal-cookie";
+
 const cookies = new Cookies();
+let dolar = config.DOLAR;
 
 export const CartContext = createContext();
 
@@ -89,12 +92,15 @@ const CartContextProvider = ({children}) => {
 	useEffect(() => {
 		let suma=0;
 		for (const item of cart) {
-			suma=parseFloat(item.qty)*parseFloat(item.price ? item.price : item.usd)+parseFloat(suma)
+			suma=parseFloat(item.qty)*parseFloat(item.price ? item.price : item.usd*dolar)+parseFloat(suma)
 		}
 		setTotal(suma);
 		let sumaIva=0;
 		for (const item of cart) {
-			sumaIva=(parseFloat(item.qty)*parseFloat(item.price ? item.price : item.usd)*parseFloat(item.iva)/100)+parseFloat(sumaIva)
+			let IVA=parseFloat(typeof item.iva === "string" ? item.iva.replace(/,/g, '.') : item.iva);
+			let PRICE = parseFloat(item.price ? item.price : item.usd*dolar);
+			let QTY=parseFloat(item.qty);
+			sumaIva=(QTY*PRICE*IVA/100)+parseFloat(sumaIva);
 		}
 		setIvaTotal(sumaIva);
 

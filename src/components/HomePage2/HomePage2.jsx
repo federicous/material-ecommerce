@@ -7,6 +7,7 @@ import { navList } from '../utils/navList';
 import { ImageButton, ImageSrc, Image,ImageBackdrop, ImageMarked  } from '../utils/homePageUtils';
 // import { CartContext } from '../CartContext/CartContext';
 import axios from "axios";
+// import {config} from "../../config/config"
 import {config} from "../../config/config"
 import Cookies from "universal-cookie";
 const cookies = new Cookies();

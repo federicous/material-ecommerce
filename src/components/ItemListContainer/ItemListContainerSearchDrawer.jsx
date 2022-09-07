@@ -9,6 +9,7 @@ import BusquedaDrawerWhite from '../Busqueda/BusquedaDrawerWhite'
 import axios from "axios";
 import { useTheme } from '@material-ui/core/styles';
 import Cookies from "universal-cookie";
+// import {config} from "../../config/config"
 import {config} from "../../config/config"
 
 const cookies = new Cookies();

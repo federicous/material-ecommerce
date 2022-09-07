@@ -6,6 +6,7 @@ import { useParams } from 'react-router';
 import { Box } from '@material-ui/system';
 import Return from '../utils/Return';
 import axios from "axios";
+// import {config} from "../../config/config"
 import {config} from "../../config/config"
 import Cookies from "universal-cookie";
 const cookies = new Cookies();

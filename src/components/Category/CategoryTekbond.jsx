@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { KeyboardArrowDown } from '@material-ui/icons'
 import axios from "axios";
 import { CartContext } from '../CartContext/CartContext';
+// import {config} from "../../config/config";
 import {config} from "../../config/config";
 import Cookies from "universal-cookie";
 

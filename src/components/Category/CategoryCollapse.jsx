@@ -20,6 +20,7 @@ import {
       import ModeThemeDrawer from "../ModeTheme/ModeThemeDrawer";
       import AccountDrawer from '../Account/AccountDrawer'
       import axios from "axios";
+//       import {config} from "../../config/config";
       import {config} from "../../config/config";
       import { CartContext } from '../CartContext/CartContext';
       import Cookies from "universal-cookie";

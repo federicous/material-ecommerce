@@ -3,6 +3,7 @@ import { Card,CardActions,CardContent,CardMedia,Container,Typography,Box, Button
 import { Link } from 'react-router-dom';
 import { fontSize } from '@material-ui/system';
 import ItemCountHorizontal from '../ItemCount/ItemCountHorizontal'
+// import {config} from "../../config/config";
 import {config} from "../../config/config";
 
 function capitalizeFirstLetter(string) {
