@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 // import { Form } from "react-bootstrap";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import {
   Box,
   TextField,
@@ -141,6 +141,7 @@ export default function Login() {
                 )     
               )}
             </Stack>
+            <Button sx={{color:"text.primary", textDecorationLine:"underline"}} onClick={() => navigate(`/register`, { replace: true })} >Crear cuenta</Button>
           </>
         </Container>
         </form>

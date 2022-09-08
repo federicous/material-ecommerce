@@ -11,6 +11,7 @@ import Cart from './components/Cart/Cart';
 import CartContextProvider from './components/CartContext/CartContext';
 import Return from './components/utils/Return';
 import Login from './components/Login/Login';
+import Register from './components/Register/Register';
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
 // import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
@@ -92,6 +93,7 @@ function App() {
           >
             <Routes>
               <Route exact path="/"  element={<Login />}/>
+              <Route exact path="/register"  element={<Register />}/>
               <Route path="/" element={<ProtectedRoutes />}>
                 <Route path="/home" element={<HomePage2 />} />
                 <Route exact path="/category/:category" element={<ItemListContainer />} />
