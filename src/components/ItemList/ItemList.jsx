@@ -23,7 +23,7 @@ const ItemList = ({ products }) => {
       <Grid container spacing={2} sx={{ marginTop: "0.1rem" }}>
         {productsList &&
           productsList.map((item) => (
-            <Grid item key={item._id ? item._id : item.id} xs={12} sm={4} md={3}>
+            <Grid item key={item._id ? item._id : item.id} xs={12} sm={4} md={4} lg={3}>
               <Box  sx={{ width:"auto" }}>
                 <div className="item">
                     <Item

@@ -6,6 +6,7 @@ import './NavBar.css';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../CartContext/CartContext';
 import TemporaryDrawer from './TemporaryDrawer';
+import PermanentDrawer from './PermanentDrawer'
 import Category2 from '../Category/Category2'
 import CategoryTekbond from '../Category/CategoryTekbond'
 import Busqueda from '../Busqueda/Busqueda'
@@ -90,12 +91,12 @@ return (
             <>
             {usuario ? <>             
               {/* <Category2 lista="bremen"/> <CategoryTekbond/>  */}
-              {navList.map((item) => (
+              {/* {navList.map((item) => (
                 <Category2 key={item} lista={item}/>
-                        ))}            
+                        ))}             */}
             </> : <></>}
             {/* <Category2/> */}
-            <Busqueda/>
+            {/* <Busqueda/> */}
             {/* <ModeTheme/>
             <Logout /> */}
             </>
@@ -115,7 +116,9 @@ return (
                 ):(
                   <>
                   {usuario ? 
+                  <>
                                      <Box style={{textDecoration: "none", color: "inherit", display: "flex", flexDirection: "row", alignItems: "center",}}>
+                                     <Busqueda/>
                                       <OrderButton/>
                                      <Link to={`/cart`} style={{ textDecoration: "none", color: "inherit" }}>
                                         <IconButton>
@@ -125,8 +128,9 @@ return (
                                         </IconButton>
                                      </Link>
                                      <Account/>
+              {/* <PermanentDrawer/> */}
                                    </Box>
-                  
+                  </>
                   : <></>}
                     {/* <Box style={{textDecoration: "none", color: "inherit", display: "flex", flexDirection: "row", alignItems: "center",}}>
                       <Link to={`/cart`} style={{ textDecoration: "none", color: "inherit" }}>

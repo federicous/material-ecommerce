@@ -5,7 +5,7 @@ import ItemListContainerSearch from './components/ItemListContainer/ItemListCont
 import ItemListContainerSearchDrawer from './components/ItemListContainer/ItemListContainerSearchDrawer';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailContainer';
-import { Container } from '@material-ui/core'
+import { Container, useMediaQuery } from '@material-ui/core'
 import HomePage2 from './components/HomePage2/HomePage2';
 import Cart from './components/Cart/Cart';
 import CartContextProvider from './components/CartContext/CartContext';
@@ -21,6 +21,8 @@ import { blue, green } from '@material-ui/core/colors';
 import { CartContext } from './components/CartContext/CartContext';
 import AlertMessage from './components/AlertMessage/AlertMessage';
 import Order from './components/Order/Order';
+import PermanentDrawer2 from './components/NavBar/PermanentDrawer2'
+import { Box } from '@material-ui/system';
 
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
 
   const cartContext = useContext(CartContext);
 	const {modeTheme}= cartContext;
+  const isMobile = useMediaQuery('(max-width:900px)');
 
   //  useEffect(() => {
   //    console.log("use effect en app");
@@ -82,6 +85,13 @@ function App() {
         <CssBaseline/>
         <BrowserRouter>
           <NavBar />
+          <Box sx={{display:"flex"}}>
+          {isMobile ? 
+          <></>:<>
+          <PermanentDrawer2 />
+          </>        
+        }
+  
           <Container
             sx={{
               marginTop: "80px",
@@ -112,6 +122,7 @@ function App() {
               <Route exact path="*" element={<Return />} /> 
             </Routes>
           </Container>
+          </Box>
         </BrowserRouter>
       </ThemeProvider>
     // </CartContextProvider>

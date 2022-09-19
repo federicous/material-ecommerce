@@ -284,7 +284,7 @@ const isNumber = (number, min) => {
                 <TextField
                   required
                   fullWidth
-                  helperText={!password ? "Letra mayúscula, letra minúscula, número, +8 caracateres " : ""}
+                  helperText={!password ? "Letra mayúscula, letra minúscula, número, +8 caracteres " : ""}
                   name="password"
                   label="Contraseña"
                   type="password"
