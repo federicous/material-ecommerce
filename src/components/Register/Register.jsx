@@ -400,7 +400,6 @@ const isNumber = (number, min) => {
                   fullWidth
                   id="altura"
                   label="Altura"
-                  autoFocus
                   onChange={handleAltura}
                 />
               </Grid>
@@ -412,7 +411,6 @@ const isNumber = (number, min) => {
                   fullWidth
                   id="cuit"
                   label="CUIT"
-                  autoFocus
                   type="number"
                   onChange={handleCuit}
                 />
