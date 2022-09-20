@@ -1,24 +1,13 @@
 import {
-	Button,
-	Divider,
-	Drawer,
 	List,
 	ListItem,
-	ListItemButton,
-	ListItemIcon,
 	ListItemText,
 	Collapse,
-	Typography,
-	SwipeableDrawer,
       } from "@material-ui/core";
-      import { Menu, ExitToApp, Search, Inbox,ExpandLess, ExpandMore, StarBorder  } from "@material-ui/icons";
-      import { Box } from "@material-ui/system";
+      import { ExpandLess, ExpandMore  } from "@material-ui/icons";
       import * as React from "react";
       import { Link } from "react-router-dom";
       // import { navList } from "../utils/navList";
-      import LogoutDrawer from "../Logout/LogoutDrawer";
-      import ModeThemeDrawer from "../ModeTheme/ModeThemeDrawer";
-      import AccountDrawer from '../Account/AccountDrawer'
       import axios from "axios";
 //       import {config} from "../../config/config";
       import {config} from "../../config/config";
@@ -88,9 +77,10 @@ return (
 		<List component="div" disablePadding
 		onClick={toggleDrawer(anchor, false)}
 		onKeyDown={toggleDrawer(anchor, false)}
+		sx={{overflow:"hidden"}}
 		>
 			{navList.map((item) => (
-				<ListItem key={item} sx={{color:'text.primary', ml:2}}
+				<ListItem button key={item} sx={{color:'text.primary', ml:2}}
 				component={Link}  to={`/${lista}/category/${item}`} style={{ textDecoration:"none"}}
 				onClick={toggleDrawer(anchor, false)}
 				onKeyDown={toggleDrawer(anchor, false)}

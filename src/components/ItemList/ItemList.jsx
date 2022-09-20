@@ -2,7 +2,6 @@ import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import Item from "../Item/Item";
 import ItemHorizontal from "../Item/ItemHorizontal";
-import PaginationLink from "../Pagination/Pagination";
 import { Box } from "@material-ui/system";
 import "./ItemList.css";
 import {config} from "../../config/config";

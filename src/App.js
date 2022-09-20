@@ -8,7 +8,6 @@ import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailCont
 import { Container, useMediaQuery } from '@material-ui/core'
 import HomePage2 from './components/HomePage2/HomePage2';
 import Cart from './components/Cart/Cart';
-import CartContextProvider from './components/CartContext/CartContext';
 import Return from './components/utils/Return';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
@@ -16,14 +15,17 @@ import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
 // import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { useMemo, useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { blue, green } from '@material-ui/core/colors';
 import { CartContext } from './components/CartContext/CartContext';
 import AlertMessage from './components/AlertMessage/AlertMessage';
 import Order from './components/Order/Order';
 import PermanentDrawer2 from './components/NavBar/PermanentDrawer2'
 import { Box } from '@material-ui/system';
+import Cookies from "universal-cookie";
 
+const cookies = new Cookies();
+const token = cookies.get("token");  
 
 function App() {
   // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -88,7 +90,10 @@ function App() {
           <Box sx={{display:"flex"}}>
           {isMobile ? 
           <></>:<>
+          {token ?
           <PermanentDrawer2 />
+          : <></>
+          }
           </>        
         }
   

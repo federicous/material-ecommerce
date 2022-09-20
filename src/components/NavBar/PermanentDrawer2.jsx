@@ -3,26 +3,18 @@ import Box from '@material-ui/core/Box';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemButton from '@material-ui/core/ListItemButton';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import LogoutDrawer from "../Logout/LogoutDrawer";
 import ModeThemeDrawer from "../ModeTheme/ModeThemeDrawer";
 import AccountDrawer from '../Account/AccountDrawer'
-import { Link } from "react-router-dom";
 import CategoryCollapse from "../Category/CategoryCollapse";
-import { Menu, Search, } from "@material-ui/icons";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { CartContext } from '../CartContext/CartContext';
 import {config} from "../../config/config";
+import OrderButtonTemporary from "../Order/OrderButtonTemporary"
 
 const cookies = new Cookies();
 
@@ -154,7 +146,7 @@ export default function PermanentDrawerLeft() {
               <AccountDrawer/>
             </ListItem>
             <Divider />
-            <Link to={`/searchDrawer/`} style={{ textDecoration:"none"}}>
+            {/* <Link to={`/searchDrawer/`} style={{ textDecoration:"none"}}>
               <ListItem
                 onClick={toggleDrawer(anchor, false)}
                 onKeyDown={toggleDrawer(anchor, false)}
@@ -164,7 +156,7 @@ export default function PermanentDrawerLeft() {
                   </ListItemIcon>           
               </ListItem>
               <Divider />
-            </Link>
+            </Link> */}
 
             {navList.map((item) => (        
                 <CategoryCollapse key={item} lista={item} toggleDrawer={toggleDrawer} anchor={anchor} />
@@ -172,6 +164,8 @@ export default function PermanentDrawerLeft() {
            <Divider />  
           </Box>
           <Box>
+          <Divider />
+          <OrderButtonTemporary toggleDrawer={(anchor, isfalse) => toggleDrawer(anchor, isfalse)} anchor={anchor}/>
             <Divider />
             <ModeThemeDrawer
               onClick={toggleDrawer(anchor, false)}

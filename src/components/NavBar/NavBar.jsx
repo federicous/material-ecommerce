@@ -6,20 +6,14 @@ import './NavBar.css';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../CartContext/CartContext';
 import TemporaryDrawer from './TemporaryDrawer';
-import PermanentDrawer from './PermanentDrawer'
-import Category2 from '../Category/Category2'
-import CategoryTekbond from '../Category/CategoryTekbond'
 import Busqueda from '../Busqueda/Busqueda'
 import Account from '../Account/Account'
 import Cookies from "universal-cookie";
 // import {config} from "../../config/config";
-import {config} from "../../config/config";
-import axios from "axios";
-import OrderButton from '../Order/OrderButton';
 
 const cookies = new Cookies();
 const usuarioCookie = cookies.get("user");  
-const token = cookies.get("token");  
+// const token = cookies.get("token");  
 
 export default function NavBar() {
 	const cartContext = useContext(CartContext);
@@ -27,7 +21,7 @@ export default function NavBar() {
   const [quantity, setQuantity] = useState(0)
   const isMobile = useMediaQuery('(max-width:900px)');
   const [usuario, setUsuario] = useState("")
-  const [navList, setNavList] = React.useState([])
+  // const [navList, setNavList] = React.useState([])
 
   useEffect(() => {
     let total=0;
@@ -41,34 +35,34 @@ export default function NavBar() {
     setUsuario(usuarioCookie)
   }, [user,cart])
   
-  React.useEffect(() => {
-    let cancel = false;
-    if (cookies.get("user")) {
-      const configuration = {
-        method: "get",
-        // url: `${config.SERVER}/api/categorias/label`,
-        url: `${config.SERVER}/api/categorias/lista`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      };
+  // React.useEffect(() => {
+  //   let cancel = false;
+  //   if (cookies.get("user")) {
+  //     const configuration = {
+  //       method: "get",
+  //       // url: `${config.SERVER}/api/categorias/label`,
+  //       url: `${config.SERVER}/api/categorias/lista`,
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       withCredentials: true,
+  //     };
   
-            // make the API call
-        axios(configuration)
-        .then((result) => {
-          if (cancel) return;
-          setNavList([...result.data])
-        })
-        .catch((error) => {
-          error = new Error();
-        })
-        return () => { 
-          cancel = true;
-        }
-    }
+  //           // make the API call
+  //       axios(configuration)
+  //       .then((result) => {
+  //         if (cancel) return;
+  //         setNavList([...result.data])
+  //       })
+  //       .catch((error) => {
+  //         error = new Error();
+  //       })
+  //       return () => { 
+  //         cancel = true;
+  //       }
+  //   }
 
-  }, [user]);
+  // }, [user]);
 
 return (
   <Box sx={{ flexGrow: 1 }}>
@@ -107,9 +101,11 @@ return (
           {isMobile ? (
             <Box style={{textDecoration: "none", color: "inherit", display: "flex", flexDirection: "row", alignItems: "center",}}  >
               <Link to={`/cart`} style={{ textDecoration: "none", color: "inherit" }}>
-                <Badge badgeContent={quantity} color="error">
-                  <ShoppingCart />
-                </Badge>
+                <IconButton>
+                  <Badge badgeContent={quantity} color="error">
+                    <ShoppingCart />
+                  </Badge>
+                </IconButton>
               </Link>
               <TemporaryDrawer/>
             </Box>
@@ -119,7 +115,7 @@ return (
                   <>
                                      <Box style={{textDecoration: "none", color: "inherit", display: "flex", flexDirection: "row", alignItems: "center",}}>
                                      <Busqueda/>
-                                      <OrderButton/>
+                                      {/* <OrderButton/> */}
                                      <Link to={`/cart`} style={{ textDecoration: "none", color: "inherit" }}>
                                         <IconButton>
                                           <Badge badgeContent={quantity} color="error">

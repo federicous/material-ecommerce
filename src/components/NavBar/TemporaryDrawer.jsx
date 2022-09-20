@@ -20,6 +20,7 @@ import {config} from "../../config/config";
 import { CartContext } from '../CartContext/CartContext';
 import CategoryCollapse from "../Category/CategoryCollapse";
 import Cookies from "universal-cookie";
+import OrderButtonTemporary from "../Order/OrderButtonTemporary";
 
 const cookies = new Cookies();
 const token = cookies.get("token");  
@@ -97,7 +98,7 @@ export default function TemporaryDrawer() {
             </ListItem>
             <Divider />
             <Link to={`/searchDrawer/`} style={{ textDecoration:"none"}}>
-              <ListItem
+              <ListItem button 
                 onClick={toggleDrawer(anchor, false)}
                 onKeyDown={toggleDrawer(anchor, false)}
               >
@@ -114,6 +115,9 @@ export default function TemporaryDrawer() {
            <Divider />  
           </Box>
           <Box>
+          <Divider />
+          <OrderButtonTemporary toggleDrawer={(anchor, isfalse) => toggleDrawer(anchor, isfalse)} anchor={anchor}
+          />
             <Divider />
             <ModeThemeDrawer
               onClick={toggleDrawer(anchor, false)}

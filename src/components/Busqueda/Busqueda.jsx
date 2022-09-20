@@ -2,11 +2,8 @@ import {Search as SearchIcon} from '@material-ui/icons';
 import { alpha, styled } from "@material-ui/system"; 
 import { InputBase } from '@material-ui/core';
 import { useState, useEffect } from 'react';
-import Cookies from "universal-cookie";
-import axios from "axios";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const cookies = new Cookies();
 
 const Search = styled('div')(({ theme }) => ({
 	position: 'relative',

@@ -4,7 +4,6 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  SwipeableDrawer,
   Drawer,
 } from "@material-ui/core";
 import { Menu, Search, } from "@material-ui/icons";

@@ -1,7 +1,6 @@
 import React from 'react'
-import { Card,CardActions,CardContent,CardMedia,Container,Typography,Box, Button } from '@material-ui/core';
+import { Card,CardContent,CardMedia,Typography,Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { fontSize } from '@material-ui/system';
 import ItemCountHorizontal from '../ItemCount/ItemCountHorizontal'
 // import {config} from "../../config/config";
 import {config} from "../../config/config";

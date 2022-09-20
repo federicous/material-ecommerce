@@ -16,9 +16,9 @@ export default function AuthComponent() {
 
   return (
     <>
-            <ListItem onClick={() => logout()} sx={{display:"flex", justifyContent:"center"}}>
+            <ListItem button  onClick={() => logout()} sx={{display:"flex", justifyContent:"center", cursor:"pointer"}}>
               <ListItemIcon sx={{alignItems:"center", color:"text.primary"}}>
-                <ExitToApp sx={{mr:1}} fontSize="small" />Logout
+                <ExitToApp sx={{mr:1}} fontSize="small" />Salir
               </ListItemIcon>
             </ListItem>
     </>

@@ -20,7 +20,7 @@ export default function AuthComponent() {
           <ListItemIcon>
             <ExitToApp fontSize="small" />
           </ListItemIcon>
-          Logout
+          Salir
         </MenuItem>
     </>
   );
