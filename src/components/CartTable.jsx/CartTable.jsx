@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, CardMedia, Link, Typography, Button, Backdrop, CircularProgress } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, Grid, CardMedia, Link, Typography, Button, Backdrop, CircularProgress, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { Link as DomLink, useNavigate } from 'react-router-dom';
 import { Delete } from '@material-ui/icons';
 import './CartTable.css';
@@ -7,6 +7,8 @@ import axios from "axios";
 // import {config} from "../../config/config";
 import {config} from "../../config/config";
 import Cookies from "universal-cookie";
+import ApiQuery from "../utils/apiQuery/apiQuery"
+let apiQuery = new ApiQuery();
 
 const cookies = new Cookies();
 
@@ -29,7 +31,9 @@ function capitalizeFirstLetter(string) {
 }
 
 const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
-
+  const [isAdmin, setIsAdmin] = React.useState(false)
+  const [listaUsuarios, setListaUsuarios] = React.useState([])
+  const [usuario, setUsuario] = React.useState('')
   const [errorMessage, setErrorMessage] = React.useState(false);
 	// Backdrop or Loading spinner 
 	const [open, setOpen] = React.useState(false);
@@ -68,6 +72,25 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
       return () => { 
         cancel = true;
       }
+  }
+
+  React.useEffect(() => {
+    apiQuery.get(`/permisos`)
+    .then((respuesta)=>{
+      setIsAdmin(respuesta)
+      apiQuery.get(`/api/users`)
+      .then((res)=>{
+        setListaUsuarios(res)
+      })
+    })
+  }, [])
+
+  const handleUsuario = (event) => {
+    setUsuario(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
   }
 
 	return (
@@ -194,11 +217,62 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
           </TableBody>
         </Table>
       </TableContainer>
+      {isAdmin ? <>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+                <Grid item xs={12} sm={12}>
+                <FormControl variant="outlined" sx={{width:"100%"}} >
+                  <InputLabel id="demo-simple-select-outlined-label">Cliente</InputLabel>
+                  <Select
+                  fullWidth
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={usuario}
+                    onChange={handleUsuario}
+                    label="Cliente"
+                    name="cliente"
+                    sx={{width:"100%"}}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {listaUsuarios.sort(function (a, b) {
+                      if (a.name > b.name) {
+                        return 1;
+                      }
+                      if (a.name < b.name) {
+                        return -1;
+                      }
+                      // a must be equal to b
+                      return 0;
+                    }).map((item) => (
+                      <MenuItem key={item.name} value={item.name}>{`${
+                        [item.name,item.ferreteria].filter(Boolean).join(" - ")
+                        }`}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <Button sx={{my:3, width:"100%"}} variant='contained' 
+                onClick={handleOrden}
+                disabled={usuario ? false : true}
+                >
+                  Enviar orden
+                </Button>
+              </Grid>
+            </Grid>
+        </Box>        
+
+      </> : <>
       <Button sx={{my:3}} variant='contained' 
       onClick={handleOrden}
       >
         Enviar orden
       </Button>
+      
+      </>}
+
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}

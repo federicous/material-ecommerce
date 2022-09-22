@@ -9,11 +9,11 @@ import TemporaryDrawer from './TemporaryDrawer';
 import Busqueda from '../Busqueda/Busqueda'
 import Account from '../Account/Account'
 import Cookies from "universal-cookie";
-// import {config} from "../../config/config";
+import ApiQuery from "../utils/apiQuery/apiQuery"
+let apiQuery = new ApiQuery();
 
 const cookies = new Cookies();
 const usuarioCookie = cookies.get("user");  
-// const token = cookies.get("token");  
 
 export default function NavBar() {
 	const cartContext = useContext(CartContext);
@@ -22,6 +22,7 @@ export default function NavBar() {
   const isMobile = useMediaQuery('(max-width:900px)');
   const [usuario, setUsuario] = useState("")
   // const [navList, setNavList] = React.useState([])
+  const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
     let total=0;
@@ -35,34 +36,13 @@ export default function NavBar() {
     setUsuario(usuarioCookie)
   }, [user,cart])
   
-  // React.useEffect(() => {
-  //   let cancel = false;
-  //   if (cookies.get("user")) {
-  //     const configuration = {
-  //       method: "get",
-  //       // url: `${config.SERVER}/api/categorias/label`,
-  //       url: `${config.SERVER}/api/categorias/lista`,
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       withCredentials: true,
-  //     };
-  
-  //           // make the API call
-  //       axios(configuration)
-  //       .then((result) => {
-  //         if (cancel) return;
-  //         setNavList([...result.data])
-  //       })
-  //       .catch((error) => {
-  //         error = new Error();
-  //       })
-  //       return () => { 
-  //         cancel = true;
-  //       }
-  //   }
-
-  // }, [user]);
+  useEffect(() => {
+    apiQuery.get(`/permisos`)
+    .then((respuesta)=>{
+      console.log(respuesta);
+      setIsAdmin(respuesta)
+    })
+  }, [])
 
 return (
   <Box sx={{ flexGrow: 1 }}>
