@@ -45,14 +45,32 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   let handleOrden = () => {
     setOpen(true)
     let cancel = false;
-    const configuration = {
-      method: "post",
-      url: `${config.SERVER}/api/order`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      withCredentials: true,
-    };
+
+    let configuration;
+
+    if (usuario!=='') {
+      console.log(`cliente seleccionado`);
+      configuration = {
+        method: "post",
+        url: `${config.SERVER}/api/order/user`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: usuario,
+        withCredentials: true,
+      }
+    } else {
+      console.log(`sincliente`);
+      configuration = {
+        method: "post",
+        url: `${config.SERVER}/api/order`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true, 
+      }
+    }
+
           // make the API call
       axios(configuration)
       .then((result) => {
@@ -87,6 +105,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
 
   const handleUsuario = (event) => {
     setUsuario(event.target.value);
+    console.log(event.target.value.email);
   };
 
   const handleSubmit = (event) => {
@@ -246,7 +265,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
                       // a must be equal to b
                       return 0;
                     }).map((item) => (
-                      <MenuItem key={item.name} value={item.name}>{`${
+                      <MenuItem key={item.name} value={item}>{`${
                         [item.name,item.ferreteria].filter(Boolean).join(" - ")
                         }`}</MenuItem>
                     ))}
@@ -254,7 +273,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={12}>
-                <Button sx={{my:3, width:"100%"}} variant='contained' 
+                <Button sx={{ width:"100%"}} variant='contained' 
                 onClick={handleOrden}
                 disabled={usuario ? false : true}
                 >
