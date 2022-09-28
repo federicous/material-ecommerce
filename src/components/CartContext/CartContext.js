@@ -3,6 +3,8 @@ import axios from "axios";
 // import {config} from "../../config/config";
 import {config} from "../../config/config";
 import Cookies from "universal-cookie";
+import ApiQuery from "../utils/apiQuery/apiQuery"
+let apiQuery = new ApiQuery();
 
 const cookies = new Cookies();
 let dolar = config.DOLAR;

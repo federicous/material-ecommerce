@@ -9,8 +9,8 @@ import TemporaryDrawer from './TemporaryDrawer';
 import Busqueda from '../Busqueda/Busqueda'
 import Account from '../Account/Account'
 import Cookies from "universal-cookie";
-import ApiQuery from "../utils/apiQuery/apiQuery"
-let apiQuery = new ApiQuery();
+// import ApiQuery from "../utils/apiQuery/apiQuery"
+// let apiQuery = new ApiQuery();
 
 const cookies = new Cookies();
 const usuarioCookie = cookies.get("user");  
@@ -22,7 +22,7 @@ export default function NavBar() {
   const isMobile = useMediaQuery('(max-width:900px)');
   const [usuario, setUsuario] = useState("")
   // const [navList, setNavList] = React.useState([])
-  const [isAdmin, setIsAdmin] = useState(false)
+  // const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
     let total=0;
@@ -36,13 +36,13 @@ export default function NavBar() {
     setUsuario(usuarioCookie)
   }, [user,cart])
   
-  useEffect(() => {
-    apiQuery.get(`/permisos`)
-    .then((respuesta)=>{
-      console.log(respuesta);
-      setIsAdmin(respuesta)
-    })
-  }, [])
+  // useEffect(() => {
+  //   apiQuery.get(`/permisos`)
+  //   .then((respuesta)=>{
+  //     console.log(respuesta);
+  //     setIsAdmin(respuesta)
+  //   })
+  // }, [])
 
 return (
   <Box sx={{ flexGrow: 1 }}>

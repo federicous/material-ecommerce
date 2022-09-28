@@ -33,7 +33,8 @@ function capitalizeFirstLetter(string) {
 const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   const [isAdmin, setIsAdmin] = React.useState(false)
   const [listaUsuarios, setListaUsuarios] = React.useState([])
-  const [usuario, setUsuario] = React.useState('')
+  const [usuario, setUsuario] = React.useState('');
+  const [descuento, setDescuento] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState(false);
 	// Backdrop or Loading spinner 
 	const [open, setOpen] = React.useState(false);
@@ -103,9 +104,15 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
     })
   }, [])
 
+    React.useEffect(() => {
+    apiQuery.get(`/descuento?email=${usuario.email}`)
+    .then((respuesta)=>{
+      setDescuento(respuesta)
+    })
+  }, [usuario])
+
   const handleUsuario = (event) => {
     setUsuario(event.target.value);
-    console.log(event.target.value.email);
   };
 
   const handleSubmit = (event) => {
@@ -220,7 +227,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
             ))}
 
             <TableRow>
-              <TableCell rowSpan={3} />
+              <TableCell rowSpan={4} />
               <TableCell colSpan={3}>Subtotal</TableCell>
               <TableCell align="center">{ccyFormat(parseFloat(total))}</TableCell>
             </TableRow>
@@ -229,10 +236,21 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
               {/* <TableCell align="right">{``}</TableCell> */}
               <TableCell align="center">{ccyFormat(parseFloat(ivaTotal))}</TableCell>
             </TableRow>
+            {descuento ? <>
+              <TableRow>
+                <TableCell colSpan={3}>Descuento ({parseFloat(descuento)}%)</TableCell>
+                <TableCell align="center">- {ccyFormat(parseFloat(descuento)/100*(parseFloat(total)))}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={3}>TOTAL</TableCell>
+                <TableCell align="center">{ccyFormat((parseFloat(total)+parseFloat(ivaTotal))-(parseFloat(descuento)/100*(parseFloat(total))))}</TableCell>
+              </TableRow>
+            </> : <>
             <TableRow>
               <TableCell colSpan={3}>TOTAL</TableCell>
-              <TableCell align="center">{ccyFormat(parseFloat(total)+parseFloat(ivaTotal))}</TableCell>
-            </TableRow>
+              <TableCell align="center">{ccyFormat((parseFloat(total)+parseFloat(ivaTotal)))}</TableCell>
+            </TableRow>            
+            </>}
           </TableBody>
         </Table>
       </TableContainer>

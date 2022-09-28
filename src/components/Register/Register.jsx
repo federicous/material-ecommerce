@@ -448,7 +448,7 @@ const isNumber = (number, min) => {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        <Copyright sx={{ my: 4 }} />
       </Container>
     // </ThemeProvider>
   );
