@@ -105,10 +105,12 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   }, [])
 
     React.useEffect(() => {
-    apiQuery.get(`/descuento?email=${usuario.email}`)
-    .then((respuesta)=>{
-      setDescuento(respuesta)
-    })
+      if (usuario) {
+        apiQuery.get(`/descuento?email=${usuario.email}`)
+        .then((respuesta)=>{
+          setDescuento(respuesta)
+        })
+      }
   }, [usuario])
 
   const handleUsuario = (event) => {
