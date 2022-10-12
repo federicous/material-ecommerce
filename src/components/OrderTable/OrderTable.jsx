@@ -8,12 +8,16 @@ import { KeyboardArrowUp, KeyboardArrowDown, } from '@material-ui/icons';
 
 const cookies = new Cookies();
 
+
 function ccyFormat(num) {
-	return `${num.toFixed(2)}`;
+  let numFloat = parseFloat(num)
+  return `${numFloat.toFixed(2)}`;
       }
 function ccyFormatOne(num) {
-  return `${num.toFixed(1)}`;
+  let numFloat = parseFloat(num)
+  return `${numFloat.toFixed(1)}`;
       }
+          
 
 function dateFormat(timestamp) {
   let objectDate = new Date(timestamp)

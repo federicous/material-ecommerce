@@ -54,7 +54,7 @@ import {
 		    axios(configuration)
 		    .then((result) => {
 		      if (cancel) return;
-		      setNavList([...result.data])
+		      setNavList([...result.data].filter(Boolean))
 		    })
 		    .catch((error) => {
 		      error = new Error();

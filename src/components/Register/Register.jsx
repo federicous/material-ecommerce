@@ -243,7 +243,7 @@ const isNumber = (number, min) => {
           <Typography component="h1" variant="h5">
             Registro 
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -309,35 +309,35 @@ const isNumber = (number, min) => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-              <FormControl variant="outlined" sx={{width:"100%"}} >
-                <InputLabel id="demo-simple-select-outlined-label">Provincia</InputLabel>
-                <Select
-                fullWidth
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={provincia}
-                  onChange={handleProvincia}
-                  label="Provincia"
-                  name="provincia"
-                  sx={{width:"100%"}}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {provincias.sort(function (a, b) {
-                    if (a.iso_nombre > b.iso_nombre) {
-                      return 1;
-                    }
-                    if (a.iso_nombre < b.iso_nombre) {
-                      return -1;
-                    }
-                    // a must be equal to b
-                    return 0;
-                  }).map((item) => (
-                    <MenuItem key={item.iso_nombre} value={item.iso_nombre}>{item.iso_nombre}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                <FormControl variant="outlined" sx={{width:"100%"}} >
+                  <InputLabel id="demo-simple-select-outlined-label">Provincia</InputLabel>
+                  <Select
+                  fullWidth
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={provincia}
+                    onChange={handleProvincia}
+                    label="Provincia"
+                    name="provincia"
+                    sx={{width:"100%"}}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {provincias.sort(function (a, b) {
+                      if (a.iso_nombre > b.iso_nombre) {
+                        return 1;
+                      }
+                      if (a.iso_nombre < b.iso_nombre) {
+                        return -1;
+                      }
+                      // a must be equal to b
+                      return 0;
+                    }).map((item) => (
+                      <MenuItem key={item.iso_nombre} value={item.iso_nombre}>{item.iso_nombre}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
               <FormControl variant="outlined" sx={{width:"100%"}} disabled={!provincia} >

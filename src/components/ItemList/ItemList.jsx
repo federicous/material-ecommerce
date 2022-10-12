@@ -9,7 +9,8 @@ import {config} from "../../config/config";
 let dolar = config.DOLAR;
 
 function ccyFormat(num) {
-	return `${num.toFixed(2)}`;
+  let numFloat = parseFloat(num)
+	return `${numFloat.toFixed(2)}`;
       }
 
 const ItemList = ({ products }) => {
@@ -35,7 +36,8 @@ const ItemList = ({ products }) => {
                       }`}
                     description={item.code}
                     img={item.image}
-                    stock={item.stock}
+                    // stock={item.stock ? item.stock : 100000}
+                    stock={1000000}
                     price={ccyFormat(item.price ? item.price : item.usd*dolar) }
                   />
 
@@ -51,7 +53,8 @@ const ItemList = ({ products }) => {
                       }`}
                     description={item.code}
                     img={item.image}
-                    stock={item.stock}
+                    // stock={item.stock ? item.stock : 100000}
+                    stock={1000000}
                     price={ccyFormat(item.price ? item.price : item.usd*dolar) }
                   />
                 </div>

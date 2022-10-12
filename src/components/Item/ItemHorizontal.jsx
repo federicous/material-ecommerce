@@ -1,9 +1,13 @@
 import React from 'react'
-import { Card,CardContent,CardMedia,Typography,Box } from '@material-ui/core';
+import { Card,CardContent,CardMedia,Typography,Box,Button, Link as LinkMui } from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
-import ItemCountHorizontal from '../ItemCount/ItemCountHorizontal'
+import ItemCountHorizontal from '../ItemCount/ItemCountHorizontal';
+import { Edit as EditIcon } from '@material-ui/icons';
 // import {config} from "../../config/config";
 import {config} from "../../config/config";
+
+import ApiQuery from "../utils/apiQuery/apiQuery"
+let apiQuery = new ApiQuery();
 
 function capitalizeFirstLetter(string) {
   let cadena = string.toLowerCase()
@@ -12,6 +16,15 @@ function capitalizeFirstLetter(string) {
 
 const Item = ({product, name, description, img, stock, model,sku, price}) => {
   let navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = React.useState(false);
+
+  React.useEffect(() => {
+    apiQuery.get(`/permisos`)
+    .then((respuesta)=>{
+      setIsAdmin(respuesta)
+    })
+  }, [])
+  
 	return (
     <>
   <Box>
@@ -31,6 +44,12 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
             <Typography sx={{ fontWeight: "bold", textDecoration: "none", color:"text.primary" }} variant="h6">
             $ {price}
           </Typography>
+          {isAdmin ? <>
+              <LinkMui href={`${config.ADMINISTRADOR}/producto/${sku}`} style={{ textDecoration:"none", color:"inherit"}}>
+                <Button startIcon={<EditIcon />} size="small" variant="contained" color="primary"  sx={{ fontSize: 12, mt:1}}>Editar</Button>
+              </LinkMui>
+            </> : <></>
+          }
         </CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
         <ItemCountHorizontal

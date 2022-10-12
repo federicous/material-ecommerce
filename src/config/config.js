@@ -1,6 +1,7 @@
 import axios from "axios";
 require('dotenv').config();
 let SERVIDOR_NODE= process.env.REACT_APP_SERVER;
+let ADMINISTRADOR= process.env.REACT_APP_ADMIN;
 
 // const configuration = {
 // 	method: "get",
@@ -23,6 +24,7 @@ export const config = {
 	// SERVER_LOCAL: `http://localhost:8088`,
 	SERVER: SERVIDOR_NODE || `http://app.distribuidorabrmtools.com:8088`,
 	DOLAR: 147,
+	ADMINISTRADOR: ADMINISTRADOR,
 }
 
 // export const config = async () => {

@@ -47,13 +47,13 @@ const CartContextProvider = ({children}) => {
 		if (productAdd._id) { // Verifico si es mongo o si es sql
 			if (cart.some(product=>product._id===productAdd._id)) {
 				let productIndex=cart.findIndex(product=>product._id===productAdd._id)
-				if ((cart[productIndex].qty+counter)<=cart[productIndex].stock) {
+				// if ((cart[productIndex].qty+counter)<=cart[productIndex].stock) {
 					cart[productIndex].qty+=counter
 					apiCartUpdate([...cart])
 					setCart([...cart])
-				}else{
-					alert("out of stock")
-				}
+				// }else{
+				// 	alert("out of stock")
+				// }
 			
 			} else {
 				productAdd.qty=counter
@@ -63,13 +63,13 @@ const CartContextProvider = ({children}) => {
 		} else {
 			if (cart.some(product=>product.id===productAdd.id)) {
 				let productIndex=cart.findIndex(product=>product.id===productAdd.id)
-				if ((cart[productIndex].qty+counter)<=cart[productIndex].stock) {
+				// if ((cart[productIndex].qty+counter)<=cart[productIndex].stock) {
 					cart[productIndex].qty+=counter
 					apiCartUpdate([...cart])
 					setCart([...cart])
-				}else{
-					alert("out of stock")
-				}
+				// }else{
+				// 	alert("out of stock")
+				// }
 			
 			} else {
 				productAdd.qty=counter

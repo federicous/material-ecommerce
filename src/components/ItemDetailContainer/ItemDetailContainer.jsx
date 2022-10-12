@@ -11,6 +11,13 @@ import {config} from "../../config/config"
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
+let dolar = config.DOLAR;
+
+function ccyFormat(num) {
+  let numFloat = parseFloat(num)
+	return `${numFloat.toFixed(2)}`;
+      }
+
 const ItemDetailContainer = ({initial}) => {
 
 	const {sku} = useParams()
@@ -49,7 +56,7 @@ const ItemDetailContainer = ({initial}) => {
 
 	return (
     <>
-    <Typography variant={"h5"}>Details</Typography>
+    <Typography variant={"h5"}>Detalle</Typography>
       {!products.length && loading ? (
         <Box
           sx={{
@@ -78,14 +85,17 @@ const ItemDetailContainer = ({initial}) => {
                 <Box sx={{ width:"fit-content" }}>
                 <ItemDetail
                   product={item}
-                  sku={item._id ? item._id : item.id}
-                  initial={item.stock ? initial : item.stock}
-                  name={`${item.name}`}
+                  initial={item.stock ? 1 : item.stock}
+                  sku={item._id ? item._id : item.id }
                   model={item.label}
+                  name={`${
+                    [item.name,item.color,item.linea,item.presentacion,`${item.contenido ? (""+item.contenido) : ""}`].filter(Boolean).join(" | ")
+                    }`}
                   description={item.code}
                   img={item.image}
-                  stock={item.stock}
-                  price={item.price}
+                  // stock={item.stock ? item.stock : 100000}
+                  stock={1000000}
+                  price={ccyFormat(item.price ? item.price : item.usd*dolar) }
                 />
                 </Box>
 

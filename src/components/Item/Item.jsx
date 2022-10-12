@@ -1,10 +1,13 @@
 import React from 'react'
-import { Card,CardActions,CardContent,CardMedia,Container,Typography,Box, Button } from '@material-ui/core';
+import { Card,CardActions,CardContent,CardMedia,Container,Typography,Box, Button, Link as LinkMui } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { fontSize } from '@material-ui/system';
 import ItemCount2 from '../ItemCount/ItemCount2'
 // import {config} from "../../config/config";
 import {config} from "../../config/config";
+import { Edit as EditIcon } from '@material-ui/icons';
+import ApiQuery from "../utils/apiQuery/apiQuery"
+let apiQuery = new ApiQuery();
 
 function capitalizeFirstLetter(string) {
   let cadena = string.toLowerCase()
@@ -12,6 +15,15 @@ function capitalizeFirstLetter(string) {
 }
 
 const Item = ({product, name, description, img, stock, model,sku, price}) => {
+  const [isAdmin, setIsAdmin] = React.useState(false);
+
+  React.useEffect(() => {
+    apiQuery.get(`/permisos`)
+    .then((respuesta)=>{
+      setIsAdmin(respuesta)
+    })
+  }, [])
+  
 	return (
     <>
       <Card
@@ -50,6 +62,12 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
             $ {price}
           </Typography>
           </Link>
+          {isAdmin ? <>
+              <LinkMui href={`${config.ADMINISTRADOR}/producto/${sku}`} style={{ textDecoration:"none", color:"inherit"}}>
+                <Button startIcon={<EditIcon />} size="small" variant="contained" color="primary"  sx={{ fontSize: 12, mt:1}}>Editar</Button>
+              </LinkMui>
+            </> : <></>
+          }
         </CardContent>
         <CardActions
           sx={{
@@ -57,7 +75,7 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
             flexDirection: "column",
           }}
         >
-          <Typography sx={{fontSize:{xs:"x-small",sm:"small"}}} variant="caption">(Stock: {stock})</Typography>
+          {/* <Typography sx={{fontSize:{xs:"x-small",sm:"small"}}} variant="caption">(Stock: {stock})</Typography> */}
           <Box>
             {/* <Link to={`/detail/${sku}`} style={{ textDecoration:"none", color:"inherit"}}>
               <Button

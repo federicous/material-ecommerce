@@ -1,10 +1,23 @@
 import React from 'react'
-import { Card,CardActions,CardContent,CardMedia,Container,Typography } from '@material-ui/core';
-import ItemCount from '../ItemCount/ItemCount'
+import { Card,CardActions,CardContent,CardMedia,Container,Typography, Button, Link as LinkMui } from '@material-ui/core';
+import ItemCount2 from '../ItemCount/ItemCount2'
 // import {config} from "../../config/config";
 import {config} from "../../config/config";
+import { Edit as EditIcon } from '@material-ui/icons';
+import ApiQuery from "../utils/apiQuery/apiQuery"
+let apiQuery = new ApiQuery();
 
-const Item = ({initial, name, model, description, img, stock, price, product}) => {
+
+const Item = ({initial, name, model, description, img, stock, price, product, sku}) => {
+  const [isAdmin, setIsAdmin] = React.useState(false);
+
+  React.useEffect(() => {
+    apiQuery.get(`/permisos`)
+    .then((respuesta)=>{
+      setIsAdmin(respuesta)
+    })
+  }, [])
+
 	return (
     <>
       <Card
@@ -34,6 +47,12 @@ const Item = ({initial, name, model, description, img, stock, price, product}) =
           <Typography variant="body2" color="text.secondary">
             Código: {description}
           </Typography>
+          {isAdmin ? <>
+              <LinkMui href={`${config.ADMINISTRADOR}/producto/${sku}`} style={{ textDecoration:"none", color:"inherit"}}>
+                <Button startIcon={<EditIcon />} size="small" variant="contained" color="primary"  sx={{ fontSize: 12, mt:1}}>Editar</Button>
+              </LinkMui>
+            </> : <></>
+          }
         </CardContent>
         <CardActions
           sx={{
@@ -44,10 +63,10 @@ const Item = ({initial, name, model, description, img, stock, price, product}) =
           <Typography sx={{ fontWeight: "bold" }} variant="h6">
             $ {price}
           </Typography>
-          <Typography variant="body2">(Stock: {stock})</Typography>
-          <ItemCount
+          {/* <Typography variant="body2">(Stock: {stock})</Typography> */}
+          <ItemCount2
             product={product}
-            initial={initial}
+            initial={1}
             stock={stock}
           />
         </CardActions>
