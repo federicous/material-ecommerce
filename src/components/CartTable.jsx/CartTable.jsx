@@ -7,7 +7,8 @@ import axios from "axios";
 // import {config} from "../../config/config";
 import {config} from "../../config/config";
 import Cookies from "universal-cookie";
-import ApiQuery from "../utils/apiQuery/apiQuery"
+import { CartContext } from '../CartContext/CartContext';
+import ApiQuery from "../utils/apiQuery/apiQuery";
 let apiQuery = new ApiQuery();
 
 const cookies = new Cookies();
@@ -38,6 +39,8 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   const [usuario, setUsuario] = React.useState('');
   const [descuento, setDescuento] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState(false);
+	const cartContext = React.useContext(CartContext);
+	const {user}= cartContext;
 	// Backdrop or Loading spinner 
 	const [open, setOpen] = React.useState(false);
 	const handleClose = () => {
@@ -99,10 +102,12 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
     apiQuery.get(`/permisos`)
     .then((respuesta)=>{
       setIsAdmin(respuesta)
-      apiQuery.get(`/api/users`)
-      .then((res)=>{
-        setListaUsuarios(res)
-      })
+      if (respuesta) {
+        apiQuery.get(`/api/users`)
+        .then((res)=>{
+          setListaUsuarios(res)
+        })
+      }
     })
   }, [])
 
@@ -112,8 +117,14 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
         .then((respuesta)=>{
           setDescuento(respuesta)
         })
+      } else {
+        apiQuery.get(`/descuento?email=${user}`)
+        .then((respuesta)=>{
+          setDescuento(respuesta)
+        }) 
       }
   }, [usuario])
+  
 
   const handleUsuario = (event) => {
     setUsuario(event.target.value);
