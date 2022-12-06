@@ -99,7 +99,7 @@ const CartContextProvider = ({children}) => {
 		setTotal(suma);
 		let sumaIva=0;
 		for (const item of cart) {
-			let IVA=parseFloat(typeof item.iva === "string" ? item.iva.replace(/,/g, '.') : item.iva);
+			let IVA=parseFloat(typeof item.iva === "string" ? item.iva.replace(/,/g, '.').replace(/%/g, '') : item.iva);
 			let PRICE = parseFloat(item.price ? item.price : item.usd*dolar);
 			let QTY=parseFloat(item.qty);
 			sumaIva=(QTY*PRICE*IVA/100)+parseFloat(sumaIva);

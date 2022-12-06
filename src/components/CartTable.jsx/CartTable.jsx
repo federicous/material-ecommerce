@@ -230,7 +230,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
                       {ccyFormat(row.price ? row.price : row.usd*dolar)}
                       </Box>
                       <Box sx={{color:"text.secondary"}}>
-                      ({ccyFormatOne(parseFloat(typeof row.iva === "string" ? row.iva.replace(/,/g, '.') : row.iva))}%)
+                      ({ccyFormatOne(parseFloat(typeof row.iva === "string" ? row.iva.replace(/,/g, '.').replace(/%/g, '') : row.iva))}%)
                       </Box>         
                     </Box>
 
