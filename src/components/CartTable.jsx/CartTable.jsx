@@ -25,7 +25,7 @@ function ccyFormatOne(num) {
 
 const token = cookies.get("token");
 
-let dolar = config.DOLAR;
+// let dolar = config.DOLAR;
 
 
 function capitalizeFirstLetter(string) {
@@ -43,6 +43,8 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
 	const {user}= cartContext;
 	// Backdrop or Loading spinner 
 	const [open, setOpen] = React.useState(false);
+  const [dolar, setDolar] = React.useState(0)
+
 	const handleClose = () => {
 	  setOpen(false);
 	};
@@ -97,6 +99,15 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
         cancel = true;
       }
   }
+
+  React.useEffect(() => {
+    apiQuery.get(`/api/dolar`)
+		.then((respuesta) => {
+			console.log(`Valor del DOLAR: ${respuesta}`);
+      setDolar(Number(respuesta.dolar));
+		})
+
+  }, [])
 
   React.useEffect(() => {
     apiQuery.get(`/permisos`)

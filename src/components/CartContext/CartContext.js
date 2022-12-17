@@ -7,7 +7,7 @@ import ApiQuery from "../utils/apiQuery/apiQuery"
 let apiQuery = new ApiQuery();
 
 const cookies = new Cookies();
-let dolar = config.DOLAR;
+// let dolar = config.DOLAR;
 
 export const CartContext = createContext();
 
@@ -18,8 +18,17 @@ const CartContextProvider = ({children}) => {
 	const [total, setTotal] = useState(0)
 	const [user, setUser] = useState("");
 	const [ivaTotal, setIvaTotal] = useState(0)
+	const [dolar, setDolar] = useState(0)
 
 	const token = cookies.get("token");
+
+	useEffect(() => {
+		apiQuery.get(`/api/dolar`)
+			.then((respuesta) => {
+				console.log(`Valor del DOLAR: ${respuesta}`);
+		  		setDolar(Number(respuesta.dolar))
+			})	    
+	      	}, [])
 
 	function apiCartUpdate(newCart) {
 		const configuration = {

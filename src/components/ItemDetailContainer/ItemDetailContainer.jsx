@@ -9,9 +9,11 @@ import axios from "axios";
 // import {config} from "../../config/config"
 import {config} from "../../config/config"
 import Cookies from "universal-cookie";
+import ApiQuery from "../utils/apiQuery/apiQuery";
+let apiQuery = new ApiQuery();
 const cookies = new Cookies();
 
-let dolar = config.DOLAR;
+// let dolar = config.DOLAR;
 
 function ccyFormat(num) {
   let numFloat = parseFloat(num)
@@ -23,6 +25,16 @@ const ItemDetailContainer = ({initial}) => {
 	const {sku} = useParams()
 	const [products, setProducts] = useState([])
 	const [loading, setLoading] = useState(true)
+  const [dolar, setDolar] = useState(0)
+
+  useEffect(() => {
+    apiQuery.get(`/api/dolar`)
+		.then((respuesta) => {
+			console.log(`Valor del DOLAR: ${respuesta}`);
+      setDolar(Number(respuesta.dolar));
+		})
+  }, [])
+  
  
   useEffect(() => {
     let cancel = false;

@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from 'react'
 import { Grid, Typography } from "@material-ui/core";
 import Item from "../Item/Item";
 import ItemHorizontal from "../Item/ItemHorizontal";
 import { Box } from "@material-ui/system";
 import "./ItemList.css";
 import {config} from "../../config/config";
+import ApiQuery from "../utils/apiQuery/apiQuery";
+let apiQuery = new ApiQuery();
 
-let dolar = config.DOLAR;
+// let dolar = config.DOLAR;
 
 function ccyFormat(num) {
   let numFloat = parseFloat(num)
@@ -14,7 +16,19 @@ function ccyFormat(num) {
       }
 
 const ItemList = ({ products }) => {
+
+  const [dolar, setDolar] = useState(0)
   const productsList = products;
+
+  useEffect(() => {
+    apiQuery.get(`/api/dolar`)
+		.then((respuesta) => {
+			console.log(`Valor del DOLAR: ${respuesta}`);
+      setDolar(Number(respuesta.dolar));
+		})
+
+  }, [])
+
 
   return (
     <>

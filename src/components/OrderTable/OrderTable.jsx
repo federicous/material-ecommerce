@@ -5,6 +5,8 @@ import axios from "axios";
 import {config} from "../../config/config";
 import Cookies from "universal-cookie";
 import { KeyboardArrowUp, KeyboardArrowDown, } from '@material-ui/icons';
+import ApiQuery from "../utils/apiQuery/apiQuery";
+let apiQuery = new ApiQuery();
 
 const cookies = new Cookies();
 
@@ -39,7 +41,7 @@ function dateFormat(timestamp) {
     
 const token = cookies.get("token");
 
-let dolar = config.DOLAR;
+// let dolar = config.DOLAR;
 
 function capitalizeFirstLetter(string) {
   let cadena = string.toLowerCase()
@@ -50,6 +52,17 @@ function capitalizeFirstLetter(string) {
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+  const [dolar, setDolar] = React.useState(0)
+
+  React.useEffect(() => {
+    apiQuery.get(`/api/dolar`)
+		.then((respuesta) => {
+			console.log(`Valor del DOLAR: ${respuesta}`);
+      setDolar(Number(respuesta.dolar))
+			//   setIsAdmin(respuesta)
+		})
+
+  }, [])
 
   return (
     <React.Fragment>
