@@ -40,7 +40,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   const [descuento, setDescuento] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState(false);
 	const cartContext = React.useContext(CartContext);
-	const {user, changeUser}= cartContext;
+	const {user}= cartContext;
 	// Backdrop or Loading spinner 
 	const [open, setOpen] = React.useState(false);
   const [dolar, setDolar] = React.useState(0)
@@ -103,6 +103,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   React.useEffect(() => {
     apiQuery.get(`/api/dolar`)
 		.then((respuesta) => {
+			console.log(`Valor del DOLAR: ${respuesta}`);
       setDolar(Number(respuesta.dolar));
 		})
 
@@ -138,7 +139,6 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
 
   const handleUsuario = (event) => {
     setUsuario(event.target.value);
-    changeUser(event.target.value);
   };
 
   const handleSubmit = (event) => {

@@ -19,6 +19,8 @@ const CartContextProvider = ({children}) => {
 	const [user, setUser] = useState("");
 	const [ivaTotal, setIvaTotal] = useState(0)
 	const [dolar, setDolar] = useState(0)
+	const [descuento, setDescuento] = useState('');
+	const [usuario, setUsuario] = useState('');
 
 	const token = cookies.get("token");
 
@@ -29,6 +31,21 @@ const CartContextProvider = ({children}) => {
 		  		setDolar(Number(respuesta.dolar))
 			})	    
 	      	}, [])
+
+
+	useEffect(() => {
+	if (usuario) {
+		apiQuery.get(`/descuento?email=${usuario.email}`)
+		.then((respuesta)=>{
+		setDescuento(respuesta)
+		})
+	} else {
+		apiQuery.get(`/descuento?email=${user}`)
+		.then((respuesta)=>{
+		setDescuento(respuesta)
+		}) 
+	}
+	}, [usuario])
 
 	function apiCartUpdate(newCart) {
 		const configuration = {
@@ -100,22 +117,42 @@ const CartContextProvider = ({children}) => {
 		setCart([])
 	}
 
-	useEffect(() => {
-		let suma=0;
-		for (const item of cart) {
-			suma=parseFloat(item.qty)*parseFloat(item.price ? item.price : item.usd*dolar)+parseFloat(suma)
-		}
-		setTotal(suma);
-		let sumaIva=0;
-		for (const item of cart) {
-			let IVA=parseFloat(typeof item.iva === "string" ? item.iva.replace(/,/g, '.').replace(/%/g, '') : item.iva);
-			let PRICE = parseFloat(item.price ? item.price : item.usd*dolar);
-			let QTY=parseFloat(item.qty);
-			sumaIva=(QTY*PRICE*IVA/100)+parseFloat(sumaIva);
-		}
-		setIvaTotal(sumaIva);
+	function changeUser(user) {
+		setUsuario(user)
+	}
 
-	}, [cart])
+	useEffect(() => {
+
+		if (usuario.descuento) {
+			let suma=0;
+			for (const item of cart) {
+				suma=parseFloat(item.qty)*parseFloat(item.price ? item.price : item.usd*dolar)+parseFloat(suma)
+			}
+			setTotal(suma);
+			let sumaIva=0;
+			for (const item of cart) {
+				let IVA=parseFloat(typeof item.iva === "string" ? item.iva.replace(/,/g, '.').replace(/%/g, '') : item.iva);
+				let PRICE = parseFloat(item.price ? item.price : item.usd*dolar);
+				let QTY=parseFloat(item.qty);
+				sumaIva=(QTY*(PRICE-PRICE*(parseFloat(usuario.descuento)/100))*IVA/100)+parseFloat(sumaIva);
+			}
+			setIvaTotal(sumaIva);			
+		} else {
+			let suma=0;
+			for (const item of cart) {
+				suma=parseFloat(item.qty)*parseFloat(item.price ? item.price : item.usd*dolar)+parseFloat(suma)
+			}
+			setTotal(suma);
+			let sumaIva=0;
+			for (const item of cart) {
+				let IVA=parseFloat(typeof item.iva === "string" ? item.iva.replace(/,/g, '.').replace(/%/g, '') : item.iva);
+				let PRICE = parseFloat(item.price ? item.price : item.usd*dolar);
+				let QTY=parseFloat(item.qty);
+				sumaIva=(QTY*PRICE*IVA/100)+parseFloat(sumaIva);
+			}
+			setIvaTotal(sumaIva);
+		}
+	}, [cart, usuario])
 
 	useEffect(() => {
 		let cancel = false;
@@ -155,7 +192,8 @@ const CartContextProvider = ({children}) => {
 			setModeTheme,
 			modeTheme,	
 			setUser,
-			user,		
+			user,	
+			changeUser,	
 		}}>
 			{children}
 		</CartContext.Provider>
