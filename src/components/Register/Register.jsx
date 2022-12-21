@@ -33,6 +33,7 @@ export default function SignUp() {
 
   const [provincia, setProvincia] = React.useState('');
   const [localidadArray, setLocalidadArray] = React.useState([]);
+  const [vendedor, setVendedor] = React.useState('');
   const [localidad, setLocalidad] = React.useState('');
   const [nombre, setNombre] = React.useState('');
   const [apellido, setApellido] = React.useState('');
@@ -50,6 +51,8 @@ export default function SignUp() {
 // React.useEffect(() => {
 //   console.log(provincias);
 // }, [])
+
+let vendedorArray = [{nombre:"Leonel"}, {nombre:"Moises"}];
 
 React.useEffect(() => {
   let array = localidades.filter((item)=> item.provincia.nombre.match(new RegExp(`${provincia}`,'gi')))
@@ -144,6 +147,10 @@ React.useEffect(() => {
     setLocalidad(event.target.value);
   };
 
+  const handleVendedor = (event) => {
+    setVendedor(event.target.value);
+  };
+
   const handlePhone = (e) => {
     let telefono= e.target.value
     if (isNumber(telefono,10)) {
@@ -191,13 +198,13 @@ React.useEffect(() => {
   };
 
   React.useEffect(() => {
-    if (nombre && apellido && correo && password && repeatPassword && calle && altura && cuit && ferreteria && telefono && provincia && localidad) {
+    if (nombre && apellido && correo && password && repeatPassword && calle && altura && cuit && ferreteria && telefono && provincia && localidad && vendedor) {
       setBotonSubmit(false)
     } else {
       setBotonSubmit(true)
     }
     
-  }, [nombre, apellido, correo, password, repeatPassword, calle, altura, cuit, ferreteria, telefono, provincia, localidad])
+  }, [nombre, apellido, correo, password, repeatPassword, calle, altura, cuit, ferreteria, telefono, provincia, localidad, vendedor])
   
   React.useEffect(() => {
     if (repeatPassword && (password!=repeatPassword)) {
@@ -284,7 +291,7 @@ const isNumber = (number, min) => {
                 <TextField
                   required
                   fullWidth
-                  helperText={!password ? "Letra mayúscula, letra minúscula, número, +8 caracteres " : ""}
+                  helperText={!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}
                   name="password"
                   label="Contraseña"
                   type="password"
@@ -426,6 +433,34 @@ const isNumber = (number, min) => {
                   type="number"
                   onChange={handlePhone}
                 />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+              <FormControl variant="outlined" sx={{width:"100%"}} >
+                <InputLabel id="demo-simple-select-outlined-label">Vendedor</InputLabel>
+                <Select
+                fullWidth
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={vendedor}
+                  onChange={handleVendedor}
+                  label="Vendedor"
+                  sx={{width:"100%"}}
+                  name="vendedor"
+                >
+                  {vendedorArray.sort(function (a, b) {
+                    if (a.nombre > b.nombre) {
+                      return 1;
+                    }
+                    if (a.nombre < b.nombre) {
+                      return -1;
+                    }
+                    // a must be equal to b
+                    return 0;
+                  }).map((item) => (
+                    <MenuItem key={item.nombre} value={capitalizeFirstLetter(item.nombre)}>{capitalizeFirstLetter(item.nombre)}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
               </Grid>
 
             </Grid>

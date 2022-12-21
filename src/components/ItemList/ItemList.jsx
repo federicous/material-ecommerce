@@ -23,7 +23,6 @@ const ItemList = ({ products }) => {
   useEffect(() => {
     apiQuery.get(`/api/dolar`)
 		.then((respuesta) => {
-			console.log(`Valor del DOLAR: ${respuesta}`);
       setDolar(Number(respuesta.dolar));
 		})
 
