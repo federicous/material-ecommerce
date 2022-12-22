@@ -8,7 +8,7 @@ import Return from '../utils/Return';
 import './itemCount.css';
 
 
-const ItemCount = ({initial, sku, stock, product}) => {
+const ItemCount = ({initial, sku, stock, product, price}) => {
 
 	const cartContext = useContext(CartContext);
 	const {addToCart}= cartContext;
@@ -66,7 +66,7 @@ return (
 			</ButtonGroup>
 			<Box sx={{ width:"100%", mt:{xs:1,md:2} }}>
 			{initial ? (
-					<Button size="medium" variant="contained" color="success"  sx={{ fontSize: 12, width:"100%", height:"100%", textAlign:"center" }}
+					<Button disabled={price ? false : true} size="medium" variant="contained" color="success"  sx={{ fontSize: 12, width:"100%", height:"100%", textAlign:"center" }}
 					onClick={()=>addCart(contador)} ><AddShoppingCart fontSize="small"/> </Button>
 			):(
 					<Link to={`/`}>

@@ -59,7 +59,7 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
               Código: {description}
             </Typography>
             <Typography sx={{ fontWeight: "bold", textDecoration: "none", color:"text.primary" }} variant="h6">
-            $ {price}
+            {price ? `$ ${price}` : "SIN PRECIO" }
           </Typography>
           </Link>
           {isAdmin ? <>
@@ -92,6 +92,7 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
             product={product}
             initial={1}
             stock={stock}
+            price={price}
           />
           </Box>
         </CardActions>

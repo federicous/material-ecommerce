@@ -55,7 +55,7 @@ const ItemList = ({ products }) => {
                     img={item.image}
                     // stock={item.stock ? item.stock : 100000}
                     stock={1000000}
-                    price={ccyFormat(item.price ? item.price : item.usd*dolar) }
+                    price={item.price ? ccyFormat(item.price) : (item.usd ? ccyFormat(item.usd*dolar) : "") }
                   />
 
                 </div>
@@ -72,7 +72,7 @@ const ItemList = ({ products }) => {
                     img={item.image}
                     // stock={item.stock ? item.stock : 100000}
                     stock={1000000}
-                    price={ccyFormat(item.price ? item.price : item.usd*dolar) }
+                    price={item.price ? ccyFormat(item.price) : (item.usd ? ccyFormat(item.usd*dolar) : "") }
                   />
                 </div>
 

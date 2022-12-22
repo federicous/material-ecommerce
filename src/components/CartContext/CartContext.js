@@ -68,7 +68,7 @@ const CartContextProvider = ({children}) => {
 	}
 	
 	function addToCart(productAdd, counter) {	
-
+		console.log(cart);
 		if (productAdd._id) { // Verifico si es mongo o si es sql
 			if (cart.some(product=>product._id===productAdd._id)) {
 				let productIndex=cart.findIndex(product=>product._id===productAdd._id)
@@ -121,7 +121,7 @@ const CartContextProvider = ({children}) => {
 	}
 
 	useEffect(() => {
-
+			console.log(cart);
 		if (usuario.descuento) {
 			let suma=0;
 			for (const item of cart) {
@@ -151,6 +151,7 @@ const CartContextProvider = ({children}) => {
 			}
 			setIvaTotal(sumaIva);
 		}
+		console.log(total);
 	}, [cart, usuario])
 
 	useEffect(() => {

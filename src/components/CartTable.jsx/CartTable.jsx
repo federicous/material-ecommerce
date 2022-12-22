@@ -135,6 +135,11 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
       }
   }, [usuario])
   
+React.useEffect(() => {
+
+console.log(cart);
+}, [])
+
 
   const handleUsuario = (event) => {
     setUsuario(event.target.value);
