@@ -38,7 +38,7 @@ const ItemListContainer = () => {
 		const configuration = {
 			method: "get",
 			// url: `${config.SERVER}/api/products/category/${category}?page=${page}&pageSize=${pageSize}`,
-			url: `${config.SERVER}/api/products/${lista}/category/${category}?page=${page}&pageSize=${pageSize}`,
+			url: `${config.SERVER}/api/products/${lista}/category/${category.replace("/","%2F")}?page=${page}&pageSize=${pageSize}`,
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},

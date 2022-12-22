@@ -21,11 +21,15 @@ const ItemList = ({ products }) => {
   const productsList = products;
 
   useEffect(() => {
+    let cancel = false;
     apiQuery.get(`/api/dolar`)
 		.then((respuesta) => {
+      if (cancel) return;
       setDolar(Number(respuesta.dolar));
 		})
-
+    return () => { 
+      cancel = true;
+    }
   }, [])
 
 
