@@ -68,6 +68,7 @@ const Item = ({initial, name, model, description, img, stock, price, product, sk
             product={product}
             initial={1}
             stock={stock}
+            price={price}
           />
         </CardActions>
       </Card>

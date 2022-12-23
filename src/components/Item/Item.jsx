@@ -59,7 +59,7 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
               Código: {description}
             </Typography>
             <Typography sx={{ fontWeight: "bold", textDecoration: "none", color:"text.primary" }} variant="h6">
-            {price ? `$ ${price}` : "SIN PRECIO" }
+            {price ? `$ ${price}` : "NO DISPONIBLE" }
           </Typography>
           </Link>
           {isAdmin ? <>
