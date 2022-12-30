@@ -31,6 +31,12 @@ const ItemListContainer = () => {
 	const token = cookies.get("token");
 
 	// let lista = "bremen"
+
+	/* reseteo a pagina 1 cuando cambia la categoria */
+	useEffect(() => {
+	  setPage(1)
+	}, [category])
+	
 	
 	useEffect(() => {
 		let cancel = false;

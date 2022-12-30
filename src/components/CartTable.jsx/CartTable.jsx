@@ -135,10 +135,10 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
       }
   }, [usuario])
   
-React.useEffect(() => {
+// React.useEffect(() => {
 
-console.log(cart);
-}, [])
+// console.log(cart);
+// }, [])
 
 
   const handleUsuario = (event) => {

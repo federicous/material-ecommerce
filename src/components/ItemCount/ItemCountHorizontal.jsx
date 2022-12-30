@@ -69,7 +69,7 @@ return (
 				<>
 				<Box sx={{display:"flex"}}>
 				<Typography sx={{ fontWeight: "bold", textDecoration: "none", color:"text.primary" }} variant="h6">
-					    {price}
+					    {/* {price} */}
 					  </Typography>
 					<Button disabled={price ? false : true} size="medium" variant="contained" color="success"  sx={{ fontSize: 12, width:"100%", height:"100%", textAlign:"center" }}
 					onClick={()=>addCart(contador)} ><AddShoppingCart fontSize="small"/> </Button>

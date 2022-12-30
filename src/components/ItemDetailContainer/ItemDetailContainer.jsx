@@ -28,10 +28,15 @@ const ItemDetailContainer = ({initial}) => {
   const [dolar, setDolar] = useState(0)
 
   useEffect(() => {
+    let cancel = false;
     apiQuery.get(`/api/dolar`)
 		.then((respuesta) => {
+      if (cancel) return;
       setDolar(Number(respuesta.dolar));
 		})
+    return () => { 
+      cancel = true;
+    }
   }, [])
   
  

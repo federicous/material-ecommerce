@@ -121,7 +121,7 @@ const CartContextProvider = ({children}) => {
 	}
 
 	useEffect(() => {
-			console.log(cart);
+			// console.log(cart);
 		if (usuario.descuento) {
 			let suma=0;
 			for (const item of cart) {
@@ -151,7 +151,7 @@ const CartContextProvider = ({children}) => {
 			}
 			setIvaTotal(sumaIva);
 		}
-		console.log(total);
+		// console.log(total);
 	}, [cart, usuario])
 
 	useEffect(() => {
