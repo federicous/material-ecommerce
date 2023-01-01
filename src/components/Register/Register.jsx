@@ -78,6 +78,7 @@ React.useEffect(() => {
       phone: data.get('telefono'),
       cuit: data.get('cuit'),
       ferreteria: data.get('ferreteria'),
+      vendedor: data.get('vendedor')
     }
     // set configurations
     const configuration = {
