@@ -23,6 +23,11 @@ const Item = ({initial, name, model, description, img, stock, price, product, sk
     setIva(parseFloat(typeof product.iva === "string" ? product.iva.replace(/,/g, '.').replace(/%/g, '') : product.iva))
   }, [])
 
+  function ccyFormat(num) {
+    let numFloat = parseFloat(num)
+    return `${numFloat.toFixed(2)}`;
+  }
+
 	return (
     <>
       <Card
@@ -67,7 +72,8 @@ const Item = ({initial, name, model, description, img, stock, price, product, sk
         >
           <Typography sx={{ fontWeight: "bold" }} variant="h6">
             {/* $ {price} */}
-            {product.precioConIva ? product.precioConIva-product.precioConIva*iva/100 : (price ? `$ ${price}` : "NO DISPONIBLE") }
+            {product.precioConIva ? ccyFormat(product.precioConIva/(1+iva/100)) : (price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE") }
+            
           </Typography>
           {/* <Typography variant="body2">(Stock: {stock})</Typography> */}
           <ItemCount2

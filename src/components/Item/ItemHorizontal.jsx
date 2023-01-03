@@ -30,6 +30,11 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
     setIva(parseFloat(typeof product.iva === "string" ? product.iva.replace(/,/g, '.').replace(/%/g, '') : product.iva))
   }, [])
   
+  function ccyFormat(num) {
+    let numFloat = parseFloat(num)
+    return `${numFloat.toFixed(2)}`;
+  }
+
 	return (
     <>
   <Box>
@@ -48,7 +53,7 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
             </Typography>
             <Typography sx={{ fontWeight: "bold", textDecoration: "none", color:"text.primary" }} variant="h6">
             {/* {price ? `$ ${price}` : "NO DISPONIBLE" } */}
-            {product.precioConIva ? product.precioConIva-product.precioConIva*iva/100 : (price ? `$ ${price}` : "NO DISPONIBLE") }
+            {product.precioConIva ? ccyFormat(product.precioConIva/(1+iva/100)) : (price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE") }
           </Typography>
           {isAdmin ? <>
               <LinkMui href={`${config.ADMINISTRADOR}/producto/${sku}`} style={{ textDecoration:"none", color:"inherit"}}>

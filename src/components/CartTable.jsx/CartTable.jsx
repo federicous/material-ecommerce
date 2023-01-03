@@ -50,6 +50,11 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
 	};
   let navigate = useNavigate();
 
+  function calcularPrecio(precioConIva,iva,price,usd,qty) {
+    let resultado = ccyFormat(precioConIva ? parseFloat(precioConIva)/(1+(parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva))/100) : (price ? `${price}` : usd*dolar))*(qty ? parseFloat(qty) : 1);
+    return resultado
+  }
+
   let handleOrden = () => {
     setOpen(true)
     let cancel = false;
@@ -243,7 +248,9 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
                       }}
                     >
                       <Box>
-                      {ccyFormat(row.price ? row.price : row.usd*dolar)}
+                      {/* {ccyFormat(row.price ? row.price : row.usd*dolar)} */}
+                  {/* {ccyFormat((row.precioConIva ? row.precioConIva-row.precioConIva*(parseFloat(typeof row.iva === "string" ? row.iva.replace(/,/g, '.').replace(/%/g, '') : row.iva))/100 : (row.price ? `${row.price}` : row.usd*dolar)))} */}
+                  {calcularPrecio(row.precioConIva,row.iva,row.price,row.usd)}
                       </Box>
                       <Box sx={{color:"text.secondary"}}>
                       ({ccyFormatOne(parseFloat(typeof row.iva === "string" ? row.iva.replace(/,/g, '.').replace(/%/g, '') : row.iva))}%)
@@ -252,7 +259,10 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
 
                   </TableCell>
                 <TableCell align="center">
-                  {ccyFormat((row.price ? row.price : row.usd*dolar) * row.qty)}
+                  {/* {ccyFormat((row.price ? row.price : row.usd*dolar) * row.qty)} */}
+                  {/* {ccyFormat(((row.precioConIva ? row.precioConIva-row.precioConIva*(parseFloat(typeof row.iva === "string" ? row.iva.replace(/,/g, '.').replace(/%/g, '') : row.iva))/100 : (row.price ? `${row.price}` : row.usd*dolar)))*row.qty)} */}
+                  {calcularPrecio(row.precioConIva,row.iva,row.price,row.usd,row.qty)}
+                  {/* {row.precioConIva ? row.precioConIva : (row.price ? `$ ${row.price}` : "NO DISPONIBLE") } */}
                 </TableCell>
               </TableRow>
             ))}
