@@ -17,12 +17,17 @@ function capitalizeFirstLetter(string) {
 const Item = ({product, name, description, img, stock, model,sku, price}) => {
   let navigate = useNavigate();
   const [isAdmin, setIsAdmin] = React.useState(false);
+  const [iva, setIva] = React.useState(0);
 
   React.useEffect(() => {
     apiQuery.get(`/permisos`)
     .then((respuesta)=>{
       setIsAdmin(respuesta)
     })
+  }, [])
+
+  React.useEffect(() => {
+    setIva(parseFloat(typeof product.iva === "string" ? product.iva.replace(/,/g, '.').replace(/%/g, '') : product.iva))
   }, [])
   
 	return (
@@ -42,7 +47,8 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
               Código: {description}
             </Typography>
             <Typography sx={{ fontWeight: "bold", textDecoration: "none", color:"text.primary" }} variant="h6">
-            {price ? `$ ${price}` : "NO DISPONIBLE" }
+            {/* {price ? `$ ${price}` : "NO DISPONIBLE" } */}
+            {product.precioConIva ? product.precioConIva-product.precioConIva*iva/100 : (price ? `$ ${price}` : "NO DISPONIBLE") }
           </Typography>
           {isAdmin ? <>
               <LinkMui href={`${config.ADMINISTRADOR}/producto/${sku}`} style={{ textDecoration:"none", color:"inherit"}}>

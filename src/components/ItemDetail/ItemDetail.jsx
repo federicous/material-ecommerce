@@ -9,13 +9,18 @@ let apiQuery = new ApiQuery();
 
 
 const Item = ({initial, name, model, description, img, stock, price, product, sku}) => {
-  const [isAdmin, setIsAdmin] = React.useState(false);
+  const [isAdmin, setIsAdmin] = React.useState(false)
+  const [iva, setIva] = React.useState(0);;
 
   React.useEffect(() => {
     apiQuery.get(`/permisos`)
     .then((respuesta)=>{
       setIsAdmin(respuesta)
     })
+  }, [])
+
+  React.useEffect(() => {
+    setIva(parseFloat(typeof product.iva === "string" ? product.iva.replace(/,/g, '.').replace(/%/g, '') : product.iva))
   }, [])
 
 	return (
@@ -61,7 +66,8 @@ const Item = ({initial, name, model, description, img, stock, price, product, sk
           }}
         >
           <Typography sx={{ fontWeight: "bold" }} variant="h6">
-            $ {price}
+            {/* $ {price} */}
+            {product.precioConIva ? product.precioConIva-product.precioConIva*iva/100 : (price ? `$ ${price}` : "NO DISPONIBLE") }
           </Typography>
           {/* <Typography variant="body2">(Stock: {stock})</Typography> */}
           <ItemCount2
