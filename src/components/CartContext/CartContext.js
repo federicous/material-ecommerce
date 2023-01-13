@@ -158,8 +158,7 @@ const CartContextProvider = ({children}) => {
 				// let PRICE = parseFloat(item.price ? item.price : item.usd*dolar);
 				let PRICE = calcularPrecio(item.precioConIva,item.iva,item.price,item.usd)
 				let QTY=parseInt(item.qty);
-				// sumaIva=(QTY*PRICE*IVA/100)+parseFloat(sumaIva);
-				sumaIva=PRICE*IVA/100
+				sumaIva=parseFloat(QTY*PRICE*IVA/100)+parseFloat(sumaIva);
 			}
 			setIvaTotal(sumaIva);
 		}
