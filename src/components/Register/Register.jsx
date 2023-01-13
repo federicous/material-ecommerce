@@ -314,10 +314,10 @@ const isNumber = (number, min) => {
                   autoComplete="new-password"
                   onChange={handlePassword}
                 /> */}
-                <FormControl variant="outlined" fullWidth >
-                      <InputLabel htmlFor="outlined-adornment-password" >Password</InputLabel>
+                <FormControl variant="outlined" fullWidth required>
+                      <InputLabel htmlFor="outlined-adornment-password" >Contraseña</InputLabel>
                             <OutlinedInput
-                              id="outlined-adornment-password"
+                              id="password"
                               type={showPassword ? 'text' : 'password'}
                               endAdornment={
                                 <InputAdornment position="end">
@@ -335,18 +335,17 @@ const isNumber = (number, min) => {
                               fullWidth
                               helperText={!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}
                               name="password"
-                              label="Contraseña"
+                              label="Contraseña *"
                               // type="password"
                               // id="password"
                               autoComplete="new-password"
-                              onChange={handlePassword}
-                              
+                              onChange={handlePassword}                    
                             />
-                  <FormHelperText id="standard-weight-helper-text">{!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}</FormHelperText>
+                  <FormHelperText required id="standard-weight-helper-text">{!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}</FormHelperText>
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                {/* <TextField
                   required
                   error={passwordError}
                   helperText={passwordError ? "No coinciden" : ""}
@@ -358,7 +357,40 @@ const isNumber = (number, min) => {
                   id="repeatPassword"
                   autoComplete="new-password"
                   onChange={handleRepeatPassword}
-                />
+                /> */}
+                <FormControl variant="outlined" fullWidth error={passwordError}      >
+                      <InputLabel htmlFor="outlined-adornment-password" >Repetir Contraseña *</InputLabel>
+                            <OutlinedInput
+                              // id="outlined-adornment-password"
+                              id="repeatPassword"
+                              type={showPassword ? 'text' : 'password'}
+                              endAdornment={
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                  >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                  </IconButton>
+                                </InputAdornment>
+                              }
+                              // label="Password"
+                              fullWidth
+                              helperText={!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}
+                              name="repeatPassword"
+                              label="Repetir Contraseña *"
+                              // type="password"
+                              // id="password"
+                              autoComplete="new-password"
+                              disabled={!password}
+                              onChange={handleRepeatPassword}   
+                              required 
+                            />
+                  <FormHelperText id="standard-weight-helper-text">{passwordError ? "No coinciden" : ""}</FormHelperText>
+                </FormControl>
+
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl variant="outlined" sx={{width:"100%"}} >
