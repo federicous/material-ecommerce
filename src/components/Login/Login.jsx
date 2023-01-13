@@ -12,6 +12,8 @@ import {
   Container,
   Backdrop,
   CircularProgress,
+  InputLabel,
+  IconButton,
 } from "@material-ui/core";
 import axios from "axios";
 import { CartContext } from '../CartContext/CartContext';
@@ -19,6 +21,11 @@ import Cookies from "universal-cookie";
 import HomePage2 from "../HomePage2/HomePage2";
 // import {config} from "../../config/config"
 import {config} from "../../config/config"
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const cookies = new Cookies();
 
@@ -34,6 +41,14 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState(false);
   // Backdrop or Loading spinner 
   const [open, setOpen] = useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -107,7 +122,7 @@ export default function Login() {
 
           {/* password */}
           <FormGroup>
-            <FormControl sx={{ mb: 2 }}>
+            {/* <FormControl sx={{ mb: 2 }}>
               <TextField
                 id="outlined-name"
                 label="Password"
@@ -116,7 +131,37 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </FormControl>
+            </FormControl> */}
+            <FormControl variant="outlined" fullWidth sx={{ mb: 2 }} >
+                      <InputLabel htmlFor="outlined-adornment-password" >Password</InputLabel>
+                            <OutlinedInput
+                              id="outlined-adornment-password"
+                              type={showPassword ? 'text' : 'password'}
+                              endAdornment={
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                  >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                  </IconButton>
+                                </InputAdornment>
+                              }
+                              // label="Password"
+                              fullWidth
+                              helperText={!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}
+                              name="password"
+                              label="Password"
+                              // type="password"
+                              // id="password"
+                              autoComplete="new-password"
+                              onChange={(e) => setPassword(e.target.value)}
+                              
+                            />
+                  {/* <FormHelperText id="standard-weight-helper-text">{!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}</FormHelperText> */}
+                </FormControl>
           </FormGroup>
 
           {/* submit button */}

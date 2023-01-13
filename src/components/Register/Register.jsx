@@ -7,6 +7,11 @@ import {provincias} from "../utils/provincias"
 import {localidades} from "../utils/localidades"
 import {config} from "../../config/config"
 import axios from "axios";
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 function Copyright(props) {
   return (
@@ -47,7 +52,16 @@ export default function SignUp() {
   const [telefono, setTelefono] = React.useState('');
   const [botonSubmit, setBotonSubmit] = React.useState(true);
   const [passwordError, setPasswordError] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+
+  
 // React.useEffect(() => {
 //   console.log(provincias);
 // }, [])
@@ -289,17 +303,47 @@ const isNumber = (number, min) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                {/* <TextField
                   required
                   fullWidth
                   helperText={!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}
                   name="password"
-                  label="Contraseña"
-                  type="password"
-                  id="password"
+                  // label="Contraseña"
+                  // type="password"
+                  // id="password"
                   autoComplete="new-password"
                   onChange={handlePassword}
-                />
+                /> */}
+                <FormControl variant="outlined" fullWidth >
+                      <InputLabel htmlFor="outlined-adornment-password" >Password</InputLabel>
+                            <OutlinedInput
+                              id="outlined-adornment-password"
+                              type={showPassword ? 'text' : 'password'}
+                              endAdornment={
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                  >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                  </IconButton>
+                                </InputAdornment>
+                              }
+                              // label="Password"
+                              fullWidth
+                              helperText={!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}
+                              name="password"
+                              label="Contraseña"
+                              // type="password"
+                              // id="password"
+                              autoComplete="new-password"
+                              onChange={handlePassword}
+                              
+                            />
+                  <FormHelperText id="standard-weight-helper-text">{!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}</FormHelperText>
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <TextField
