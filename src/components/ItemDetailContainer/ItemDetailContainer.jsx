@@ -105,7 +105,7 @@ const ItemDetailContainer = ({initial}) => {
                   sku={item._id ? item._id : item.id }
                   model={item.label}
                   name={`${
-                    [item.name,item.color,item.linea,item.presentacion,`${item.contenido ? (""+item.contenido) : ""}`].filter(Boolean).join(" | ")
+                    [item.name,item.color,item.linea,item.presentacion,`${(item.unidades!="0" && item.lista=="buloneria bremen") ? (`${item.unidades} unidades`) : ""}`,`${item.contenido ? (""+item.contenido) : ""}`].filter(Boolean).join(" | ")
                     }`}
                   description={item.code}
                   img={item.image}

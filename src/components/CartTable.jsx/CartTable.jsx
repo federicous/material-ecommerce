@@ -217,7 +217,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
                     />
                     </Box>
                     <Typography sx={{textDecoration: "none", fontSize:{xs:"x-small",sm:"small",md:"medium"}}} color="text.primary" variant="caption">{capitalizeFirstLetter(`${
-                        [row.name,row.color,row.linea,row.presentacion,`${row.contenido ? (""+row.contenido) : ""}`].filter(Boolean).join(" | ")
+                           [row.name,row.color,row.linea,row.presentacion,`${(row.unidades!="0" && row.lista=="buloneria bremen") ? (`${row.unidades} unidades`) : ""}`,`${row.contenido ? (""+row.contenido) : ""}`].filter(Boolean).join(" | ")
                         }`)} ({row.code})</Typography>                  
                   </Box>
                   </DomLink>
