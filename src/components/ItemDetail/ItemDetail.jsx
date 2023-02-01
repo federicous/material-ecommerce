@@ -67,7 +67,7 @@ const Item = ({initial, name, model, description, img, stock, price, product, sk
             Código: {description}
           </Typography>
           {isAdmin ? <>
-              <LinkMui href={`${config.ADMINISTRADOR}/producto/${sku}`} style={{ textDecoration:"none", color:"inherit"}}>
+              <LinkMui href={`${config.ADMINISTRADOR}/producto/${sku}`} target="_blank" style={{ textDecoration:"none", color:"inherit"}}>
                 <Button startIcon={<EditIcon />} size="small" variant="contained" color="primary"  sx={{ fontSize: 12, mt:1}}>Editar</Button>
               </LinkMui>
             </> : <></>
