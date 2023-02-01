@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card,CardContent,CardMedia,Typography,Box,Button, Link as LinkMui } from '@material-ui/core';
+import { Card,CardContent,CardMedia,Typography,Box,Button, Link as LinkMui, Badge, styled } from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
 import ItemCountHorizontal from '../ItemCount/ItemCountHorizontal';
 import { Edit as EditIcon } from '@material-ui/icons';
@@ -13,6 +13,15 @@ function capitalizeFirstLetter(string) {
   let cadena = string.toLowerCase()
   return cadena.charAt(0).toUpperCase() + cadena.slice(1);
 }
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    right: 30,
+    top: 1,
+    // border: `2px solid ${theme.palette.background.paper}`,
+    // padding: '10 4px',
+  },
+}));
 
 const Item = ({product, name, description, img, stock, model,sku, price}) => {
   let navigate = useNavigate();
@@ -38,6 +47,8 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
 	return (
     <>
   <Box>
+  <StyledBadge badgeContent={product.oferta == "si" ? "OFERTA" : 0} color="error">
+
   <Card sx={{ display: 'flex', width:"100%" }}>
     <CardMedia component="img" image={`${config.SERVER}/images/${img ? img : "sin_imagen.jpg"}`} sx={{minHeight:"90px", minWidth:"80px"}} alt="sin imagen" onClick={() => navigate(`/detail/${sku}`, { replace: true })}/>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -71,10 +82,10 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
           />
         </Box>
       </Box>
-
     </Card>
-  </Box>
+    </StyledBadge>  
 
+  </Box>
 
     </>
   );

@@ -5,21 +5,19 @@ import ItemHorizontal from "../Item/ItemHorizontal";
 import { Box } from "@material-ui/system";
 import "./ItemList.css";
 import {config} from "../../config/config";
+import ItemClass from '../utils/ItemClass/ItemClass';
 import ApiQuery from "../utils/apiQuery/apiQuery";
 let apiQuery = new ApiQuery();
+let itemClass = new ItemClass()
 
 // let dolar = config.DOLAR;
 
-function ccyFormat(num) {
-  let numFloat = parseFloat(num)
-	return `${numFloat.toFixed(2)}`;
-      }
 
 const ItemList = ({ products }) => {
 
   const [dolar, setDolar] = useState(0)
   const productsList = products;
-
+  
   useEffect(() => {
     let cancel = false;
     apiQuery.get(`/api/dolar`)
@@ -55,7 +53,7 @@ const ItemList = ({ products }) => {
                     img={item.image}
                     // stock={item.stock ? item.stock : 100000}
                     stock={1000000}
-                    price={item.price ? ccyFormat(item.price) : (item.usd ? ccyFormat(item.usd*dolar) : "") }
+                    price={itemClass.calcularPrecio(item,dolar)}
                   />
 
                 </div>
@@ -72,7 +70,9 @@ const ItemList = ({ products }) => {
                     img={item.image}
                     // stock={item.stock ? item.stock : 100000}
                     stock={1000000}
-                    price={item.price ? ccyFormat(item.price) : (item.usd ? ccyFormat(item.usd*dolar) : "") }
+                    // price={item.price ? ccyFormat(item.price) : (item.usd ? ccyFormat(item.usd*dolar) : "") }
+                    // price={calcularPrecio(item) }
+                    price={itemClass.calcularPrecio(item,dolar)}
                   />
                 </div>
 

@@ -15,6 +15,7 @@ import Cookies from "universal-cookie";
 import { CartContext } from '../CartContext/CartContext';
 import {config} from "../../config/config";
 import OrderButtonTemporary from "../Order/OrderButtonTemporary"
+import Ofertas from "../Ofertas/Ofertas"
 
 const cookies = new Cookies();
 
@@ -161,6 +162,8 @@ export default function PermanentDrawerLeft() {
             {navList.map((item) => (        
                 <CategoryCollapse key={item} lista={item} toggleDrawer={toggleDrawer} anchor={anchor} />
             ))}
+           <Divider />  
+           <Ofertas toggleDrawer={(anchor, isfalse) => toggleDrawer(anchor, isfalse)} anchor={anchor}/>
            <Divider />  
           </Box>
           <Box>

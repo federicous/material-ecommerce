@@ -51,8 +51,8 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   let navigate = useNavigate();
 
   function calcularPrecio(precioConIva,iva,price,usd,qty) {
-    let resultado = ccyFormat(precioConIva ? parseFloat(precioConIva)/(1+(parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva))/100) : (price ? `${price}` : usd*dolar))*(qty ? parseFloat(qty) : 1);
-    return resultado
+    let resultado = (precioConIva ? parseFloat(precioConIva)/(1+(parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva))/100) : (price ? `${price}` : usd*dolar))*(qty ? parseFloat(qty) : 1);
+    return ccyFormat(resultado)
   }
 
   let handleOrden = () => {

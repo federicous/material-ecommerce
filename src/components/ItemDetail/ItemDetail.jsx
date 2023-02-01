@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card,CardActions,CardContent,CardMedia,Container,Typography, Button, Link as LinkMui } from '@material-ui/core';
+import { Card,CardActions,CardContent,CardMedia,Container,Typography, Button, Link as LinkMui, Badge, styled } from '@material-ui/core';
 import ItemCount2 from '../ItemCount/ItemCount2'
 // import {config} from "../../config/config";
 import {config} from "../../config/config";
@@ -7,6 +7,14 @@ import { Edit as EditIcon } from '@material-ui/icons';
 import ApiQuery from "../utils/apiQuery/apiQuery"
 let apiQuery = new ApiQuery();
 
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    right: 30,
+    top: 1,
+    // border: `2px solid ${theme.palette.background.paper}`,
+    // padding: '10 4px',
+  },
+}));
 
 const Item = ({initial, name, model, description, img, stock, price, product, sku}) => {
   const [isAdmin, setIsAdmin] = React.useState(false)
@@ -30,6 +38,7 @@ const Item = ({initial, name, model, description, img, stock, price, product, sk
 
 	return (
     <>
+    <StyledBadge badgeContent={product.oferta == "si" ? "OFERTA" : 0} color="error">
       <Card
         sx={{
           display: "flex",
@@ -84,6 +93,7 @@ const Item = ({initial, name, model, description, img, stock, price, product, sk
           />
         </CardActions>
       </Card>
+      </StyledBadge>
     </>
   );
 }

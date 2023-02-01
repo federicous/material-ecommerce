@@ -9,16 +9,14 @@ import axios from "axios";
 // import {config} from "../../config/config"
 import {config} from "../../config/config"
 import Cookies from "universal-cookie";
+import ItemClass from '../utils/ItemClass/ItemClass';
 import ApiQuery from "../utils/apiQuery/apiQuery";
+// import ItemClass from '../utils/ItemClass/ItemClass';
 let apiQuery = new ApiQuery();
 const cookies = new Cookies();
+let itemClass = new ItemClass()
 
 // let dolar = config.DOLAR;
-
-function ccyFormat(num) {
-  let numFloat = parseFloat(num)
-	return `${numFloat.toFixed(2)}`;
-      }
 
 const ItemDetailContainer = ({initial}) => {
 
@@ -60,6 +58,7 @@ const ItemDetailContainer = ({initial}) => {
       .then((result) => {
         if (cancel) return;
         setProducts([result.data]);
+        console.log([result.data]);
       })
       .catch((error) => {
         error = new Error();
@@ -91,6 +90,7 @@ const ItemDetailContainer = ({initial}) => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
+            mt:1,
           }}
           container
           spacing={2}
@@ -112,7 +112,8 @@ const ItemDetailContainer = ({initial}) => {
                   // stock={item.stock ? item.stock : 100000}
                   stock={1000000}
                   // price={ccyFormat(item.price ? item.price : item.usd*dolar) }
-                  price={item.price ? ccyFormat(item.price) : (item.usd ? ccyFormat(item.usd*dolar) : "") }
+                  // price={item.price ? ccyFormat(item.price) : (item.usd ? ccyFormat(item.usd*dolar) : "") }
+                  price={itemClass.calcularPrecio(item,dolar)}
                 />
                 </Box>
 
