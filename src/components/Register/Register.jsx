@@ -186,7 +186,7 @@ React.useEffect(() => {
 
   const handleFerreteria = (event) => {
     let ferreteria= event.target.value
-    if (isBetween(ferreteria.length, 3, 30)) {
+    if (isBetween(ferreteria.length, 3, 130)) {
       setFerreteria(ferreteria)
     } else {
     setFerreteria('')
@@ -196,7 +196,7 @@ React.useEffect(() => {
 
   const handleCalle = (event) => {
     let calle= event.target.value
-    if (isBetween(calle.length, 3, 30)) {
+    if (isBetween(calle.length, 3, 130)) {
       setCalle(calle)
     } else {
     setCalle('')
