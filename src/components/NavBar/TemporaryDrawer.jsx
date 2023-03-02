@@ -21,6 +21,7 @@ import { CartContext } from '../CartContext/CartContext';
 import CategoryCollapse from "../Category/CategoryCollapse";
 import Cookies from "universal-cookie";
 import OrderButtonTemporary from "../Order/OrderButtonTemporary";
+import DownloadsButton from "../Downloads/DownloadsButton"
 
 const cookies = new Cookies();
 const token = cookies.get("token");  
@@ -115,6 +116,8 @@ export default function TemporaryDrawer() {
            <Divider />  
           </Box>
           <Box>
+          <Divider />
+          <DownloadsButton toggleDrawer={(anchor, isfalse) => toggleDrawer(anchor, isfalse)} anchor={anchor}/>
           <Divider />
           <OrderButtonTemporary toggleDrawer={(anchor, isfalse) => toggleDrawer(anchor, isfalse)} anchor={anchor}
           />

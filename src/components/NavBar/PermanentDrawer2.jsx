@@ -16,6 +16,7 @@ import { CartContext } from '../CartContext/CartContext';
 import {config} from "../../config/config";
 import OrderButtonTemporary from "../Order/OrderButtonTemporary"
 import Ofertas from "../Ofertas/Ofertas"
+import DownloadsButton from "../Downloads/DownloadsButton"
 
 const cookies = new Cookies();
 
@@ -167,6 +168,8 @@ export default function PermanentDrawerLeft() {
            <Divider />  
           </Box>
           <Box>
+          <Divider />
+          <DownloadsButton toggleDrawer={(anchor, isfalse) => toggleDrawer(anchor, isfalse)} anchor={anchor}/>
           <Divider />
           <OrderButtonTemporary toggleDrawer={(anchor, isfalse) => toggleDrawer(anchor, isfalse)} anchor={anchor}/>
             <Divider />
