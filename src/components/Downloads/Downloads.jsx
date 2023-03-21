@@ -46,7 +46,7 @@ export default function InteractiveList() {
         window.URL.revokeObjectURL(url);
       })
       .catch((error) => {
-	error = new Error();
+        error = new Error();
       });
   }
 
@@ -59,28 +59,34 @@ export default function InteractiveList() {
           </Typography>
           <Demo>
             <List dense={false}>
-              {listas.map((item) => (
-                <ListItem
-                  key={item}
-                  button
-                  onClick={() => getFile(item)}
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                      <DownloadIcon />
-                    </IconButton>
-                  }
-                >
-                  <ListItemAvatar>
-                    <Avatar>
-                      <FileIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={item}
-                    //     secondary={secondary ? "Secondary text" : null}
-                  />
-                </ListItem>
-              ))}
+              {listas.length ? (
+                <>
+                  {listas.map((item) => (
+                    <ListItem
+                      key={item}
+                      button
+                      onClick={() => getFile(item)}
+                      secondaryAction={
+                        <IconButton edge="end" aria-label="delete">
+                          <DownloadIcon />
+                        </IconButton>
+                      }
+                    >
+                      <ListItemAvatar>
+                        <Avatar>
+                          <FileIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={item}
+                        //     secondary={secondary ? "Secondary text" : null}
+                      />
+                    </ListItem>
+                  ))}
+                </>
+              ) : (
+                <></>
+              )}
             </List>
           </Demo>
         </Grid>
