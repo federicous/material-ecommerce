@@ -28,14 +28,14 @@ export default function InteractiveList() {
   const [listas, setListas] = React.useState([]);
 
   React.useEffect(() => {
-    apiQuery.get(`/descargas/lista`).then((respuesta) => {
+    apiQuery.get(`/api/descargas/lista`).then((respuesta) => {
       setListas(respuesta);
     });
   }, []);
 
   function getFile(item) {
     apiQuery
-      .getArchivo(`/descargas/lista/${item}`)
+      .getArchivo(`/api/descargas/lista/${item}`)
       .then((respuesta) => {
         const url = window.URL.createObjectURL(respuesta);
         const a = document.createElement("a");
@@ -59,7 +59,7 @@ export default function InteractiveList() {
           </Typography>
           <Demo>
             <List dense={false}>
-              {listas.length ? (
+              {listas ? (
                 <>
                   {listas.map((item) => (
                     <ListItem
