@@ -45,7 +45,7 @@ const ItemList = ({ products }) => {
                     product={item}
                     initial={item.stock ? 1 : item.stock}
                     sku={item._id ? item._id : item.id }
-                    model={item.label}
+                    model={item.label ? item.label : ""}
                     name={`${
                       [item.name,item.color,item.linea,item.presentacion,`${(item.unidades!="0" && item.lista=="buloneria bremen") ? (`${item.unidades} unidades`) : ""}`,`${item.contenido ? (""+item.contenido) : ""}`].filter(Boolean).join(" | ")
                       }`}
@@ -62,7 +62,7 @@ const ItemList = ({ products }) => {
                     product={item}
                     initial={item.stock ? 1 : item.stock}
                     sku={item._id ? item._id : item.id }
-                    model={item.label}
+                    model={item.label ? item.label : ""}
                     name={`${
                       [item.name,item.color,item.linea,item.presentacion,`${(item.unidades!="0" && item.lista=="buloneria bremen") ? (`${item.unidades} unidades`) : ""}`,`${item.contenido ? (""+item.contenido) : ""}`].filter(Boolean).join("|")
                       }`}
