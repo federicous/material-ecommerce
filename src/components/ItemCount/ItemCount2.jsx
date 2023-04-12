@@ -12,37 +12,52 @@ const ItemCount = ({initial, sku, stock, product, price}) => {
 
 	const cartContext = useContext(CartContext);
 	const {addToCart}= cartContext;
-	const [contador, setContador] = useState(initial)
+	const [contador, setContador] = useState((product.multiplicador && !isNaN(Number(product.multiplicador))) ? (Number(initial))*(Number(product.multiplicador)) : Number(initial))
 	const [visibilty, setVisibilty] = useState(true)
 	const [result, setResult] = useState(stock)
-	const [tipeo, setTipeo] = useState(false)
 
-	function multiplicador(valor,condicion=false) {
-		/* el resultado depende si se modifica desde los click en los botones o directamente por teclado */
-		if (!condicion) {
-			return (product.multiplicador && !isNaN(Number(product.multiplicador))) ? (Number(valor))*(Number(product.multiplicador)) : Number(valor)
-		} else {
-			return Number(valor)
-		}
+	function roundToNearestFloor(number,multiplo) {
+		return Math.floor(number/multiplo) * multiplo;
+	}	
+	
+	function roundToNearestCeil(number,multiplo) {
+		return Math.ceil(number/multiplo) * multiplo;
 	}
 
 	function addItem() {
-		setTipeo(false)
-		if (Number(contador) < Number(result)) {
-			setContador(Number(contador)+1)
+		if ((product.multiplicador && !isNaN(Number(product.multiplicador)))) {
+			if (Number(contador) < Number(result)) {
+				let contadorMultiplo=roundToNearestFloor(contador,product.multiplicador)
+				setContador(Number(contadorMultiplo)+Number(product.multiplicador))
+			}
+		} else {		
+			if (Number(contador) < Number(result)) {
+				setContador(Number(contador)+1)
+			}
 		}
 	}
 
 	function removeItem() {
-		setTipeo(false)
-		if (Number(contador)>1) {
-			setContador(Number(contador)-1)		
+		if (product.multiplicador && !isNaN(Number(product.multiplicador))) {
+			if (Number(contador) > Number(product.multiplicador)) {
+				let contadorMultiplo=roundToNearestCeil(contador,product.multiplicador)
+				setContador(Number(contadorMultiplo)-Number(product.multiplicador))
+			}
+		} else {
+			if (Number(contador)>1) {
+				setContador(Number(contador)-1)		
+			}
 		}
 	}
 
 	function addCart(counter) {
 		if (Number(counter)<=Number(stock)) {
-			addToCart(product, multiplicador(Number(counter)))
+			if (product.multiplicador && !isNaN(Number(product.multiplicador))) {
+				let contadorMultiplo=roundToNearestCeil(contador,product.multiplicador)
+				addToCart(product, Number(contadorMultiplo))
+			} else {
+				addToCart(product, Number(counter))
+			}
 			setResult(Number(stock)-Number(counter))
 			setContador(Number(initial))
 			setVisibilty(false)
@@ -51,27 +66,13 @@ const ItemCount = ({initial, sku, stock, product, price}) => {
 
 	function setContadorFunction(e) {
 		let value = e.target.value
-		setTipeo(true)
-
-		if (product.multiplicador && !isNaN(Number(product.multiplicador))) {
-			// setContador(Math.ceil(value/Number(product.multiplicador)) * Number(product.multiplicador))
 			if (Number(contador)<Number(stock) && Number(value)>=0) {
 				setContador(Number(value))
 			} else if (Number(value)>=0) {
 				setContador(Number(stock)-1)
 			} else {
 				setContador(0)
-			}
-
-		} else {
-			if (Number(contador)<Number(stock) && Number(value)>=0) {
-				setContador(Number(value))
-			} else if (Number(value)>=0) {
-				setContador(Number(stock)-1)
-			} else {
-				setContador(0)
-			}
-		}
+			}		
 	}
 
 return (
@@ -84,7 +85,8 @@ return (
 				<Box component="div" sx={{ fontSize: 12, display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center",width:"100%" }}>    
 					<TextField onInput={()=>console.log("oninput")} onChange={(e) => setContadorFunction(e)} sx={{ width:"100%", input: {textAlign: "center" }}}    id="standard-number"
 						type="number"
-						value={multiplicador(contador,tipeo)}							
+						// value={multiplicador(contador,tipeo)}							
+						value={contador}							
 						InputLabelProps={{
 						shrink: true,
 						}}

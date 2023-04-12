@@ -12,38 +12,67 @@ const ItemCount = ({initial, sku, stock, product, price}) => {
 
 	const cartContext = useContext(CartContext);
 	const {addToCart}= cartContext;
-	const [contador, setContador] = useState(initial)
+	const [contador, setContador] = useState((product.multiplicador && !isNaN(Number(product.multiplicador))) ? (Number(initial))*(Number(product.multiplicador)) : Number(initial))
 	const [visibilty, setVisibilty] = useState(true)
 	const [result, setResult] = useState(stock)
 
+	function roundToNearestFloor(number,multiplo) {
+		return Math.floor(number/multiplo) * multiplo;
+	}	
+	
+	function roundToNearestCeil(number,multiplo) {
+		return Math.ceil(number/multiplo) * multiplo;
+	}
+
 	function addItem() {
-		if (Number(contador) < Number(result)) {
-			setContador(Number(contador)+1)
+		if ((product.multiplicador && !isNaN(Number(product.multiplicador)))) {
+			if (Number(contador) < Number(result)) {
+				let contadorMultiplo=roundToNearestFloor(contador,product.multiplicador)
+				setContador(Number(contadorMultiplo)+Number(product.multiplicador))
+			}
+		} else {		
+			if (Number(contador) < Number(result)) {
+				setContador(Number(contador)+1)
+			}
 		}
 	}
 
 	function removeItem() {
-		if (Number(contador)>1) {
-			setContador(Number(contador)-1)		
+		if (product.multiplicador && !isNaN(Number(product.multiplicador))) {
+			if (Number(contador) > Number(product.multiplicador)) {
+				let contadorMultiplo=roundToNearestCeil(contador,product.multiplicador)
+				setContador(Number(contadorMultiplo)-Number(product.multiplicador))
+			}
+		} else {
+			if (Number(contador)>1) {
+				setContador(Number(contador)-1)		
+			}
 		}
 	}
 
 	function addCart(counter) {
 		if (Number(counter)<=Number(stock)) {
-			addToCart(product, Number(counter))
+			if (product.multiplicador && !isNaN(Number(product.multiplicador))) {
+				let contadorMultiplo=roundToNearestCeil(contador,product.multiplicador)
+				addToCart(product, Number(contadorMultiplo))
+			} else {
+				addToCart(product, Number(counter))
+			}
 			setResult(Number(stock)-Number(counter))
 			setContador(Number(initial))
 			setVisibilty(false)
 		}
 	}
 
-	function setContadorFunction(value) {
-		if (Number(contador)<Number(stock)) {
-			setContador(Number(value))
-		} else {
-			setContador(Number(stock)-1)
-		}
-
+	function setContadorFunction(e) {
+		let value = e.target.value
+			if (Number(contador)<Number(stock) && Number(value)>=0) {
+				setContador(Number(value))
+			} else if (Number(value)>=0) {
+				setContador(Number(stock)-1)
+			} else {
+				setContador(0)
+			}		
 	}
 
 return (
@@ -54,7 +83,7 @@ return (
 				<Button onClick={()=>removeItem()}><Remove/></Button>
 				{/* <Box component="span" sx={{ fontSize: 12, display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center" }}>{contador}</Box> */}
 				<Box component="div" sx={{ fontSize: 12, display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center",width:"100%" }}>    
-					<TextField onChange={(e) => setContadorFunction(e.target.value)} sx={{ width:"100%", input: {textAlign: "center" }}}    id="standard-number"
+					<TextField onChange={(e) => setContadorFunction(e)} sx={{ width:"100%", input: {textAlign: "center" }}}    id="standard-number"
 						type="number"
 						value={contador}							
 						InputLabelProps={{
