@@ -15,14 +15,26 @@ const ItemCount = ({initial, sku, stock, product, price}) => {
 	const [contador, setContador] = useState(initial)
 	const [visibilty, setVisibilty] = useState(true)
 	const [result, setResult] = useState(stock)
+	const [tipeo, setTipeo] = useState(false)
+
+	function multiplicador(valor,condicion=false) {
+		/* el resultado depende si se modifica desde los click en los botones o directamente por teclado */
+		if (!condicion) {
+			return (product.multiplicador && !isNaN(Number(product.multiplicador))) ? (Number(valor))*(Number(product.multiplicador)) : Number(valor)
+		} else {
+			return Number(valor)
+		}
+	}
 
 	function addItem() {
+		setTipeo(false)
 		if (Number(contador) < Number(result)) {
 			setContador(Number(contador)+1)
 		}
 	}
 
 	function removeItem() {
+		setTipeo(false)
 		if (Number(contador)>1) {
 			setContador(Number(contador)-1)		
 		}
@@ -30,20 +42,36 @@ const ItemCount = ({initial, sku, stock, product, price}) => {
 
 	function addCart(counter) {
 		if (Number(counter)<=Number(stock)) {
-			addToCart(product, Number(counter))
+			addToCart(product, multiplicador(Number(counter)))
 			setResult(Number(stock)-Number(counter))
 			setContador(Number(initial))
 			setVisibilty(false)
 		}
 	}
 
-	function setContadorFunction(value) {
-		if (Number(contador)<Number(stock)) {
-			setContador(Number(value))
-		} else {
-			setContador(Number(stock)-1)
-		}
+	function setContadorFunction(e) {
+		let value = e.target.value
+		setTipeo(true)
 
+		if (product.multiplicador && !isNaN(Number(product.multiplicador))) {
+			// setContador(Math.ceil(value/Number(product.multiplicador)) * Number(product.multiplicador))
+			if (Number(contador)<Number(stock) && Number(value)>=0) {
+				setContador(Number(value))
+			} else if (Number(value)>=0) {
+				setContador(Number(stock)-1)
+			} else {
+				setContador(0)
+			}
+
+		} else {
+			if (Number(contador)<Number(stock) && Number(value)>=0) {
+				setContador(Number(value))
+			} else if (Number(value)>=0) {
+				setContador(Number(stock)-1)
+			} else {
+				setContador(0)
+			}
+		}
 	}
 
 return (
@@ -54,9 +82,9 @@ return (
 				<Button onClick={()=>removeItem()}><Remove/></Button>
 				{/* <Box component="span" sx={{ fontSize: 12, display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center" }}>{contador}</Box> */}
 				<Box component="div" sx={{ fontSize: 12, display:"flex", flexDirection:"row", justifyContent:"space-evenly", alignItems:"center",width:"100%" }}>    
-					<TextField onChange={(e) => setContadorFunction(e.target.value)} sx={{ width:"100%", input: {textAlign: "center" }}}    id="standard-number"
+					<TextField onInput={()=>console.log("oninput")} onChange={(e) => setContadorFunction(e)} sx={{ width:"100%", input: {textAlign: "center" }}}    id="standard-number"
 						type="number"
-						value={contador}							
+						value={multiplicador(contador,tipeo)}							
 						InputLabelProps={{
 						shrink: true,
 						}}
