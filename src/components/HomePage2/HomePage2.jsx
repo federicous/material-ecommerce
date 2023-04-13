@@ -86,7 +86,7 @@ export default function HomePage2() {
           focusRipple
           key={item.name}
           style={{
-            width: "25%",
+            width: "20%",
           }}
           sx={{mb:3}}
         >
