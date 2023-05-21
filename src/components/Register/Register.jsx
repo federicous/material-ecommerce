@@ -12,6 +12,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import CheckIcon from '@material-ui/icons/Check';
 
 function Copyright(props) {
   return (
@@ -41,15 +42,24 @@ export default function SignUp() {
   const [vendedor, setVendedor] = React.useState('');
   const [localidad, setLocalidad] = React.useState('');
   const [nombre, setNombre] = React.useState('');
+  const [nombreError, setNombreError] = React.useState(false);
   const [apellido, setApellido] = React.useState('');
+  const [apellidoError, setApellidoError] = React.useState(false);
   const [correo, setCorreo] = React.useState('');
+  const [correoError, setCorreoError] = React.useState(false);
   const [password, setPassword] = React.useState('');
   const [repeatPassword, setRepeatPassword] = React.useState('');
+  const [repeatPasswordError, setRepeatPasswordError] = React.useState(false);
   const [calle, setCalle] = React.useState('');
+  const [calleError, setCalleError] = React.useState(false);
   const [altura, setAltura] = React.useState('');
+  const [alturaError, setAlturaError] = React.useState(false);
   const [cuit, setCuit] = React.useState('');
+  const [cuitError, setCuitError] = React.useState(false);
   const [ferreteria, setFerreteria] = React.useState('');
+  const [ferreteriaError, setFerreteriaError] = React.useState(false);
   const [telefono, setTelefono] = React.useState('');
+  const [telefonoError, setTelefonoError] = React.useState(false);
   const [botonSubmit, setBotonSubmit] = React.useState(true);
   const [passwordError, setPasswordError] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
@@ -115,19 +125,23 @@ React.useEffect(() => {
 
   function handleFirstName(e) {
     let firstName= e.target.value
-    if (isBetween(firstName.length, 3, 15)) {
+    if (isBetween(firstName.length, 3, 25)) {
       setNombre(firstName)
+      setNombreError(false)
     } else {
     setNombre('')
+    setNombreError(true)
     }
   }
 
   function handleLastName(e) {
     let lastName= e.target.value
-    if (isBetween(lastName.length, 3, 15)) {
+    if (isBetween(lastName.length, 3, 25)) {
       setApellido(lastName)
+      setApellidoError(false)
     } else {
-    setApellido('')
+      setApellido('')
+      setApellidoError(true)
     }
   }
 
@@ -135,8 +149,10 @@ React.useEffect(() => {
     let email= e.target.value
     if (isEmailValid(email)) {
       setCorreo(email)
+      setCorreoError(false)
     } else {
-    setCorreo('')
+      setCorreo('')
+      setCorreoError(true)
     }
   }
 
@@ -144,8 +160,10 @@ React.useEffect(() => {
     let password= e.target.value
     if (isPasswordSecure(password)) {
       setPassword(password)
+      setPasswordError(false)
     } else {
-    setPassword('')
+      setPassword('')
+      setPasswordError(true)
     }
   }
 
@@ -170,8 +188,10 @@ React.useEffect(() => {
     let telefono= e.target.value
     if (isNumber(telefono,10)) {
       setTelefono(telefono)
+      setTelefonoError(false)
     } else {
     setTelefono('')
+    setTelefonoError(true)
     }
   };
 
@@ -179,8 +199,10 @@ React.useEffect(() => {
     let cuit= event.target.value
     if (isNumber(cuit,11)) {
       setCuit(cuit)
+      setCuitError(false)
     } else {
     setCuit('')
+    setCuitError(true)
     }
   };
 
@@ -188,8 +210,10 @@ React.useEffect(() => {
     let ferreteria= event.target.value
     if (isBetween(ferreteria.length, 3, 130)) {
       setFerreteria(ferreteria)
+      setFerreteriaError(false)
     } else {
     setFerreteria('')
+    setFerreteriaError(true)
     }
 
   };
@@ -198,8 +222,10 @@ React.useEffect(() => {
     let calle= event.target.value
     if (isBetween(calle.length, 3, 130)) {
       setCalle(calle)
+      setCalleError(false)
     } else {
     setCalle('')
+    setCalleError(true)
     }
   };
 
@@ -207,8 +233,10 @@ React.useEffect(() => {
     let altura= event.target.value
     if (isBetween(altura.length, 1, 30)) {
       setAltura(altura)
+      setAlturaError(false)
     } else {
     setAltura('')
+    setAlturaError(true)
     }
   };
 
@@ -277,6 +305,8 @@ const isNumber = (number, min) => {
                   label="Nombre"
                   autoFocus
                   onChange={handleFirstName}
+                  color={nombre ? "success" : "error"}
+                  error={nombreError}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -288,7 +318,10 @@ const isNumber = (number, min) => {
                   name="lastName"
                   autoComplete="family-name"
                   onChange={handleLastName}
+                  color={apellido ? "success" : "error"}
+                  error={apellidoError}
                 />
+                <FormHelperText id="component-error-text">Error</FormHelperText>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -300,6 +333,8 @@ const isNumber = (number, min) => {
                   autoComplete="email"
                   type="email"
                   onChange={handleEmail}
+                  color={correo ? "success" : "error"}
+                  error={correoError}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -315,10 +350,12 @@ const isNumber = (number, min) => {
                   onChange={handlePassword}
                 /> */}
                 <FormControl variant="outlined" fullWidth required>
-                      <InputLabel htmlFor="outlined-adornment-password" >Contraseña</InputLabel>
+                      <InputLabel htmlFor="outlined-adornment-password" color={password ? "success" : "error"} error={passwordError}>Contraseña</InputLabel>
                             <OutlinedInput
                               id="password"
                               type={showPassword ? 'text' : 'password'}
+                              color={password ? "success" : "error"}
+                              error={passwordError}
                               endAdornment={
                                 <InputAdornment position="end">
                                   <IconButton
@@ -359,7 +396,7 @@ const isNumber = (number, min) => {
                   onChange={handleRepeatPassword}
                 /> */}
                 <FormControl variant="outlined" fullWidth error={passwordError}      >
-                      <InputLabel htmlFor="outlined-adornment-password" >Repetir Contraseña *</InputLabel>
+                      <InputLabel htmlFor="outlined-adornment-password" color={ password ? "success" : "error"} error={password!=repeatPassword} >Repetir Contraseña *</InputLabel>
                             <OutlinedInput
                               // id="outlined-adornment-password"
                               id="repeatPassword"
@@ -387,6 +424,8 @@ const isNumber = (number, min) => {
                               disabled={!password}
                               onChange={handleRepeatPassword}   
                               required 
+                              color={ password ? "success" : "error"}
+                              error={password!=repeatPassword}
                             />
                   <FormHelperText id="standard-weight-helper-text">{passwordError ? "No coinciden" : ""}</FormHelperText>
                 </FormControl>
@@ -463,6 +502,8 @@ const isNumber = (number, min) => {
                   name="ferreteria"
                   autoComplete="ferreteria"
                   onChange={handleFerreteria}
+                  color={ferreteria ? "success" : "error"}
+                  error={ferreteriaError}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -474,6 +515,8 @@ const isNumber = (number, min) => {
                   name="calle"
                   autoComplete="calle"
                   onChange={handleCalle}
+                  color={calle ? "success" : "error"}
+                  error={calleError}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -485,6 +528,8 @@ const isNumber = (number, min) => {
                   id="altura"
                   label="Altura"
                   onChange={handleAltura}
+                  color={altura ? "success" : "error"}
+                  error={alturaError}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -497,6 +542,8 @@ const isNumber = (number, min) => {
                   label="CUIT"
                   type="number"
                   onChange={handleCuit}
+                  color={cuit ? "success" : "error"}
+                  error={cuitError}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -509,6 +556,8 @@ const isNumber = (number, min) => {
                   autoComplete="telefono"
                   type="number"
                   onChange={handlePhone}
+                  color={telefono ? "success" : "error"}
+                  error={telefonoError}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
