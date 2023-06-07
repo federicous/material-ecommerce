@@ -45,7 +45,13 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
   
 	return (
     <>
-      <StyledBadge badgeContent={product.oferta == "si" ? "OFERTA" : 0} color="error">
+      <StyledBadge badgeContent={
+          (product.oferta == "si") && (product.novedades!= "si")
+            ? "OFERTA" 
+            : (product.novedades == "si" ? "NOVEDADES" : 0 )
+        } color={(product.oferta == "si") && (product.novedades!= "si")
+        ? "error" 
+        : (product.novedades == "si" ? "success" : "info")}>
         <Card
           sx={{
             display: "flex",
