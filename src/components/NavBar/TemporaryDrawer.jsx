@@ -22,6 +22,8 @@ import CategoryCollapse from "../Category/CategoryCollapse";
 import Cookies from "universal-cookie";
 import OrderButtonTemporary from "../Order/OrderButtonTemporary";
 import DownloadsButton from "../Downloads/DownloadsButton"
+import Ofertas from "../Ofertas/Ofertas"
+import Novedades from "../Novedades/Novedades"
 
 const cookies = new Cookies();
 const token = cookies.get("token");  
@@ -113,6 +115,10 @@ export default function TemporaryDrawer() {
             {navList.map((item) => (        
                 <CategoryCollapse key={item} lista={item} toggleDrawer={toggleDrawer} anchor={anchor} />
             ))}
+           <Divider />  
+           <Ofertas toggleDrawer={(anchor, isfalse) => toggleDrawer(anchor, isfalse)} anchor={anchor}/>
+           <Divider />   
+           <Novedades toggleDrawer={(anchor, isfalse) => toggleDrawer(anchor, isfalse)} anchor={anchor}/>
            <Divider />  
           </Box>
           <Box>

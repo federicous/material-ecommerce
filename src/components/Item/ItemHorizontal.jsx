@@ -47,7 +47,22 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
 	return (
     <>
   <Box>
-  <StyledBadge badgeContent={product.oferta == "si" ? "OFERTA" : 0} color="error">
+  <StyledBadge 
+        badgeContent={
+          product.oferta == "si" && product.novedades != "si"
+            ? "OFERTA"
+            : product.novedades == "si"
+            ? "NOVEDADES"
+            : 0
+        }
+        color={
+          product.oferta == "si" && product.novedades != "si"
+            ? "error"
+            : product.novedades == "si"
+            ? "success"
+            : "info"
+        }
+  >
 
   <Card sx={{ display: 'flex', width:"100%" }}>
     <CardMedia component="img" image={`${config.SERVER}/images/${img ? img : "sin_imagen.jpg"}`} sx={{minHeight:"90px", minWidth:"80px"}} alt="sin imagen" onClick={() => navigate(`/detail/${sku}`, { replace: true })}/>
