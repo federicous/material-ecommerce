@@ -9,6 +9,11 @@ let apiQuery = new ApiQuery();
 const cookies = new Cookies();
 // let dolar = config.DOLAR;
 
+function ccyFormat(num) {
+	let numFloat = parseFloat(num)
+	      return `${numFloat.toFixed(2)}`;
+}
+
 export const CartContext = createContext();
 
 const CartContextProvider = ({children}) => {
@@ -120,11 +125,12 @@ const CartContextProvider = ({children}) => {
 		setUsuario(user)
 	}
 
-	function calcularPrecio(precioConIva,iva,price,usd,qty) {
+	function calcularPrecio(precioConIva,iva,precio,usd,qty,oferta,precioOferta) {
+		let price = (oferta && oferta=="si" && precioOferta) ? ccyFormat(precioOferta) : precio
 		/* le saco el iva si viene incluido */
 		let resultado = (precioConIva ? parseFloat(precioConIva)/(1+(parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva))/100) : (price ? `${price}` : usd*dolar))*(qty ? parseFloat(qty) : 1);
 		return resultado
-	      }
+	}
 	      
 
 	useEffect(() => {
@@ -133,14 +139,14 @@ const CartContextProvider = ({children}) => {
 			let suma=0;
 			for (const item of cart) {
 				// suma=parseFloat(item.qty)*parseFloat(item.price ? item.price : item.usd*dolar)+parseFloat(suma)
-				suma = calcularPrecio(item.precioConIva,item.iva,item.price,item.usd,item.qty)+parseFloat(suma)
+				suma = calcularPrecio(item.precioConIva,item.iva,item.price,item.usd,item.qty,item.oferta,item.precioOferta)+parseFloat(suma)
 			}
 			setTotal(suma);
 			let sumaIva=0;
 			for (const item of cart) {
 				let IVA=parseFloat(typeof item.iva === "string" ? item.iva.replace(/,/g, '.').replace(/%/g, '') : item.iva);
 				// let PRICE = parseFloat(item.price ? item.price : item.usd*dolar);
-				let PRICE = calcularPrecio(item.precioConIva,item.iva,item.price,item.usd)
+				let PRICE = calcularPrecio(item.precioConIva,item.iva,item.price,item.usd,1,item.oferta,item.precioOferta)
 				let QTY=parseInt(item.qty);
 				sumaIva=(QTY*(PRICE-PRICE*(parseFloat(usuario.descuento)/100))*IVA/100)+parseFloat(sumaIva);
 			}
@@ -149,14 +155,14 @@ const CartContextProvider = ({children}) => {
 			let suma=0;
 			for (const item of cart) {
 				// suma=parseFloat(item.qty)*parseFloat(item.price ? item.price : item.usd*dolar)+parseFloat(suma)
-				suma = calcularPrecio(item.precioConIva,item.iva,item.price,item.usd,item.qty)+parseFloat(suma)
+				suma = calcularPrecio(item.precioConIva,item.iva,item.price,item.usd,item.qty,item.oferta,item.precioOferta)+parseFloat(suma)
 			}
 			setTotal(suma);
 			let sumaIva=0;
 			for (const item of cart) {
 				let IVA=parseFloat(typeof item.iva === "string" ? item.iva.replace(/,/g, '.').replace(/%/g, '') : item.iva);
 				// let PRICE = parseFloat(item.price ? item.price : item.usd*dolar);
-				let PRICE = calcularPrecio(item.precioConIva,item.iva,item.price,item.usd)
+				let PRICE = calcularPrecio(item.precioConIva,item.iva,item.price,item.usd,1,item.oferta,item.precioOferta)
 				let QTY=parseInt(item.qty);
 				sumaIva=parseFloat(QTY*PRICE*IVA/100)+parseFloat(sumaIva);
 			}

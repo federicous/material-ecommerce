@@ -8,7 +8,7 @@ import {config} from "../../config/config";
 import ItemClass from '../utils/ItemClass/ItemClass';
 import ApiQuery from "../utils/apiQuery/apiQuery";
 let apiQuery = new ApiQuery();
-let itemClass = new ItemClass()
+let itemClass = new ItemClass();
 
 // let dolar = config.DOLAR;
 
