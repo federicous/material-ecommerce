@@ -9,7 +9,9 @@ import {config} from "../../config/config";
 import Cookies from "universal-cookie";
 import { CartContext } from '../CartContext/CartContext';
 import ApiQuery from "../utils/apiQuery/apiQuery";
+import ItemClass from '../utils/ItemClass/ItemClass';
 let apiQuery = new ApiQuery();
+let itemClass = new ItemClass();
 
 const cookies = new Cookies();
 
@@ -51,9 +53,12 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   let navigate = useNavigate();
 
   function calcularPrecio(precioConIva,iva,precio,usd,qty,oferta,precioOferta) {
-    let price = (oferta && oferta=="si" && precioOferta) ? ccyFormat(precioOferta) : precio
-    let resultado = (precioConIva ? parseFloat(precioConIva)/(1+(parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva))/100) : (price ? `${price}` : usd*dolar))*(qty ? parseFloat(qty) : 1);
-    return ccyFormat(resultado)
+    // let price = (oferta && oferta=="si" && precioOferta) ? ccyFormat(precioOferta) : precio
+    // // let resultado = (precioConIva ? parseFloat(precioConIva)/(1+(parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva))/100) : (price ? `${price}` : usd*dolar))*(qty ? parseFloat(qty) : 1);
+    // let resultado = (precioConIva ? parseFloat(precioConIva)/(1+(parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva))/100) : ((usd && usd != 0) ? usd*dolar : `${price}`))*(qty ? parseFloat(qty) : 1);
+    // return ccyFormat(resultado)
+
+    return(itemClass.calcularPrecioCantidad(precioConIva,iva,precio,usd,qty,oferta,precioOferta,dolar))
   }
 
   let handleOrden = () => {

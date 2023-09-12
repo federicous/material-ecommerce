@@ -4,6 +4,8 @@ import axios from "axios";
 import {config} from "../../config/config";
 import Cookies from "universal-cookie";
 import ApiQuery from "../utils/apiQuery/apiQuery"
+import ItemClass from '../utils/ItemClass/ItemClass';
+let itemClass = new ItemClass();
 let apiQuery = new ApiQuery();
 
 const cookies = new Cookies();
@@ -126,10 +128,13 @@ const CartContextProvider = ({children}) => {
 	}
 
 	function calcularPrecio(precioConIva,iva,precio,usd,qty,oferta,precioOferta) {
-		let price = (oferta && oferta=="si" && precioOferta) ? ccyFormat(precioOferta) : precio
-		/* le saco el iva si viene incluido */
-		let resultado = (precioConIva ? parseFloat(precioConIva)/(1+(parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva))/100) : (price ? `${price}` : usd*dolar))*(qty ? parseFloat(qty) : 1);
-		return resultado
+		// let price = (oferta && oferta=="si" && precioOferta) ? ccyFormat(precioOferta) : precio
+		// /* le saco el iva si viene incluido */
+		// let resultado = (precioConIva ? parseFloat(precioConIva)/(1+(parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva))/100) : ((price && precio != 0) ? `${price}` : usd*dolar))*(qty ? parseFloat(qty) : 1);
+		// // let resultado = (precioConIva ? parseFloat(precioConIva)/(1+(parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva))/100) : (usd ? usd*dolar : `${price}`))*(qty ? parseFloat(qty) : 1);
+		// return resultado
+		return(itemClass.calcularPrecioContext(precioConIva,iva,precio,usd,qty,oferta,precioOferta,dolar))
+
 	}
 	      
 
@@ -211,6 +216,7 @@ const CartContextProvider = ({children}) => {
 			setUser,
 			user,	
 			changeUser,	
+			dolar,
 		}}>
 			{children}
 		</CartContext.Provider>
