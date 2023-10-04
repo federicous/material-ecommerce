@@ -1,87 +1,85 @@
-import * as React from 'react';
-import Box from '@material-ui/core/Box';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
+import * as React from "react";
+import Box from "@material-ui/core/Box";
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import AppBar from "@material-ui/core/AppBar";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
 import LogoutDrawer from "../Logout/LogoutDrawer";
 import ModeThemeDrawer from "../ModeTheme/ModeThemeDrawer";
-import AccountDrawer from '../Account/AccountDrawer'
+import AccountDrawer from "../Account/AccountDrawer";
 import CategoryCollapse from "../Category/CategoryCollapse";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import { CartContext } from '../CartContext/CartContext';
-import {config} from "../../config/config";
-import OrderButtonTemporary from "../Order/OrderButtonTemporary"
-import Ofertas from "../Ofertas/Ofertas"
-import Novedades from "../Novedades/Novedades"
-import DownloadsButton from "../Downloads/DownloadsButton"
+import { CartContext } from "../CartContext/CartContext";
+import { config } from "../../config/config";
+import OrderButtonTemporary from "../Order/OrderButtonTemporary";
+import Ofertas from "../Ofertas/Ofertas";
+import Novedades from "../Novedades/Novedades";
+import DownloadsButton from "../Downloads/DownloadsButton";
 
 const cookies = new Cookies();
 
-const token = cookies.get("token");  
+const token = cookies.get("token");
 const drawerWidth = 250;
 
 export default function PermanentDrawerLeft() {
-	const [navList, setNavList] = React.useState([])
-	const cartContext = React.useContext(CartContext);
-	const {user}= cartContext;
+  const [navList, setNavList] = React.useState([]);
+  const cartContext = React.useContext(CartContext);
+  const { user } = cartContext;
 
-	const [state, setState] = React.useState({
-		top: false,
-		left: false,
-		bottom: false,
-		right: false,
-	      });
-	    
-	      let anchor = "left";
-	    
-	      const toggleDrawer = (anchor, open) => (event) => {
-		if (
-		  event &&
-		  event.type === "keydown" &&
-		  (event.key === "Tab" || event.key === "Shift")
-		) {
-		  return;
-		}
-	    
-		setState({ ...state, [anchor]: open });
-	      };
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
 
-	      React.useEffect(() => {
-		let cancel = false;
-		if (cookies.get("user")) {
-		  const configuration = {
-		    method: "get",
-		    // url: `${config.SERVER}/api/categorias/label`,
-		    url: `${config.SERVER}/api/categorias/lista`,
-		    headers: {
-		      Authorization: `Bearer ${token}`,
-		    },
-		    withCredentials: true,
-		  };
-	      
-			// make the API call
-		    axios(configuration)
-		    .then((result) => {
-		      if (cancel) return;
-		      setNavList([...result.data].filter(Boolean))
-		    })
-		    .catch((error) => {
-		      error = new Error();
-		    })
-		    return () => { 
-		      cancel = true;
-		    }
-		}
-	    
-	      }, [user]);
+  let anchor = "left";
 
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  React.useEffect(() => {
+    let cancel = false;
+    if (cookies.get("user")) {
+      const configuration = {
+        method: "get",
+        // url: `${config.SERVER}/api/categorias/label`,
+        url: `${config.SERVER}/api/categorias/lista`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      };
+
+      // make the API call
+      axios(configuration)
+        .then((result) => {
+          if (cancel) return;
+          setNavList([...result.data].filter(Boolean));
+        })
+        .catch((error) => {
+          error = new Error();
+        });
+      return () => {
+        cancel = true;
+      };
+    }
+  }, [user]);
 
   return (
-    <Box sx={{ display: 'flex', zIndex:"1" }}>
+    <Box sx={{ display: "flex", zIndex: "1" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -97,9 +95,9 @@ export default function PermanentDrawerLeft() {
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          '& .MuiDrawer-paper': {
+          "& .MuiDrawer-paper": {
             width: drawerWidth,
-            boxSizing: 'border-box',
+            boxSizing: "border-box",
           },
         }}
         variant="permanent"
@@ -133,23 +131,30 @@ export default function PermanentDrawerLeft() {
           ))}
         </List> */}
 
-<Box
-      sx={{ height:"100%", marginTop:"70px"}}
-      role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
-      // onKeyDown={toggleDrawer(anchor, false)}
-    >
-      <List sx={{height:"100%", py:"0px"}}>
-        <Box sx={{height:"100%", display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
-          <Box>
-            <ListItem
-              onClick={toggleDrawer(anchor, false)}
-              onKeyDown={toggleDrawer(anchor, false)}
+        <Box
+          sx={{ height: "100%", marginTop: "70px" }}
+          role="presentation"
+          // onClick={toggleDrawer(anchor, false)}
+          // onKeyDown={toggleDrawer(anchor, false)}
+        >
+          <List sx={{ height: "100%", py: "0px" }}>
+            <Box
+              sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
             >
-              <AccountDrawer/>
-            </ListItem>
-            <Divider />
-            {/* <Link to={`/searchDrawer/`} style={{ textDecoration:"none"}}>
+              <Box>
+                <ListItem
+                  onClick={toggleDrawer(anchor, false)}
+                  onKeyDown={toggleDrawer(anchor, false)}
+                >
+                  <AccountDrawer />
+                </ListItem>
+                <Divider />
+                {/* <Link to={`/searchDrawer/`} style={{ textDecoration:"none"}}>
               <ListItem
                 onClick={toggleDrawer(anchor, false)}
                 onKeyDown={toggleDrawer(anchor, false)}
@@ -161,35 +166,59 @@ export default function PermanentDrawerLeft() {
               <Divider />
             </Link> */}
 
-            {navList.map((item) => (        
-                <CategoryCollapse key={item} lista={item} toggleDrawer={toggleDrawer} anchor={anchor} />
-            ))}
-           <Divider />  
-           <Ofertas toggleDrawer={(anchor, isfalse) => toggleDrawer(anchor, isfalse)} anchor={anchor}/>
-           <Divider />   
-           <Novedades toggleDrawer={(anchor, isfalse) => toggleDrawer(anchor, isfalse)} anchor={anchor}/>
-           <Divider />  
-          </Box>
-          <Box>
-          <Divider />
-          <DownloadsButton toggleDrawer={(anchor, isfalse) => toggleDrawer(anchor, isfalse)} anchor={anchor}/>
-          <Divider />
-          <OrderButtonTemporary toggleDrawer={(anchor, isfalse) => toggleDrawer(anchor, isfalse)} anchor={anchor}/>
-            <Divider />
-            <ModeThemeDrawer
-              onClick={toggleDrawer(anchor, false)}
-              onKeyDown={toggleDrawer(anchor, false)}
-            />
-            <Divider />
-            <LogoutDrawer
-              onClick={toggleDrawer(anchor, false)}
-              onKeyDown={toggleDrawer(anchor, false)}
-            />
-          </Box>
+                {navList.map((item) => (
+                  <CategoryCollapse
+                    key={item}
+                    lista={item}
+                    toggleDrawer={toggleDrawer}
+                    anchor={anchor}
+                  />
+                ))}
+                <Divider />
+                <Ofertas
+                  toggleDrawer={(anchor, isfalse) =>
+                    toggleDrawer(anchor, isfalse)
+                  }
+                  anchor={anchor}
+                />
+                <Divider />
+                <Novedades
+                  toggleDrawer={(anchor, isfalse) =>
+                    toggleDrawer(anchor, isfalse)
+                  }
+                  anchor={anchor}
+                />
+                <Divider />
+              </Box>
+              <Box>
+                <Divider />
+                <DownloadsButton
+                  toggleDrawer={(anchor, isfalse) =>
+                    toggleDrawer(anchor, isfalse)
+                  }
+                  anchor={anchor}
+                />
+                <Divider />
+                <OrderButtonTemporary
+                  toggleDrawer={(anchor, isfalse) =>
+                    toggleDrawer(anchor, isfalse)
+                  }
+                  anchor={anchor}
+                />
+                <Divider />
+                <ModeThemeDrawer
+                  onClick={toggleDrawer(anchor, false)}
+                  onKeyDown={toggleDrawer(anchor, false)}
+                />
+                <Divider />
+                <LogoutDrawer
+                  onClick={toggleDrawer(anchor, false)}
+                  onKeyDown={toggleDrawer(anchor, false)}
+                />
+              </Box>
+            </Box>
+          </List>
         </Box>
-      </List>
-    </Box>
-
       </Drawer>
       {/* <Box
         component="main"

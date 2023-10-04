@@ -6,7 +6,9 @@ import {config} from "../../config/config";
 import Cookies from "universal-cookie";
 import { KeyboardArrowUp, KeyboardArrowDown, } from '@material-ui/icons';
 import ApiQuery from "../utils/apiQuery/apiQuery";
+import ItemClass from '../utils/ItemClass/ItemClass';
 let apiQuery = new ApiQuery();
+let itemClass = new ItemClass();
 
 const cookies = new Cookies();
 
@@ -95,7 +97,7 @@ function Row(props) {
                     <TableCell>Código</TableCell>
                     <TableCell>Nombre</TableCell>
                     <TableCell align="right">Cant.</TableCell>
-                    <TableCell align="right">P.Unit ($)</TableCell>
+                    {/* <TableCell align="right">P.Unit ($)</TableCell> */}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -108,9 +110,10 @@ function Row(props) {
                         [productListRow.name,productListRow.color,productListRow.linea,productListRow.presentacion,`${productListRow.contenido ? (""+productListRow.contenido) : ""}`].filter(Boolean).join("|")
                         }`)}</TableCell>
                       <TableCell align="right">{productListRow.qty}</TableCell>
-                      <TableCell align="right">
+                      {/* <TableCell align="right">
                       {ccyFormat(productListRow.price ? productListRow.price : productListRow.usd*dolar)}
-                      </TableCell>
+                      {itemClass.calcularPrecio(productListRow, dolar)}
+                      </TableCell> */}
                     </TableRow>
                   ))}
                 </TableBody>
