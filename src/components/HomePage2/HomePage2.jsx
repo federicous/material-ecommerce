@@ -78,6 +78,22 @@ export default function HomePage2() {
         minWidth: 300,
         width: "100%",
         flexDirection: "row",
+        // marginTop: "2rem",
+      }} >
+    <Alert severity="warning">
+        <AlertTitle>ATENCIÓN</AlertTitle>
+        Debido a la situación económica del país <strong>los precios se definirán el día de la facturación</strong>
+      </Alert>
+      </Box>
+    <Box component="span" 
+      sx={{
+        display: "flex",
+        flexWrap: "wrap", 
+        justifyContent: "center",
+        alignItems: "center",
+        minWidth: 300,
+        width: "100%",
+        flexDirection: "row",
         marginTop: "2rem",
       }}
     >
