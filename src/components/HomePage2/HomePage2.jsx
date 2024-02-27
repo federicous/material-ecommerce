@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Typography, Box, Pagination, Stack, useMediaQuery, Backdrop, CircularProgress, Alert, AlertTitle  } from "@material-ui/core";
+import { Typography, Box, Pagination, Stack, useMediaQuery, Backdrop, CircularProgress, Alert, AlertTitle, Modal  } from "@material-ui/core";
 // import { getFirestore } from "../../services/getFirebase";
 import ItemList from "../ItemList/ItemList";
 import { Link } from 'react-router-dom';
@@ -10,8 +10,14 @@ import axios from "axios";
 // import {config} from "../../config/config"
 import {config} from "../../config/config"
 import Cookies from "universal-cookie";
+import ApiQuery from "../utils/apiQuery/apiQuery";
+let apiQuery = new ApiQuery();
 const cookies = new Cookies();
 
+let item = {
+  img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
+  title: 'Breakfast',
+}
 
 export default function HomePage2() {
   const [products, setProducts] = useState([]);
@@ -19,10 +25,28 @@ export default function HomePage2() {
   const [errorMessage, setErrorMessage] = useState(false);
   // Backdrop or Loading spinner 
   const [open, setOpen] = useState(false);
+  const [imagenPromo, setImagenPromo] = useState("")
+  const [promo, setPromo] = useState({})
   const handleClose = () => {
     setOpen(false);
   };
 
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
+
+  const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    // width: 400,
+    // bgcolor: 'background.paper',
+    // bgcolor: 'white',
+    border: 'none',
+    boxShadow: 24,
+    objectFit: "cover",
+  };
 
 	let pageSize = 12;
 	const [pagesCant, setPagesCant] = useState(10)
@@ -37,9 +61,23 @@ export default function HomePage2() {
   
   const token = cookies.get("token");
 
+  useEffect(() => {
+    apiQuery.get(`/api/promo`)
+		.then((respuesta) => {
+      setPromo(respuesta[0])
+      if (respuesta[0].habilitar == "on") {
+        setOpenModal(true)
+      } else {
+        setOpenModal(false)
+      }
+			//   setIsAdmin(respuesta)
+		})
+  }, [])
+
     useEffect(() => {
       let cancel = false;
       setOpen(true)
+      // setOpenModal(true)
       const configuration = {
         method: "get",
         url: `${config.SERVER}/api/products?page=${page}&pageSize=${pageSize}`,
@@ -68,6 +106,38 @@ export default function HomePage2() {
 
   return (
     <>
+      <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        // sx={{p:0,m:0, objectFit: "cover",}}
+      >
+        <Box sx={modalStyle}>
+          {/* <img
+            srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+            src={`${item.img}?w=564&h=564&fit=crop&auto=format`}
+            alt={item.title}
+            loading="lazy"
+            sx={{objectFit: "cover", border: '2px solid #000', boxShadow: 24, m: 0, p: 0}}
+          /> */}
+          <Box
+        component="img"
+        sx={{
+          // height: 233,
+          width: 650,
+          // maxHeight: { xs: 233, md: 167 },
+          maxWidth: { xs: 350, md: 850 },
+          // objectFit: "cover",
+          border: "none"
+        }}
+        alt="Novedades y promociones"
+        // src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
+        // src={`${item.img}`}
+        src={`${config.SERVER}/images/promocion/${promo?.image ? promo.image : "sin_imagen.jpg"}`}
+      />
+        </Box>
+      </Modal>
     {/* <Typography variant={"h5"}>Categories</Typography> */}
     <Box component="span" 
       sx={{

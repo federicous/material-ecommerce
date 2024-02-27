@@ -76,7 +76,7 @@ export default function SignUp() {
 //   console.log(provincias);
 // }, [])
 
-let vendedorArray = [{nombre:"Leonel"}, {nombre:"Moises"}];
+let vendedorArray = [{nombre:"Leonel"}, {nombre:"Moises"}, {nombre:"Jeremias"}];
 
 React.useEffect(() => {
   let array = localidades.filter((item)=> item.provincia.nombre.match(new RegExp(`${provincia}`,'gi')))
