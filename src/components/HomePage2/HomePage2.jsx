@@ -172,9 +172,9 @@ export default function HomePage2() {
           focusRipple
           key={item.name}
           style={{
-            width: "20%",
+            width: "30%",
           }}
-          sx={{mb:3}}
+          // sx={{mb:3}}
         >
           {/* <Link key={item.id} to={`/category/${item.value}`}> */}
           <Link key={item.id} to={`/brand/${item.value.toLowerCase()}`}>
@@ -200,29 +200,40 @@ export default function HomePage2() {
           </Link>
         </ImageButton>
       ))}
+</Box>
+<Box component="span" 
+      sx={{
+        display: "flex",
+        flexWrap: "wrap", 
+        justifyContent: "center",
+        alignItems: "center",
+        minWidth: 300,
+        width: "100%",
+        flexDirection: "row",
+        marginTop: "2rem",
+      }}>
+      {isMobile || open ? (
+          <></>
+          ):(
+          <>
+            {errorMessage ? (<>
+              
+              <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              No se pudieron cargar los datos — <strong>Falló la conexión</strong>
+              </Alert>
 
- {isMobile || open ? (
-    <></>
-    ):(
-    <>
-      {errorMessage ? (<>
-        
-        <Alert severity="error">
-        <AlertTitle>Error</AlertTitle>
-        No se pudieron cargar los datos — <strong>Falló la conexión</strong>
-        </Alert>
-
-      </>) : (<>
-        <Typography variant={"h5"}>Productos</Typography>
-            <ItemList products={products} />
-            <Box sx={{my:2}}>
-              <Stack spacing={2}>
-                <Pagination count={pagesCant} page={page} onChange={handleChange} />
-              </Stack>
-            </Box>
-      </>)}
-    </>
-  )}
+            </>) : (<>
+              <Typography variant={"h5"}>Productos</Typography>
+                  <ItemList products={products} />
+                  <Box sx={{my:2}}>
+                    <Stack spacing={2}>
+                      <Pagination count={pagesCant} page={page} onChange={handleChange} />
+                    </Stack>
+                  </Box>
+            </>)}
+          </>
+        )}
         {/* <ItemListContainer products={products} /> */}
       {/* </Box> */}
     </Box>
