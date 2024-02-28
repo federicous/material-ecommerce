@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Typography, Box, Pagination, Stack, useMediaQuery, Backdrop, CircularProgress, Alert, AlertTitle, Modal  } from "@material-ui/core";
+import { Typography, Box, Pagination, Stack, useMediaQuery, Backdrop, CircularProgress, Alert, AlertTitle, Modal, IconButton  } from "@material-ui/core";
 // import { getFirestore } from "../../services/getFirebase";
 import ItemList from "../ItemList/ItemList";
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import axios from "axios";
 import {config} from "../../config/config"
 import Cookies from "universal-cookie";
 import ApiQuery from "../utils/apiQuery/apiQuery";
+import CloseIcon from '@material-ui/icons/Close';
 let apiQuery = new ApiQuery();
 const cookies = new Cookies();
 
@@ -136,6 +137,18 @@ export default function HomePage2() {
         // src={`${item.img}`}
         src={`${config.SERVER}/images/promocion/${promo?.image ? promo.image : "sin_imagen.jpg"}`}
       />
+        <IconButton
+          aria-label="close"
+          onClick={handleCloseModal}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
         </Box>
       </Modal>
     {/* <Typography variant={"h5"}>Categories</Typography> */}
