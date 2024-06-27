@@ -38,7 +38,7 @@ let ADMINISTRADOR = process.env.REACT_APP_ADMIN;
 
 export const config = {
 	// SERVER_LOCAL: `http://localhost:8088`,
-	SERVER: SERVIDOR_NODE || `http://app.distribuidorabrmtools.com:8088`,
+	SERVER: SERVIDOR_NODE || `http://app.ferreteriapuertonuevo.com:8088`,
 	DOLAR: 0,
 	ADMINISTRADOR: ADMINISTRADOR,
 }
@@ -52,7 +52,7 @@ export const config = {
 
 // 		return(
 // 			{
-// 				SERVER: SERVIDOR_NODE || `http://app.distribuidorabrmtools.com:8088`,
+// 				SERVER: SERVIDOR_NODE || `http://app.ferreteriapuertonuevo.com:8088`,
 // 				DOLAR: DOLAR_OFICIAL_VENTA ? parseFloat(DOLAR_OFICIAL_VENTA) : 232,
 // 			}
 // 		)
@@ -65,7 +65,7 @@ export const config = {
 // 	const result = await axios(configuration)
 // 	let DOLAR_OFICIAL_VENTA =[...result.data].filter((tipo)=> tipo.casa.nombre == "Dolar Oficial")[0].casa.venta
 // 	return {
-// 		SERVER: SERVIDOR_NODE || `http://app.distribuidorabrmtools.com:8088`,
+// 		SERVER: SERVIDOR_NODE || `http://app.ferreteriapuertonuevo.com:8088`,
 // 		DOLAR: DOLAR_OFICIAL_VENTA ? parseFloat(DOLAR_OFICIAL_VENTA) : 232,
 // 	}
 //     }

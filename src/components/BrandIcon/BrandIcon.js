@@ -1,7 +1,7 @@
 import React from 'react'
 import './BrandIcon.css'
 // import logo from '../BrandIcon/logo-brmtools2.png'
-import logo from '../BrandIcon/logo-brmtools.webp'
+import logo from '../BrandIcon/cropped-logo2-blanco.png'
 import { Box, width } from '@material-ui/system'
 
 const BrandIcon = () => {
@@ -9,7 +9,7 @@ const BrandIcon = () => {
 		<Box
 		sx={{mr:3, my:1}}
 		>
-			<img style={{width:"130px"}}
+			<img style={{width:"220px"}}
 			        src={logo}
 				// srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
 				alt="Sin logo"
