@@ -6,9 +6,9 @@ import {config} from "../../config/config";
 import Cookies from "universal-cookie";
 import { KeyboardArrowUp, KeyboardArrowDown, } from '@material-ui/icons';
 import ApiQuery from "../utils/apiQuery/apiQuery";
-import ItemClass from '../utils/ItemClass/ItemClass';
+// import ItemClass from '../utils/ItemClass/ItemClass';
 let apiQuery = new ApiQuery();
-let itemClass = new ItemClass();
+// let itemClass = new ItemClass();
 
 const cookies = new Cookies();
 

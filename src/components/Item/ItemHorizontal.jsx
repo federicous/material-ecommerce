@@ -29,7 +29,7 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
   const [iva, setIva] = React.useState(0);
 
   React.useEffect(() => {
-    apiQuery.get(`/permisos`)
+    apiQuery.get(`/permisos/nivel`)
     .then((respuesta)=>{
       setIsAdmin(respuesta)
     })

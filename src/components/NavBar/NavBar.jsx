@@ -44,7 +44,7 @@ export default function NavBar() {
   }, [user, cart]);
 
   // useEffect(() => {
-  //   apiQuery.get(`/permisos`)
+  //   apiQuery.get(`/permisos/nivel`)
   //   .then((respuesta)=>{
   //     console.log(respuesta);
   //     setIsAdmin(respuesta)

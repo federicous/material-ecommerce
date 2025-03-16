@@ -110,7 +110,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   }, [])
 
   React.useEffect(() => {
-    apiQuery.get(`/permisos`)
+    apiQuery.get(`/permisos/nivel`)
     .then((respuesta)=>{
       setIsAdmin(respuesta)
       if (respuesta) {

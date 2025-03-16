@@ -5,10 +5,11 @@ import ItemHorizontal from "../Item/ItemHorizontal";
 import { Box } from "@material-ui/system";
 import "./ItemList.css";
 import {config} from "../../config/config";
-import ItemClass from '../utils/ItemClass/ItemClass';
+// import ItemClass from '../utils/ItemClass/ItemClass';
 import ApiQuery from "../utils/apiQuery/apiQuery";
+import { CartContext } from '../CartContext/CartContext';
 let apiQuery = new ApiQuery();
-let itemClass = new ItemClass();
+// let itemClass = new ItemClass();
 
 // let dolar = config.DOLAR;
 
@@ -16,6 +17,8 @@ let itemClass = new ItemClass();
 const ItemList = ({ products }) => {
 
   const [dolar, setDolar] = useState(0)
+  const cartContext = React.useContext(CartContext);
+	const itemClass = cartContext.itemClassContext;
   const productsList = products;
   
   useEffect(() => {

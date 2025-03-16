@@ -9,9 +9,9 @@ import {config} from "../../config/config";
 import Cookies from "universal-cookie";
 import { CartContext } from '../CartContext/CartContext';
 import ApiQuery from "../utils/apiQuery/apiQuery";
-import ItemClass from '../utils/ItemClass/ItemClass';
+// import ItemClass from '../utils/ItemClass/ItemClass';
 let apiQuery = new ApiQuery();
-let itemClass = new ItemClass();
+// let itemClass = new ItemClass();
 
 const cookies = new Cookies();
 
@@ -42,6 +42,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   const [descuento, setDescuento] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState(false);
 	const cartContext = React.useContext(CartContext);
+  const itemClass = cartContext.itemClassContext;
 	const {user, changeUser}= cartContext;
 	// Backdrop or Loading spinner 
 	const [open, setOpen] = React.useState(false);
@@ -120,7 +121,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   }, [])
 
   React.useEffect(() => {
-    apiQuery.get(`/permisos`)
+    apiQuery.get(`/permisos/nivel`)
     .then((respuesta)=>{
       setIsAdmin(respuesta)
       if (respuesta) {
@@ -132,19 +133,19 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
     })
   }, [])
 
-    React.useEffect(() => {
-      if (usuario) {
-        apiQuery.get(`/descuento?email=${usuario.email}`)
-        .then((respuesta)=>{
-          setDescuento(respuesta)
-        })
-      } else {
-        apiQuery.get(`/descuento?email=${user}`)
-        .then((respuesta)=>{
-          setDescuento(respuesta)
-        }) 
-      }
-  }, [usuario])
+  //   React.useEffect(() => {
+  //     if (usuario) {
+  //       apiQuery.get(`/descuento?email=${usuario.email}`)
+  //       .then((respuesta)=>{
+  //         setDescuento(respuesta)
+  //       })
+  //     } else {
+  //       apiQuery.get(`/descuento?email=${user}`)
+  //       .then((respuesta)=>{
+  //         setDescuento(respuesta)
+  //       }) 
+  //     }
+  // }, [usuario])
   
 // React.useEffect(() => {
 

@@ -9,12 +9,13 @@ import axios from "axios";
 // import {config} from "../../config/config"
 import {config} from "../../config/config"
 import Cookies from "universal-cookie";
-import ItemClass from '../utils/ItemClass/ItemClass';
+// import ItemClass from '../utils/ItemClass/ItemClass';
 import ApiQuery from "../utils/apiQuery/apiQuery";
 // import ItemClass from '../utils/ItemClass/ItemClass';
+import { CartContext } from '../CartContext/CartContext';
 let apiQuery = new ApiQuery();
 const cookies = new Cookies();
-let itemClass = new ItemClass()
+// let itemClass = new ItemClass()
 
 // let dolar = config.DOLAR;
 
@@ -24,7 +25,9 @@ const ItemDetailContainer = ({initial}) => {
 	const [products, setProducts] = useState([])
 	const [loading, setLoading] = useState(true)
   const [dolar, setDolar] = useState(0)
-
+	const cartContext = React.useContext(CartContext);
+	const itemClass = cartContext.itemClassContext;
+  
   useEffect(() => {
     let cancel = false;
     apiQuery.get(`/api/dolar`)
