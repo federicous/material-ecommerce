@@ -79,7 +79,8 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
             </Typography>
             <Typography sx={{ fontWeight: "bold", textDecoration: "none", color:"text.primary" }} variant="h6">
             {/* {price ? `$ ${price}` : "NO DISPONIBLE" } */}
-            {product.precioConIva ? ccyFormat(product.precioConIva/(1+iva/100)) : (price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE") }
+            {/* {product.precioConIva ? ccyFormat(product.precioConIva/(1+iva/100)) : (price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE") } */}
+            {price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE"}
           </Typography>
           {isAdmin ? <>
               <LinkMui href={`${config.ADMINISTRADOR}/producto/${sku}`} target="_blank" style={{ textDecoration:"none", color:"inherit"}}>

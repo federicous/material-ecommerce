@@ -96,7 +96,8 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
               <Typography sx={{ fontWeight: "bold", textDecoration: "none", color:"text.primary" }} variant="h6">
               {/* {price ? `$ ${price}` : "NO DISPONIBLE" } */}
               {}
-              {product.precioConIva ? ccyFormat(product.precioConIva/(1+iva/100)) : (price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE") }
+              {/* {product.precioConIva ? ccyFormat(product.precioConIva/(1+iva/100)) : (price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE") } */}
+              {price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE"}
             </Typography>
             </Link>
             {isAdmin ? <>
