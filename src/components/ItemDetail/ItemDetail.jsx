@@ -81,7 +81,8 @@ const Item = ({initial, name, model, description, img, stock, price, product, sk
         >
           <Typography sx={{ fontWeight: "bold" }} variant="h6">
             {/* $ {price} */}
-            {product.precioConIva ? ccyFormat(product.precioConIva/(1+iva/100)) : (price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE") }
+            {/* {product.precioConIva ? ccyFormat(product.precioConIva/(1+iva/100)) : (price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE") } */}
+            {price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE" }
             
           </Typography>
           {/* <Typography variant="body2">(Stock: {stock})</Typography> */}
