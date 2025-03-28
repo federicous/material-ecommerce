@@ -45,8 +45,8 @@ const CartContextProvider = ({children}) => {
 		setUser(usuarioCookie)
 		apiQuery.get(`/descuento?email=${usuarioCookie}`)
 		.then((respuesta)=>{
-			console.log(`usuarioCookie: ${usuarioCookie}`);	
-			console.log(respuesta);
+			// console.log(`usuarioCookie: ${usuarioCookie}`);	
+			// console.log(respuesta);
 			setDescuento(respuesta)
 		})
 		}, [])
@@ -56,15 +56,15 @@ const CartContextProvider = ({children}) => {
 			apiQuery.get(`/descuento?email=${usuario.email}`)
 			.then((respuesta)=>{
 				setDescuento(respuesta)
-				console.log(`usuario: ${usuario.email}`);
-				console.log(respuesta);
+				// console.log(`usuario: ${usuario.email}`);
+				// console.log(respuesta);
 			})
 		} else if (user?.email)  {
 			apiQuery.get(`/descuento?email=${user}`)
 			.then((respuesta)=>{
 				setDescuento(respuesta)
-				console.log(`user: ${user}`);
-				console.log(respuesta);		
+				// console.log(`user: ${user}`);
+				// console.log(respuesta);		
 			}) 
 		}
 	

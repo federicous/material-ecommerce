@@ -13,6 +13,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import CheckIcon from '@material-ui/icons/Check';
+import ApiQuery from "../utils/apiQuery/apiQuery"
+let apiQuery = new ApiQuery();
 
 function Copyright(props) {
   return (
@@ -63,6 +65,7 @@ export default function SignUp() {
   const [botonSubmit, setBotonSubmit] = React.useState(true);
   const [passwordError, setPasswordError] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
+  const [vendedorArray, setVendedorArray] = React.useState([]);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -70,13 +73,19 @@ export default function SignUp() {
     event.preventDefault();
   };
 
-
+  React.useEffect(() => {
+    apiQuery.get(`/permisos/vende`)
+    .then((respuesta)=>{
+      setVendedorArray(respuesta)
+      // console.log(respuesta);      
+    })
+  }, [])
   
 // React.useEffect(() => {
 //   console.log(provincias);
 // }, [])
 
-let vendedorArray = [{nombre:"Leonel"}, {nombre:"Moises"}, {nombre:"Jeremias"}];
+// let vendedorArray = [{nombre:"Leonel"}, {nombre:"Moises"}, {nombre:"Jeremias"}];
 
 React.useEffect(() => {
   let array = localidades.filter((item)=> item.provincia.nombre.match(new RegExp(`${provincia}`,'gi')))
@@ -574,16 +583,16 @@ const isNumber = (number, min) => {
                   name="vendedor"
                 >
                   {vendedorArray.sort(function (a, b) {
-                    if (a.nombre > b.nombre) {
+                    if (a.email > b.email) {
                       return 1;
                     }
-                    if (a.nombre < b.nombre) {
+                    if (a.email < b.email) {
                       return -1;
                     }
                     // a must be equal to b
                     return 0;
                   }).map((item) => (
-                    <MenuItem key={item.nombre} value={capitalizeFirstLetter(item.nombre)}>{capitalizeFirstLetter(item.nombre)}</MenuItem>
+                    <MenuItem key={item.email} value={capitalizeFirstLetter(item.IdVendedor ? item.IdVendedor : item.email)}>{capitalizeFirstLetter(item.IdVendedor ? item.IdVendedor : item.email)}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
