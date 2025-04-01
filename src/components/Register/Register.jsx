@@ -592,7 +592,7 @@ const isNumber = (number, min) => {
                     // a must be equal to b
                     return 0;
                   }).map((item) => (
-                    <MenuItem key={item.email} value={capitalizeFirstLetter(item.IdVendedor ? item.IdVendedor : item.email)}>{capitalizeFirstLetter(item.IdVendedor ? item.IdVendedor : item.email)}</MenuItem>
+                    <MenuItem key={item.email} value={(item.IdVendedor ? capitalizeFirstLetter(item.IdVendedor) : item.email)}>{(item.IdVendedor ? capitalizeFirstLetter(item.IdVendedor) : item.email)}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
