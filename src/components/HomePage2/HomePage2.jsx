@@ -190,7 +190,7 @@ export default function HomePage2() {
           // sx={{mb:3}}
         >
           {/* <Link key={item.id} to={`/category/${item.value}`}> */}
-          <Link key={item.id} to={`/brand/${item.value.toLowerCase()}`}>
+          <Link key={item.id} to={item.value.toLowerCase() == "wembley" ? `/search/wembley` : `/brand/${item.value.toLowerCase()}`}>
             <ImageSrc style={{ backgroundImage: `url(${item.image})` }} />
             <ImageBackdrop className="MuiImageBackdrop-root" />
             <Image>
