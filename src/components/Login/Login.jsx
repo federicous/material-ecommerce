@@ -89,7 +89,7 @@ export default function Login() {
         window.location.href = "/";
       })
       .catch((error) => {
-        setMessage(error.response.data.message);        
+        setMessage(error.response.data.message || "");        
         setLoginFail(true);
         setErrorMessage(true)
         setOpen(false)
