@@ -39,6 +39,7 @@ export default function Login() {
   const [login, setLogin] = useState(false);
   const [loginFail, setLoginFail] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false);
+  const [message, setMessage] = useState("");
   // Backdrop or Loading spinner 
   const [open, setOpen] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
@@ -88,6 +89,7 @@ export default function Login() {
         window.location.href = "/";
       })
       .catch((error) => {
+        setMessage(error.response.data.message);        
         setLoginFail(true);
         setErrorMessage(true)
         setOpen(false)
@@ -179,8 +181,12 @@ export default function Login() {
               {login ? (
                   <Alert severity="success">Autenticación Correcta</Alert>
               ) : (
-                loginFail ? (
-                <Alert severity="error">Error de Autenticación</Alert>
+                loginFail ? 
+                  ( message ? (                  
+                  <Alert severity="error">{message}</Alert>
+                  ) : (
+                  <Alert severity="error">Error de Autenticación</Alert>
+                  )
                 ) : (
                   <><Alert severity="info">Ingrese sus credenciales</Alert></>
                 )     
