@@ -43,7 +43,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   const [errorMessage, setErrorMessage] = React.useState(false);
 	const cartContext = React.useContext(CartContext);
   const itemClass = cartContext.itemClassContext;
-	const {user, changeUser}= cartContext;
+	const {user, changeUser,IdVendedor}= cartContext;
 	// Backdrop or Loading spinner 
 	const [open, setOpen] = React.useState(false);
   const [dolar, setDolar] = React.useState(0)
@@ -70,6 +70,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
 
     if (usuario!=='') {
       console.log(`cliente seleccionado`);
+      console.log(usuario);
       configuration = {
         method: "post",
         url: `${config.SERVER}/api/order/user`,
@@ -127,11 +128,13 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
       if (respuesta) {
         apiQuery.get(`/api/users`)
         .then((res)=>{
+          // let listaFiltrada =  res.filter((item)=> item.vendedor.match(new RegExp(`${IdVendedor}`,'gi')))
+          // setListaUsuarios(listaFiltrada)
           setListaUsuarios(res)
         })
       }
     })
-  }, [])
+  }, [IdVendedor])
 
   //   React.useEffect(() => {
   //     if (usuario) {
@@ -322,13 +325,14 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
                       <em>None</em>
                     </MenuItem>
                     {listaUsuarios.sort(function (a, b) {
-                      if (a.name > b.name) {
+                      const nombreA = a.name.toLowerCase();
+                      const nombreB = b.name.toLowerCase();
+                      if (nombreA > nombreB) {
                         return 1;
                       }
-                      if (a.name < b.name) {
+                      if (nombreA < nombreB) {
                         return -1;
                       }
-                      // a must be equal to b
                       return 0;
                     }).map((item) => (
                       <MenuItem key={item.name} value={item}>{`${

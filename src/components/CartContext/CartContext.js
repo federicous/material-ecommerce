@@ -30,6 +30,7 @@ const CartContextProvider = ({children}) => {
 	const [dolar, setDolar] = useState(0)
 	const [descuento, setDescuento] = useState('');
 	const [usuario, setUsuario] = useState('');
+	const [IdVendedor, setIdVendedor] = useState('');
 
 	const token = cookies.get("token");
 
@@ -43,6 +44,8 @@ const CartContextProvider = ({children}) => {
 	useEffect(() => {
 		let usuarioCookie = cookies.get("user");
 		setUser(usuarioCookie)
+		let idVendedorCookie = cookies.get("IdVendedor")
+		setIdVendedor(idVendedorCookie)
 		apiQuery.get(`/descuento?email=${usuarioCookie}`)
 		.then((respuesta)=>{
 			// console.log(`usuarioCookie: ${usuarioCookie}`);	
@@ -306,6 +309,7 @@ let itemClassContext = new ItemClassContext();
 			changeUser,	
 			dolar,
 			itemClassContext,
+			IdVendedor,
 		}}>
 			{children}
 		</CartContext.Provider>

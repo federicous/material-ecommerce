@@ -84,6 +84,9 @@ export default function Login() {
         cookies.set("user", result.data.email, {
           path: "/",
         });
+        cookies.set("IdVendedor", result.data.IdVendedor, {
+          path: "/",
+        });
         // navigate(`/`, { replace: true });
         setOpen(false)
         window.location.href = "/";
