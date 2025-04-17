@@ -4,8 +4,8 @@ import axios from "axios";
 import {config} from "../../config/config";
 import Cookies from "universal-cookie";
 import ApiQuery from "../utils/apiQuery/apiQuery"
-import ItemClass from '../utils/ItemClass/ItemClass';
-let itemClass = new ItemClass();
+// import ItemClass from '../utils/ItemClass/ItemClass';
+// let itemClass = new ItemClass();
 let apiQuery = new ApiQuery();
 
 const cookies = new Cookies();
@@ -254,6 +254,7 @@ class ItemClassContext {
 
 		let price = (oferta && oferta == "si" && precioOferta) ? ccyFormat(precioOferta) : parseFloat(precio)
 		/* le saco el iva si viene incluido */
+		// let resultado = (precioConIva ? parseFloat(precioConIva) / (1 + (parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva)) / 100) : parseFloat((usd && `${usd}` != "0") ? usd * dolar : `${price}`)) * (qty ? parseFloat(qty) : 1);
 		let resultado = (precioConIva ? parseFloat(precioConIva) / (1 + (parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva)) / 100) : parseFloat((usd && `${usd}` != "0") ? usd * dolar : `${price}`)) * (qty ? parseFloat(qty) : 1);
 		// return ccyFormat(parseFloat(resultado))
 		return ccyFormat(parseFloat(aplicarDescuento(resultado,this.valorActual)))
