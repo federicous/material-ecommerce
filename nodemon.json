@@ -1,0 +1,18 @@
+{
+  "watch": ["src"],
+  "ext": "js,jsx,json,css",
+  "ignore": [
+    "src/**/*.test.js",
+    "src/**/*.test.jsx",
+    "src/**/*.spec.js",
+    "src/**/*.spec.jsx",
+    "src/setupTests.js",
+    "node_modules/",
+    "build/",
+    "public/",
+    ".git/",
+    "*.md"
+  ],
+  "exec": "npm start",
+  "delay": "1500"
+}

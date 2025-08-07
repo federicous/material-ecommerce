@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, Grid, CardMedia, Link, Typography, Button, Backdrop, CircularProgress, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer,TableHead, TableRow, Paper, Box, Grid, CardMedia, Link, Typography, Button, Backdrop, CircularProgress, FormControl, InputLabel, Select, MenuItem, FormControlLabel, Checkbox } from '@material-ui/core';
 import { Link as DomLink, useNavigate } from 'react-router-dom';
 import { Delete } from '@material-ui/icons';
 import './CartTable.css';
@@ -47,6 +47,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
 	// Backdrop or Loading spinner 
 	const [open, setOpen] = React.useState(false);
   const [dolar, setDolar] = React.useState(0)
+  const [presupuesto, setPresupuesto] = React.useState(false);
 
 	const handleClose = () => {
 	  setOpen(false);
@@ -69,11 +70,14 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
     let configuration;
 
     if (usuario!=='') {
-      console.log(`cliente seleccionado`);
-      console.log(usuario);
+      // console.log(`cliente seleccionado`);
+      // console.log(usuario);
+      // console.log(`presupuesto: ${presupuesto}`);
       configuration = {
         method: "post",
-        url: `${config.SERVER}/api/order/user`,
+        // Enviar por parametros si se trata de un presupuesto o una orden
+        url: `${config.SERVER}/api/order/user${presupuesto ? '?presupuesto=si' : ''}`,
+        // url: `${config.SERVER}/api/order/user`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -81,7 +85,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
         withCredentials: true,
       }
     } else {
-      console.log(`sincliente`);
+      // console.log(`sincliente`);
       configuration = {
         method: "post",
         url: `${config.SERVER}/api/order`,
@@ -340,6 +344,20 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
                         }`}</MenuItem>
                     ))}
                   </Select>
+                  {/* Checkbox para presupuesto */}
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={presupuesto}
+                        onChange={(e) => setPresupuesto(e.target.checked)}
+                        name="presupuesto"
+                        color="primary"
+                      />
+                    }
+                    label="Presupuesto"
+                  />
+                  {errorMessage && <Typography color="error" variant="caption">Error al enviar la orden. Intente nuevamente.</Typography>}  
+
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={12}>

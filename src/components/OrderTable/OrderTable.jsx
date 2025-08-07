@@ -89,7 +89,7 @@ function Row(props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Orden ID: {row._id ? row._id : row.id}
+                Orden ID: {row._id ? row._id : row.id} {row.presupuesto ? "(Presupuesto)" : ""} 
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
