@@ -29,6 +29,7 @@ const CartContextProvider = ({children}) => {
 	const [ivaTotal, setIvaTotal] = useState(0)
 	const [dolar, setDolar] = useState(0)
 	const [descuento, setDescuento] = useState('');
+	const [descargas, setDescargas] = useState('off');
 	const [usuario, setUsuario] = useState('');
 	const [IdVendedor, setIdVendedor] = useState('');
 
@@ -69,8 +70,28 @@ const CartContextProvider = ({children}) => {
 				// console.log(`user: ${user}`);
 				// console.log(respuesta);		
 			}) 
-		}
-	
+		}	
+	}, [usuario, user])
+
+	useEffect(() => {
+		// console.log("useEffect descargas")
+		if (usuario?.email) {
+			console.log(`usuario: ${usuario.email}`);
+			apiQuery.get(`/api/descargas/permiso?email=${usuario.email}`)
+			.then((respuesta)=>{
+				// console.log(`respuesta: ${respuesta}`);
+				setDescargas(respuesta)
+				// console.log(`usuario: ${usuario.email}`);
+			})
+		} else if (user)  {
+			// console.log(`user: ${user}`);
+			apiQuery.get(`/api/descargas/permiso?email=${user}`)
+			.then((respuesta)=>{
+				// console.log(`respuesta: ${respuesta.userPermiso}`);
+				setDescargas(respuesta.userPermiso)
+				// console.log(`user: ${user}`);
+			}) 
+		}	
 	}, [usuario, user])
 
 	function apiCartUpdate(newCart) {
@@ -311,6 +332,8 @@ let itemClassContext = new ItemClassContext();
 			dolar,
 			itemClassContext,
 			IdVendedor,
+			descuento,
+			descargas,
 		}}>
 			{children}
 		</CartContext.Provider>

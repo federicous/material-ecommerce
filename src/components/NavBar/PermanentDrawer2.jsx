@@ -18,7 +18,9 @@ import OrderButtonTemporary from "../Order/OrderButtonTemporary";
 import Ofertas from "../Ofertas/Ofertas";
 import Novedades from "../Novedades/Novedades";
 import DownloadsButton from "../Downloads/DownloadsButton";
+import ApiQuery from "../utils/apiQuery/apiQuery";
 
+let apiQuery = new ApiQuery();
 const cookies = new Cookies();
 
 const token = cookies.get("token");
@@ -26,8 +28,11 @@ const drawerWidth = 250;
 
 export default function PermanentDrawerLeft() {
   const [navList, setNavList] = React.useState([]);
+  const [mostrarDescargas, setMostrarDescargas] = React.useState(false);
+
+  // Cart Context
   const cartContext = React.useContext(CartContext);
-  const { user } = cartContext;
+  const { user, descargas, descuento } = cartContext;
 
   const [state, setState] = React.useState({
     top: false,
@@ -77,6 +82,21 @@ export default function PermanentDrawerLeft() {
       };
     }
   }, [user]);
+
+  React.useEffect(() => {
+    // console.log("PermanentDrawer2.jsx");
+    // console.log(`user: ${user}`);
+    // console.log(`descargas: ${descargas}`);
+    // console.log(`descuento: ${descuento}`); 
+    setMostrarDescargas(descargas !== "off" && (!descuento || descargas === "on"))
+    // if (user) {
+    //   console.log(`user.email: ${user}`);
+    //   apiQuery.get(`/api/descargas/permiso?email=${user}`)
+    //   .then((respuesta) => {
+    //     console.log(`respuesta: ${respuesta.userPermiso}`);
+    //   });
+    // }
+  }, [descargas, descuento]);
 
   return (
     <Box sx={{ display: "flex", zIndex: "1" }}>
@@ -191,6 +211,8 @@ export default function PermanentDrawerLeft() {
                 <Divider />
               </Box>
               <Box>
+                {/* Descargas visibles solo para usuarios no bloqueados (user.descargas!="no") o que no tengan descuento */}
+                {(mostrarDescargas) && (<>
                 <Divider />
                 <DownloadsButton
                   toggleDrawer={(anchor, isfalse) =>
@@ -198,6 +220,7 @@ export default function PermanentDrawerLeft() {
                   }
                   anchor={anchor}
                 />
+                  </>)}
                 <Divider />
                 <OrderButtonTemporary
                   toggleDrawer={(anchor, isfalse) =>
