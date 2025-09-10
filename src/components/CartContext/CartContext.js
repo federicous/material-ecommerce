@@ -267,7 +267,7 @@ class ItemClassContext {
 	calcularPrecio(item, dolar) {
 		let precioConIva = parseFloat(item.precioConIva)
 		let iva = item.iva
-		let precio = parseFloat(item.price)
+		let precio = parseFloat(item.price ? item.price : 0) // Para solucionar error en items sin precio en COLTEC
 		let usd = parseFloat(item.usd)
 		let qty = 1
 		let oferta = item.oferta
