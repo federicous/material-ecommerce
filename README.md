@@ -20,7 +20,6 @@ Material Ecommerce is an app to buy technology pruducts as Laptops, phones, TVs,
 - react-router-dom": "5.3.0"
 
 
-
 ## Installation
 
 Requires [Node.js](https://nodejs.org/) v10+ to run.
