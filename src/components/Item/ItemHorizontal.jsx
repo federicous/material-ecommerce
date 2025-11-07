@@ -23,10 +23,12 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const Item = ({product, name, description, img, stock, model,sku, price}) => {
+const ItemHorizontal = ({product, name, description, img, stock, model,sku, price}) => {
   let navigate = useNavigate();
   const [isAdmin, setIsAdmin] = React.useState(false);
   const [iva, setIva] = React.useState(0);
+  const [isExpanded, setIsExpanded] = React.useState(false);
+  const maxLength = 40;
 
   React.useEffect(() => {
     apiQuery.get(`/permisos/nivel`)
@@ -43,6 +45,10 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
     let numFloat = parseFloat(num)
     return `${numFloat.toFixed(2)}`;
   }
+
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
 
 	return (
     <>
@@ -69,7 +75,16 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }} onClick={() => navigate(`/detail/${sku}`, { replace: true })}>
           <Typography component="div" variant="h5" sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}}}>
-            {capitalizeFirstLetter(name)}
+            {name.length > maxLength ? (
+              <>
+                {isExpanded ? capitalizeFirstLetter(name) : `${capitalizeFirstLetter(name).substring(0, maxLength)}...`}
+                <Button variant="text" size="small" onClick={(e) => {e.stopPropagation(); toggleExpanded()}} sx={{fontSize:"x-small"}}>
+                  {isExpanded ? 'Leer menos' : 'Leer más'}
+                </Button>
+              </>
+            ) : (
+              capitalizeFirstLetter(name)
+            )}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div" sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}}}>
           {capitalizeFirstLetter(model)}
@@ -107,4 +122,4 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
   );
 }
 
-export default Item
+export default ItemHorizontal

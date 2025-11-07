@@ -50,9 +50,18 @@ const ItemList = ({ products }) => {
                     sku={item._id ? item._id : item.id }
                     model={item.label ? item.label : ""}
                     name={`${
-                      [item.name,item.color,item.linea,item.presentacion,`${(item.unidades!="0" && item.lista=="buloneria bremen") ? (`${item.unidades} unidades`) : ""}`,`${item.contenido ? (""+item.contenido) : ""}`].filter(Boolean).join(" | ")
-                      }`}
+                      [item.name,
+                        item.color,
+                        item.linea,
+                        item.presentacion,
+                        `${(item.unidades!="0" && item.lista=="buloneria bremen") ? (`${item.unidades} unidades`) : ""}`,
+                        `${item.contenido ? (""+item.contenido) : ""}`,
+                        `${(item.lista == "einhell") ? (""+item.description || "") : ""}`,
+                        `${(item.lista == "einhell") ? (""+item.medidas || "") : ""}`
+                      ].filter(Boolean).join(" | ")
+                    }`}
                     description={item.code}
+                    categoria={item.categoria ? item.categoria : ""}
                     img={item.image}
                     // stock={item.stock ? item.stock : 100000}
                     stock={1000000}
@@ -67,8 +76,16 @@ const ItemList = ({ products }) => {
                     sku={item._id ? item._id : item.id }
                     model={item.label ? item.label : ""}
                     name={`${
-                      [item.name,item.color,item.linea,item.presentacion,`${(item.unidades!="0" && item.lista=="buloneria bremen") ? (`${item.unidades} unidades`) : ""}`,`${item.contenido ? (""+item.contenido) : ""}`].filter(Boolean).join("|")
-                      }`}
+                      [item.name,
+                        item.color,
+                        item.linea,
+                        item.presentacion,
+                        `${(item.unidades!="0" && item.lista=="buloneria bremen") ? (`${item.unidades} unidades`) : ""}`,
+                        `${item.contenido ? (""+item.contenido) : ""}`,
+                        `${(item.lista == "einhell") ? (""+item.description || "") : ""}`,
+                        `${(item.lista == "einhell") ? (""+item.medidas || "") : ""}`
+                      ].filter(Boolean).join("|")
+                    }`}
                     description={item.code}
                     img={item.image}
                     // stock={item.stock ? item.stock : 100000}

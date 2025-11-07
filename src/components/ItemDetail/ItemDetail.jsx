@@ -7,6 +7,11 @@ import { Edit as EditIcon } from '@material-ui/icons';
 import ApiQuery from "../utils/apiQuery/apiQuery"
 let apiQuery = new ApiQuery();
 
+function capitalizeFirstLetter(string) {
+  let cadena = string.toLowerCase()
+  return cadena.charAt(0).toUpperCase() + cadena.slice(1);
+}
+
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
     right: 30,
@@ -16,9 +21,11 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const Item = ({initial, name, model, description, img, stock, price, product, sku}) => {
+const ItemDetail = ({initial, name, model, description, img, stock, price, product, sku, categoria}) => {
   const [isAdmin, setIsAdmin] = React.useState(false)
-  const [iva, setIva] = React.useState(0);;
+  const [iva, setIva] = React.useState(0);
+  const [isExpanded, setIsExpanded] = React.useState(false);
+  const maxLength = 100;
 
   React.useEffect(() => {
     apiQuery.get(`/permisos/nivel`)
@@ -35,6 +42,10 @@ const Item = ({initial, name, model, description, img, stock, price, product, sk
     let numFloat = parseFloat(num)
     return `${numFloat.toFixed(2)}`;
   }
+
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
 
 	return (
     <>
@@ -58,8 +69,20 @@ const Item = ({initial, name, model, description, img, stock, price, product, sk
         </Container>
         <CardContent sx={{ margin: "0" }}>
           <Typography gutterBottom variant="body" component="div">
-            {name}
-          </Typography>
+            {name.length > maxLength ? (
+              <>
+                {isExpanded ? capitalizeFirstLetter(name) : `${capitalizeFirstLetter(name).substring(0, maxLength)}...`}
+                <Button variant="text" size="small" onClick={toggleExpanded} sx={{fontSize:"x-small"}}>
+                  {isExpanded ? 'Leer menos' : 'Leer más'}
+                </Button>
+              </>
+            ) : (
+              capitalizeFirstLetter(name)
+            )}
+          </Typography>            
+          <Typography gutterBottom sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}}}  variant="body2" color="text.secondary" component="div">
+              {categoria && `${categoria}`}
+            </Typography>
           <Typography gutterBottom variant="body2" component="div">
             Categoría: {model}
           </Typography>
@@ -99,4 +122,4 @@ const Item = ({initial, name, model, description, img, stock, price, product, sk
   );
 }
 
-export default Item
+export default ItemDetail

@@ -23,9 +23,11 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const Item = ({product, name, description, img, stock, model,sku, price}) => {
+const Item = ({product, name, description, img, stock, model,sku, price, categoria}) => {
   const [isAdmin, setIsAdmin] = React.useState(false);
   const [iva, setIva] = React.useState(0);
+  const [isExpanded, setIsExpanded] = React.useState(false);
+  const maxLength = 100;
 
   React.useEffect(() => {
     apiQuery.get(`/permisos/nivel`)
@@ -42,6 +44,10 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
     let numFloat = parseFloat(num)
     return `${numFloat.toFixed(2)}`;
   }
+
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
   
 	return (
     <>
@@ -83,11 +89,23 @@ const Item = ({product, name, description, img, stock, model,sku, price}) => {
             </Link>
           </Container>
           <CardContent sx={{ margin: 0,p:{xs:1,md:2} }}>
-            <Typography gutterBottom sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}}}  variant="body" component="div">
-              {capitalizeFirstLetter(name)}
+            <Typography gutterBottom sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}, minHeight:35}}  variant="body" component="div">
+              {name.length > maxLength ? (
+                <>
+                  {isExpanded ? capitalizeFirstLetter(name) : `${capitalizeFirstLetter(name).substring(0, maxLength)}...`}
+                  <Button variant="text" size="small" onClick={toggleExpanded} sx={{fontSize:"x-small"}}>
+                    {isExpanded ? 'Leer menos' : 'Leer más'}
+                  </Button>
+                </>
+              ) : (
+                capitalizeFirstLetter(name)
+              )}
             </Typography>
             <Typography gutterBottom sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}}}  variant="body2" color="text.secondary" component="div">
               {capitalizeFirstLetter(model)}
+            </Typography>
+            <Typography gutterBottom sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}}}  variant="body2" color="text.secondary" component="div">
+              {categoria && `${categoria}`}
             </Typography>
             <Link to={`/detail/${sku}`}>
               <Typography sx={{fontSize:{xs:"x-small",sm:"small"}}}  variant="caption" color="text.secondary">

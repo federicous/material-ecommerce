@@ -48,6 +48,14 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
 	const [open, setOpen] = React.useState(false);
   const [dolar, setDolar] = React.useState(0)
   const [presupuesto, setPresupuesto] = React.useState(false);
+  const [expandedRows, setExpandedRows] = React.useState({});
+
+  const toggleExpanded = (rowId) => {
+    setExpandedRows(prev => ({
+      ...prev,
+      [rowId]: !prev[rowId]
+    }));
+  };
 
 	const handleClose = () => {
 	  setOpen(false);
@@ -230,9 +238,39 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
                       sx={{ height: {xs:60, sm:90}, marginBottom: "1rem" }}
                     />
                     </Box>
-                    <Typography sx={{textDecoration: "none", fontSize:{xs:"x-small",sm:"small",md:"medium"}}} color="text.primary" variant="caption">{capitalizeFirstLetter(`${
-                           [row.name,row.color,row.linea,row.presentacion,`${(row.unidades!="0" && row.lista=="buloneria bremen") ? (`${row.unidades} unidades`) : ""}`,`${row.contenido ? (""+row.contenido) : ""}`].filter(Boolean).join(" | ")
-                        }`)} ({row.code})</Typography>                  
+                    <Typography sx={{textDecoration: "none", fontSize:{xs:"x-small",sm:"small",md:"medium"}}} color="text.primary" variant="caption">
+                      {
+                        (() => {
+                          const longText = `${capitalizeFirstLetter(`${
+                            [row.name,
+                             row.color,
+                             row.linea,
+                             row.presentacion,
+                             `${(row.unidades!="0" && row.lista=="buloneria bremen") ? (`${row.unidades} unidades`) : ""}`,
+                             `${row.contenido ? (""+row.contenido) : ""}`,
+                             `${(row.lista == "einhell") ? (""+row.description || "") : ""}`,
+                             `${(row.lista == "einhell") ? (""+row.medidas || "") : ""}`
+                           ].filter(Boolean).join(" | ")
+                         }`)} (${row.code})`;
+                          const maxLength = 100;
+                          const isExpanded = expandedRows[row._id || row.id];
+                          const rowId = row._id || row.id;
+
+                          if (longText.length > maxLength) {
+                            return (
+                              <>
+                                {isExpanded ? longText : `${longText.substring(0, maxLength)}...`}
+                                <Button variant="text" size="small" onClick={(e) => {e.preventDefault(); e.stopPropagation(); toggleExpanded(rowId)}} sx={{fontSize:"x-small", display: 'block', margin: 'auto'}}>
+                                  {isExpanded ? 'Leer menos' : 'Leer más'}
+                                </Button>
+                              </>
+                            );
+                          } else {
+                            return longText;
+                          }
+                        })()
+                      }
+                    </Typography>                  
                   </Box>
                   </DomLink>
                 </TableCell>
