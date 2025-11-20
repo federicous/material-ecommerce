@@ -248,8 +248,8 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
                              row.presentacion,
                              `${(row.unidades!="0" && row.lista=="buloneria bremen") ? (`${row.unidades} unidades`) : ""}`,
                              `${row.contenido ? (""+row.contenido) : ""}`,
-                             `${(row.lista == "einhell") ? (""+row.description || "") : ""}`,
-                             `${(row.lista == "einhell") ? (""+row.medidas || "") : ""}`
+                             `${(row.lista == "einhell") ? (row.description || "") : ""}`,
+                             `${(row.lista == "einhell") ? (row.medidas || "") : ""}`
                            ].filter(Boolean).join(" | ")
                          }`)} (${row.code})`;
                           const maxLength = 100;

@@ -114,8 +114,8 @@ const ItemDetailContainer = ({initial}) => {
                       item.presentacion,
                       `${(item.unidades!="0" && item.lista=="buloneria bremen") ? (`${item.unidades} unidades`) : ""}`,
                       `${item.contenido ? (""+item.contenido) : ""}`,
-                      `${(item.lista == "einhell") ? (""+item.description || "") : ""}`,
-                      `${(item.lista == "einhell") ? (""+item.medidas || "") : ""}`
+                      `${(item.lista == "einhell") ? (item.description || "") : ""}`,
+                      `${(item.lista == "einhell") ? (item.medidas || "") : ""}`
                     ].filter(Boolean).join(" | ")
                   }`}
                   description={item.code}
