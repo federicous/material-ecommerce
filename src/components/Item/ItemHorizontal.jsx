@@ -29,6 +29,15 @@ const ItemHorizontal = ({product, name, description, img, stock, model,sku, pric
   const [iva, setIva] = React.useState(0);
   const [isExpanded, setIsExpanded] = React.useState(false);
   const maxLength = 40;
+  const [imgSrc, setImgSrc] = React.useState(`${config.SERVER}/images/${img || "sin_imagen.jpg"}`);
+
+  const handleImageError = () => {
+    setImgSrc(`${config.SERVER}/images/sin_imagen.jpg`);
+  };
+
+  React.useEffect(() => {
+    setImgSrc(`${config.SERVER}/images/${img || "sin_imagen.jpg"}`);
+  }, [img]);
 
   React.useEffect(() => {
     apiQuery.get(`/permisos/nivel`)
@@ -71,7 +80,13 @@ const ItemHorizontal = ({product, name, description, img, stock, model,sku, pric
   >
 
   <Card sx={{ display: 'flex', width:"100%" }}>
-    <CardMedia component="img" image={`${config.SERVER}/images/${img ? img : "sin_imagen.jpg"}`} sx={{minHeight:"90px", minWidth:"80px"}} alt="sin imagen" onClick={() => navigate(`/detail/${sku}`, { replace: true })}/>
+    <CardMedia 
+      component="img" 
+      image={imgSrc} 
+      onError={handleImageError}
+      sx={{minHeight:"90px", minWidth:"80px"}} 
+      alt="sin imagen" 
+      onClick={() => navigate(`/detail/${sku}`, { replace: true })}/>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }} onClick={() => navigate(`/detail/${sku}`, { replace: true })}>
           <Typography component="div" variant="h5" sx={{fontSize:{xs:"x-small",sm:"small",md:"medium"}}}>

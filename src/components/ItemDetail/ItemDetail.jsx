@@ -26,6 +26,15 @@ const ItemDetail = ({initial, name, model, description, img, stock, price, produ
   const [iva, setIva] = React.useState(0);
   const [isExpanded, setIsExpanded] = React.useState(false);
   const maxLength = 100;
+  const [imgSrc, setImgSrc] = React.useState(`${config.SERVER}/images/${img || "sin_imagen.jpg"}`);
+
+  const handleImageError = () => {
+    setImgSrc(`${config.SERVER}/images/sin_imagen.jpg`);
+  };
+
+  React.useEffect(() => {
+    setImgSrc(`${config.SERVER}/images/${img || "sin_imagen.jpg"}`);
+  }, [img]);
 
   React.useEffect(() => {
     apiQuery.get(`/permisos/nivel`)
@@ -65,7 +74,11 @@ const ItemDetail = ({initial, name, model, description, img, stock, price, produ
             alignItems: "center",
           }}
         >
-          <CardMedia component="img" image={`${config.SERVER}/images/${img ? img : "sin_imagen.jpg"}`} alt="sin imagen"/>
+          <CardMedia 
+            component="img" 
+            image={imgSrc} 
+            onError={handleImageError}
+            alt="sin imagen"/>
         </Container>
         <CardContent sx={{ margin: "0" }}>
           <Typography gutterBottom variant="body" component="div">

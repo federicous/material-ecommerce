@@ -28,6 +28,15 @@ const Item = ({product, name, description, img, stock, model,sku, price, categor
   const [iva, setIva] = React.useState(0);
   const [isExpanded, setIsExpanded] = React.useState(false);
   const maxLength = 100;
+  const [imgSrc, setImgSrc] = React.useState(`${config.SERVER}/images/${img || "sin_imagen.jpg"}`);
+
+  const handleImageError = () => {
+    setImgSrc(`${config.SERVER}/images/sin_imagen.jpg`);
+  };
+
+  React.useEffect(() => {
+    setImgSrc(`${config.SERVER}/images/${img || "sin_imagen.jpg"}`);
+  }, [img]);
 
   React.useEffect(() => {
     apiQuery.get(`/permisos/nivel`)
@@ -85,7 +94,13 @@ const Item = ({product, name, description, img, stock, model,sku, price, categor
           >
             <Link to={`/detail/${sku}`}>
               {/* <CardMedia component="img" image={`${config.SERVER}/images/${img ? img : "sin_imagen.jpg"}`} alt="sin imagen" /> */}
-              <CardMedia component="img" image={`${config.SERVER}/images/${img ? img : "sin_imagen.jpg"}`} sx={{height:{xs:"150px",sm:"200px"}, width:"100%", objectFit:"cover"}} alt="sin imagen" />
+              <CardMedia 
+                component="img" 
+                image={imgSrc} 
+                onError={handleImageError}
+                sx={{height:{xs:"150px",sm:"200px"}, width:"100%", objectFit:"cover"}} 
+                alt="sin imagen" 
+              />
             </Link>
           </Container>
           <CardContent sx={{ margin: 0,p:{xs:1,md:2} }}>

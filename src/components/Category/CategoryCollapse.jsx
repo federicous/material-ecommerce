@@ -80,7 +80,7 @@ return (
 		sx={{overflow:"hidden"}}
 		>
 			{navList.map((item) => (
-				<ListItem button key={item} sx={{color:'text.primary', ml:2}}
+				<ListItem button key={item} sx={{color:'text.secondary', ml:2}}
 				component={Link}  to={`/${lista}/category/${item.replace("/","%2F")}`} style={{ textDecoration:"none"}}
 				onClick={toggleDrawer(anchor, false)}
 				onKeyDown={toggleDrawer(anchor, false)}
