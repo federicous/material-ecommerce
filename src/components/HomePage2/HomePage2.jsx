@@ -62,6 +62,19 @@ export default function HomePage2() {
   
   const token = cookies.get("token");
 
+  const getRoute = (val) => {
+    if (!val) return "/";
+    const key = val.toLowerCase();
+    const special = {
+      wembley: "/search/wembley",
+      einhell: "/search/einhell",
+      kwb: "/search/kwb",
+      // add more special cases here, e.g.
+      // outlet: "/search/outlet",
+    };
+    return special[key] || `/brand/${key}`;
+  };
+
   useEffect(() => {
     apiQuery.get(`/api/promo`)
 		.then((respuesta) => {
@@ -190,7 +203,7 @@ export default function HomePage2() {
           // sx={{mb:3}}
         >
           {/* <Link key={item.id} to={`/category/${item.value}`}> */}
-          <Link key={item.id} to={item.value.toLowerCase() == "wembley" ? `/search/wembley` : `/brand/${item.value.toLowerCase()}`}>
+          <Link key={item.id} to={getRoute(item.value)}>
             <ImageSrc style={{ backgroundImage: `url(${item.image})` }} />
             <ImageBackdrop className="MuiImageBackdrop-root" />
             <Image>
