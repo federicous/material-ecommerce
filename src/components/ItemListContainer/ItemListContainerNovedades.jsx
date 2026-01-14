@@ -1,7 +1,7 @@
 import ItemList from '../ItemList/ItemList'
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router';
-import { Typography, Box, Pagination, Stack, Backdrop, CircularProgress, Button, Drawer, Grid } from '@material-ui/core'
+import { Typography, Box, Pagination, Stack, Backdrop, CircularProgress, Button, Drawer, Grid, Skeleton, Card, CardContent } from '@material-ui/core'
 import axios from "axios";
 // import {config} from "../../config/config"
 import {config} from "../../config/config"
@@ -14,11 +14,15 @@ const cookies = new Cookies();
 const ItemListContainer = () => {
 
 	// const {category, brand} = useParams()
+	// const {category, brand} = useParams()
 	const [products, setProducts] = useState([])
 	const [filteredProducts, setFilteredProducts] = useState([])
-	const [page, setPage] = React.useState(1);
-	let pageSize = 12;
-	const [pagesCant, setPagesCant] = useState(10)
+	const [page, setPage] = useState(1);
+	const [hasMore, setHasMore] = useState(true);
+	const [loading, setLoading] = useState(false);
+	const [initialLoad, setInitialLoad] = useState(true);
+	const pageSize = 12;
+
 	const [errorMessage, setErrorMessage] = useState(false);
 	// Backdrop or Loading spinner 
 	const [open, setOpen] = useState(false);
@@ -26,33 +30,43 @@ const ItemListContainer = () => {
 	// Filter state
 	const [filters, setFilters] = useState({ lista: [], label: [] });
 	const [filterOpen, setFilterOpen] = useState(false);
+	
+	const observer = React.useRef();
+
+	const lastElementRef = React.useCallback(node => {
+		if (loading) return;
+		if (observer.current) observer.current.disconnect();
+		observer.current = new IntersectionObserver(entries => {
+			if (entries[0].isIntersecting && hasMore) {
+				setPage(prevPage => prevPage + 1);
+			}
+		});
+		if (node) observer.current.observe(node);
+	}, [loading, hasMore]);
 
 	const handleClose = () => {
 	  setOpen(false);
 	};
       
-
-	const handleChange = (event, value) => {
-		setPage(value);
-	      };
-
 	const token = cookies.get("token");
 
-	// let lista = "bremen"
-	
-	/* reseteo a pagina 1 cuando cambia la categoria */
+	// Initial reset not really needed as simple mount? 
+	// But let's ensure we start clean.
 	useEffect(() => {
-		setPage(1)
-	      }, [])
+		setPage(1);
+		setProducts([]);
+		setHasMore(true);
+		setInitialLoad(true);
+	}, []);
 
 
 	useEffect(() => {
 		let cancel = false;
-		setOpen(true)
+		setLoading(true);
+		
 		const configuration = {
 			method: "get",
-			// url: `${config.SERVER}/api/products/category/${category}?page=${page}&pageSize=${pageSize}`,
-			url: `${config.SERVER}/api/novedades`,
+			url: `${config.SERVER}/api/novedades?page=${page}&pageSize=${pageSize}`,
 			headers: {
 			  Authorization: `Bearer ${token}`,
 			},
@@ -62,15 +76,25 @@ const ItemListContainer = () => {
 		      axios(configuration)
 			.then((result) => {
 				if (cancel) return;
-				const allProducts = result.data.allProducts;
-				setProducts([...allProducts])
-				// Default behavior: filters apply via effect below.
-				setPagesCant(Math.ceil(result.data.total/pageSize))
-				setOpen(false)
+				const newProducts = result.data.allProducts;
+				const total = result.data.total;
+
+				setProducts(prev => {
+					return page === 1 ? newProducts : [...prev, ...newProducts];
+				});
+				
+				const totalPages = Math.ceil(total / pageSize);
+				if (page >= totalPages) {
+					setHasMore(false);
+				}
+				
+				setLoading(false);
+				setInitialLoad(false);
 			})
 			.catch((error) => {
 				setErrorMessage(true)
-				setOpen(false)
+				setLoading(false);
+				setInitialLoad(false);
 			  	error = new Error();
 			})
 			return () => { 
@@ -99,6 +123,16 @@ const ItemListContainer = () => {
 		}
 		setFilterOpen(open);
 	};
+
+	// Ref for auto-scroll
+	const loaderRef = React.useRef(null);
+	
+	// Auto-scroll effect
+	useEffect(() => {
+		if (loading && page > 1 && loaderRef.current) {
+			loaderRef.current.scrollIntoView({ behavior: 'auto', block: 'center' });
+		}
+	}, [loading, page]);
 
 	return (
 		<>
@@ -135,13 +169,33 @@ const ItemListContainer = () => {
 			</Box>
 		</Drawer>
 
-		<ItemList products={filteredProducts} />
-		<Box sx={{my:2}}>
-			<Stack spacing={2}>
-				{/* <Typography>Page: {page}</Typography> */}
-				<Pagination count={pagesCant} page={page} onChange={handleChange} />
-			</Stack>
-		</Box>
+		{initialLoad && page === 1 ? (
+			<Box sx={{ display: 'flex', mt:"30vh", height:"100%", justifyContent: 'center' }}>
+				<CircularProgress />
+			</Box>
+		) : (
+			<>
+				<ItemList products={filteredProducts} />
+				
+				{/* Sentinel for Infinite Scroll */}
+				{/* Sentinel for Infinite Scroll */}
+				{!loading && hasMore && <div ref={lastElementRef} style={{ height: '200px', margin: '10px 0' }} />}
+				
+				{/* Bottom Loader */}
+				{loading && page > 1 && (
+					<Box display="flex" flexDirection="column" alignItems="center" my={4} ref={loaderRef}>
+						<CircularProgress disableShrink />
+						<Box sx={{ height: 200 }} /> {/* Spacer for better scroll visibility */}
+					</Box>
+				)}
+				
+				{!hasMore && products.length > 0 && (
+					<Box display="flex" justifyContent="center" my={2}>
+						<Typography variant="body2" color="textSecondary">No hay más productos</Typography>
+					</Box>
+				)}
+			</>
+		)}
 
 		<Backdrop
 			sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
