@@ -11,6 +11,7 @@ import { Container, useMediaQuery } from '@material-ui/core'
 import HomePage2 from './components/HomePage2/HomePage2';
 import Cart from './components/Cart/Cart';
 import Return from './components/utils/Return';
+import ScrollToTop from './components/utils/ScrollToTop';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
@@ -89,7 +90,9 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline/>
         <BrowserRouter>
+          <div id="back-to-top-anchor" />
           <NavBar />
+          <ScrollToTop />
           <Box sx={{display:"flex"}}>
           {isMobile ? 
           <></>:<>
