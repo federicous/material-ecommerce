@@ -1,25 +1,33 @@
-
 import ItemList from '../ItemList/ItemList'
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router';
 // import { getFirestore } from '../../services/getFirebase';
-import { Typography, Box, Pagination, Stack, CircularProgress  } from '@material-ui/core'
+import { Typography, Box, Pagination, Stack, CircularProgress, Button, Drawer, Grid } from '@material-ui/core'
 import axios from "axios";
 // import {config} from "../../config/config"
 import {config} from "../../config/config"
 import Cookies from "universal-cookie";
+import ProductFilters from '../ProductFilters/ProductFilters';
+import FilterListIcon from '@material-ui/icons/FilterList';
+
 const cookies = new Cookies();
 
 const ItemListContainer = () => {
 
 	const {patron} = useParams()
 	const [products, setProducts] = useState([])
+	const [filteredProducts, setFilteredProducts] = useState([])
 	const [page, setPage] = React.useState(1);
 	let pageSize = 12;
 	const [pagesCant, setPagesCant] = useState(10)
 	const [errorMessage, setErrorMessage] = useState(false);
 	// Backdrop or Loading spinner 
 	const [open, setOpen] = useState(false);
+	
+	// Filter state
+	const [filters, setFilters] = useState({ lista: [], label: [] });
+	const [filterOpen, setFilterOpen] = useState(false);
+
 	const handleClose = () => {
 	  setOpen(false);
 	};
@@ -45,7 +53,8 @@ const ItemListContainer = () => {
 		      axios(configuration)
 			.then((result) => {
 				if (cancel) return;
-				setProducts([...result.data.allProducts])
+				const allProducts = result.data.allProducts;
+				setProducts([...allProducts])
 				setPagesCant(Math.ceil(result.data.total/pageSize))
 				setOpen(false)
 			})
@@ -59,24 +68,79 @@ const ItemListContainer = () => {
 			      }
 	}, [patron, page])
 	
+	// Filtering Effect
+	useEffect(() => {
+		let filtered = products;
+
+		if (filters.lista && filters.lista.length > 0) {
+			filtered = filtered.filter(product => filters.lista.includes(product.lista));
+		}
+
+		if (filters.label && filters.label.length > 0) {
+			filtered = filtered.filter(product => filters.label.includes(product.label));
+		}
+
+		setFilteredProducts(filtered);
+	}, [products, filters]);
+
+	const toggleFilterDrawer = (open) => (event) => {
+		if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+		  return;
+		}
+		setFilterOpen(open);
+	};
+
 	return (
 		<>
-		<Typography variant='h5'>Busqueda: "{patron}"</Typography>
+		<Box style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', marginBottom: '16px', width: '100%' }}>
+			<Typography variant='h5'>Busqueda: "{patron}"</Typography>
+			<Button 
+				variant="outlined" 
+				startIcon={<FilterListIcon />} 
+				onClick={toggleFilterDrawer(true)}
+			>
+				Filtrar
+			</Button>
+		</Box>
+
+		<Drawer
+			anchor="right"
+			open={filterOpen}
+			onClose={toggleFilterDrawer(false)}
+		>
+			<Box
+				width={300} p={2}
+				role="presentation"
+			>
+				<ProductFilters 
+					products={products} 
+					filters={filters} 
+					onChange={setFilters} 
+				/>
+				<Box display="flex" justifyContent="flex-end" mt={2}>
+					<Button variant="contained" color="primary" onClick={toggleFilterDrawer(false)}>
+						Ver Resultados
+					</Button>
+				</Box>
+			</Box>
+		</Drawer>
 
 			{open ? (<>
 				<Box sx={{ display: 'flex', mt:"30vh", height:"100%" }}>
 					<CircularProgress />
 				</Box>
 			
-			</>) : (<>
-				<ItemList products={products} />
-				<Box sx={{my:2}}>
-					<Stack spacing={2}>
-						{/* <Typography>Page: {page}</Typography> */}
-						<Pagination count={pagesCant} page={page} onChange={handleChange} />
-					</Stack>
-				</Box>				
-			</>)}
+			</>) : (
+				<>
+					<ItemList products={filteredProducts} />
+					<Box sx={{my:2}}>
+						<Stack spacing={2}>
+							{/* <Typography>Page: {page}</Typography> */}
+							<Pagination count={pagesCant} page={page} onChange={handleChange} />
+						</Stack>
+					</Box>		
+				</>
+			)}
 
 		</>
 	)
