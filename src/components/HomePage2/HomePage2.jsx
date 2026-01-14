@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Typography, Box, Pagination, Stack, useMediaQuery, Backdrop, CircularProgress, Alert, AlertTitle, Modal, IconButton  } from "@material-ui/core";
 // import { getFirestore } from "../../services/getFirebase";
 import ItemList from "../ItemList/ItemList";
@@ -28,6 +28,23 @@ export default function HomePage2() {
   const [open, setOpen] = useState(false);
   const [imagenPromo, setImagenPromo] = useState("")
   const [promo, setPromo] = useState({})
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
+
+  // Sentinel logic for infinite scroll
+  const observer = React.useRef();
+  const lastElementRef = React.useCallback(node => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(entries => {
+          if (entries[0].isIntersecting && hasMore) {
+              setPage(prevPage => prevPage + 1);
+          }
+      });
+      if (node) observer.current.observe(node);
+  }, [loading, hasMore]);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -90,7 +107,8 @@ export default function HomePage2() {
 
     useEffect(() => {
       let cancel = false;
-      setOpen(true)
+      // setOpen(true)
+      setLoading(true);
       // setOpenModal(true)
       const configuration = {
         method: "get",
@@ -104,19 +122,46 @@ export default function HomePage2() {
         axios(configuration)
         .then((result) => {
           if (cancel) return;
-          setProducts([...result.data.allProducts])
+          // setProducts([...result.data.allProducts])
+          setProducts(prev => {
+            // Filter out duplicates based on _id
+            const newProducts = result.data.allProducts.filter(newP => 
+                !prev.some(existingP => existingP._id === newP._id)
+            );
+            return [...prev, ...newProducts];
+          });
           setPagesCant(Math.ceil(result.data.total/pageSize))
-          setOpen(false)
+          // setOpen(false)
+          
+          if (result.data.allProducts.length === 0 || page >= Math.ceil(result.data.total/pageSize)) {
+            setHasMore(false);
+          }
+          
+          setLoading(false);
+          setInitialLoad(false);
+
         })
         .catch((error) => {
           setErrorMessage(true)
-          setOpen(false)
+          setLoading(false);
+          // setOpen(false)
+          setInitialLoad(false);
           error = new Error();
         })
         return () => { 
           cancel = true;
         }
     }, [page])
+
+    // Ref for auto-scroll
+    const loaderRef = React.useRef(null);
+    
+    // Auto-scroll effect
+    useEffect(() => {
+      if (loading && page > 1 && loaderRef.current) {
+        loaderRef.current.scrollIntoView({ behavior: 'auto', block: 'center' });
+      }
+    }, [loading, page]);
 
   return (
     <>
@@ -238,7 +283,7 @@ export default function HomePage2() {
         flexDirection: "row",
         marginTop: "2rem",
       }}>
-      {isMobile || open ? (
+      {isMobile || false ? (
           <></>
           ):(
           <>
@@ -251,12 +296,33 @@ export default function HomePage2() {
 
             </>) : (<>
               <Typography variant={"h5"}>Productos</Typography>
+              
+              {initialLoad && page === 1 ? (
+                 <Box sx={{ display: 'flex', mt:"10vh", height:"100%", justifyContent: 'center' }}>
+                   <CircularProgress />
+                 </Box>
+              ) : (
+                <>
                   <ItemList products={products} />
-                  <Box sx={{my:2}}>
-                    <Stack spacing={2}>
-                      <Pagination count={pagesCant} page={page} onChange={handleChange} />
-                    </Stack>
-                  </Box>
+                  
+                  {/* Sentinel for Infinite Scroll */}
+                  {!loading && hasMore && <div ref={lastElementRef} style={{ height: '200px', margin: '10px 0' }} />}
+                  
+                  {/* Bottom Loader */}
+                  {loading && page > 1 && (
+                    <Box display="flex" flexDirection="column" alignItems="center" my={4} ref={loaderRef}>
+                      <CircularProgress disableShrink/>
+                      <Box sx={{ height: 200 }} /> {/* Spacer for better scroll visibility */}
+                    </Box>
+                  )}
+
+                  {!hasMore && products.length > 0 && (
+                    <Box display="flex" justifyContent="center" my={2}>
+                      <Typography variant="body2" color="textSecondary">No hay más productos</Typography>
+                    </Box>
+                  )}
+                </>
+              )}
             </>)}
           </>
         )}
