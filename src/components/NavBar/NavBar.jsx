@@ -161,7 +161,20 @@ export default function NavBar() {
                       to="/"
                       style={{ textDecoration: "none", color: "inherit", marginLeft: "15px" }}
                     >
-                      <Button variant="contained" color="secondary" size="small">
+                      <Button
+                        variant="contained"
+                        size="small"
+                        sx={{
+                          backgroundColor: "#ffffff",
+                          color: "#1565c0",
+                          fontWeight: "bold",
+                          borderRadius: "20px",
+                          px: 2,
+                          "&:hover": {
+                            backgroundColor: "#f0f0f0",
+                          },
+                        }}
+                      >
                         Iniciar Sesión
                       </Button>
                     </Link>
