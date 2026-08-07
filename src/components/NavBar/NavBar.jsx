@@ -6,6 +6,7 @@ import {
   Badge,
   useMediaQuery,
   IconButton,
+  Button,
 } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
 import BrandIcon from "../BrandIcon/BrandIcon";
@@ -146,7 +147,25 @@ export default function NavBar() {
                     </Box>
                   </>
                 ) : (
-                  <></>
+                  <Box
+                    style={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Busqueda />
+                    <Link
+                      to="/"
+                      style={{ textDecoration: "none", color: "inherit", marginLeft: "15px" }}
+                    >
+                      <Button variant="contained" color="secondary" size="small">
+                        Iniciar Sesión
+                      </Button>
+                    </Link>
+                  </Box>
                 )}
                 {/* <Box style={{textDecoration: "none", color: "inherit", display: "flex", flexDirection: "row", alignItems: "center",}}>
                       <Link to={`/cart`} style={{ textDecoration: "none", color: "inherit" }}>

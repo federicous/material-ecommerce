@@ -156,16 +156,12 @@ export default function Login() {
                               }
                               // label="Password"
                               fullWidth
-                              helperText={!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}
                               name="password"
                               label="Password"
-                              // type="password"
-                              // id="password"
                               autoComplete="new-password"
                               onChange={(e) => setPassword(e.target.value)}
-                              
                             />
-                  {/* <FormHelperText id="standard-weight-helper-text">{!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}</FormHelperText> */}
+                  <FormHelperText id="standard-weight-helper-text">{!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}</FormHelperText>
                 </FormControl>
           </FormGroup>
 

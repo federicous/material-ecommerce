@@ -32,8 +32,20 @@ const CartContextProvider = ({children}) => {
 	const [descargas, setDescargas] = useState('off');
 	const [usuario, setUsuario] = useState('');
 	const [IdVendedor, setIdVendedor] = useState('');
+	const [showPublicPrices, setShowPublicPrices] = useState(false);
 
 	const token = cookies.get("token");
+	const canViewPrice = Boolean(token) || Boolean(showPublicPrices);
+
+	useEffect(() => {
+		apiQuery.get(`/api/config/public-prices`)
+			.then((respuesta) => {
+				if (respuesta && typeof respuesta.mostrarPreciosPublicos === "boolean") {
+					setShowPublicPrices(respuesta.mostrarPreciosPublicos);
+				}
+			})
+			.catch(() => {});
+	}, []);
 
 	useEffect(() => {
 		apiQuery.get(`/api/dolar`)
@@ -47,13 +59,14 @@ const CartContextProvider = ({children}) => {
 		setUser(usuarioCookie)
 		let idVendedorCookie = cookies.get("IdVendedor")
 		setIdVendedor(idVendedorCookie)
-		apiQuery.get(`/descuento?email=${usuarioCookie}`)
-		.then((respuesta)=>{
-			// console.log(`usuarioCookie: ${usuarioCookie}`);	
-			// console.log(respuesta);
-			setDescuento(respuesta)
-		})
-		}, [])
+		if (usuarioCookie) {
+			apiQuery.get(`/descuento?email=${usuarioCookie}`)
+			.then((respuesta)=>{
+				setDescuento(respuesta)
+			})
+			.catch(() => {})
+		}
+	}, [])
 
 	useEffect(() => {
 		if (usuario?.email) {
@@ -219,27 +232,27 @@ const CartContextProvider = ({children}) => {
 
 	useEffect(() => {
 		let cancel = false;
-		const configuration = {
-			method: "get",
-			url: `${config.SERVER}/api/cart`,
-			headers: {
-			  Authorization: `Bearer ${token}`,
-			},
-			withCredentials: true,
-		      };
-		    
-		      // make the API call
-		      axios(configuration)
-			.then((result) => {
-				if (cancel) return;
-				setCart([...result.data])
-			})
-			.catch((error) => {
-			  error = new Error();
-			})
-			return () => { 
-				cancel = true;
-			      }
+		if (token) {
+			const configuration = {
+				method: "get",
+				url: `${config.SERVER}/api/cart`,
+				headers: {
+				  Authorization: `Bearer ${token}`,
+				},
+				withCredentials: true,
+			};
+			axios(configuration)
+				.then((result) => {
+					if (cancel) return;
+					setCart([...result.data])
+				})
+				.catch((error) => {
+				  error = new Error();
+				})
+		}
+		return () => { 
+			cancel = true;
+		}
 	}, [])
 	
 // function ccyFormat(num) {
@@ -334,6 +347,8 @@ let itemClassContext = new ItemClassContext();
 			IdVendedor,
 			descuento,
 			descargas,
+			showPublicPrices,
+			canViewPrice,
 		}}>
 			{children}
 		</CartContext.Provider>

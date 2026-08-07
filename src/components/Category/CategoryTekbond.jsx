@@ -57,33 +57,26 @@ export default function MenuListComposition() {
 
   React.useEffect(() => {
     let cancel = false;
-    if (cookies.get("user")) {
-      console.log("user dio true");
-      const configuration = {
-        method: "get",
-        // url: `${config.SERVER}/api/categorias/label`,
-        url: `${config.SERVER}/api/categorias/tekbond/label`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      };
-  
-            // make the API call
-        axios(configuration)
-        .then((result) => {
-          if (cancel) return;
-          console.log(result.data);
-          setNavList([...result.data])
-        })
-        .catch((error) => {
-          error = new Error();
-        })
-        return () => { 
-          cancel = true;
-        }
-    }
+    const configuration = {
+      method: "get",
+      url: `${config.SERVER}/api/categorias/tekbond/label`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    };
 
+    axios(configuration)
+    .then((result) => {
+      if (cancel) return;
+      setNavList([...result.data])
+    })
+    .catch((error) => {
+      error = new Error();
+    })
+    return () => { 
+      cancel = true;
+    }
   }, [user]);
 
   return (

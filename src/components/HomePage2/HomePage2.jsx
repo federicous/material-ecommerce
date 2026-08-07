@@ -95,14 +95,16 @@ export default function HomePage2() {
   useEffect(() => {
     apiQuery.get(`/api/promo`)
 		.then((respuesta) => {
-      setPromo(respuesta[0])
-      if (respuesta[0].habilitar == "on") {
-        setOpenModal(true)
-      } else {
-        setOpenModal(false)
+      if (respuesta && respuesta.length > 0 && respuesta[0]) {
+        setPromo(respuesta[0])
+        if (respuesta[0].habilitar == "on") {
+          setOpenModal(true)
+        } else {
+          setOpenModal(false)
+        }
       }
-			//   setIsAdmin(respuesta)
 		})
+		.catch(() => {})
   }, [])
 
     useEffect(() => {

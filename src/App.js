@@ -94,14 +94,7 @@ function App() {
           <NavBar />
           <ScrollToTop />
           <Box sx={{display:"flex"}}>
-          {isMobile ? 
-          <></>:<>
-          {token ?
-          <PermanentDrawer2 />
-          : <></>
-          }
-          </>        
-        }
+          {isMobile ? <></> : <PermanentDrawer2 />}
   
           <Container
             sx={{
@@ -113,21 +106,21 @@ function App() {
             }}
           >
             <Routes>
-              <Route exact path="/"  element={<Login />}/>
-              <Route exact path="/register"  element={<Register />}/>
+              <Route exact path="/" element={<HomePage2 />}/>
+              <Route exact path="/login" element={<Login />}/>
+              <Route exact path="/register" element={<Register />}/>
+              <Route path="/home" element={<HomePage2 />} />
+              <Route exact path="/category/:category" element={<ItemListContainer />} />
+              <Route exact path="/brand/:brand" element={<ItemListContainerBrand />} />
+              <Route exact path="/ofertas" element={<ItemListContainerOfertas />} />
+              <Route exact path="/novedades" element={<ItemListContainerNovedades />} />
+              <Route exact path="/:lista/category/:category" element={<ItemListContainer />} />
+              <Route exact path="/search/:patron" element={<ItemListContainerSearch />} />
+              <Route exact path="/searchDrawer" element={<ItemListContainerSearchDrawer />} />
+              <Route exact path="/searchDrawer/:patron" element={<ItemListContainerSearchDrawer />} />
+              <Route exact path="/detail/:sku" element={<ItemDetailContainer greeting="Lista de productos" initial={1} />} />
+
               <Route path="/" element={<ProtectedRoutes />}>
-                <Route path="/home" element={<HomePage2 />} />
-                <Route exact path="/category/:category" element={<ItemListContainer />} />
-                <Route exact path="/brand/:brand" element={<ItemListContainerBrand />} />
-                <Route exact path="/ofertas" element={<ItemListContainerOfertas />} />
-                <Route exact path="/novedades" element={<ItemListContainerNovedades />} />
-                <Route exact path="/:lista/category/:category" element={<ItemListContainer />} />
-                <Route exact path="/search/:patron" element={<ItemListContainerSearch />} />
-                <Route exact path="/searchDrawer" element={<ItemListContainerSearchDrawer />} />
-                <Route exact path="/searchDrawer/:patron" element={<ItemListContainerSearchDrawer />} />
-                <Route exact path="/detail/:sku" element={< ItemDetailContainer
-                    greeting="Lista de productos"
-                    initial={1} />} />
                 <Route exact path="/cart" element={<Cart />} />     
                 <Route exact path="/order" element={<Order />} />     
                 <Route exact path="/downloads" element={<Downloads />} />     

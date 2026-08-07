@@ -1,11 +1,13 @@
 import React, {useContext, useState } from 'react'
 import { Button, ButtonGroup, Box, TextField,Typography} from '@material-ui/core'
 import { AddShoppingCart, Add, Remove } from '@material-ui/icons';
-// import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
 import { Link } from 'react-router-dom'
+import Cookies from "universal-cookie";
 import { CartContext } from '../CartContext/CartContext';
 import Return from '../utils/Return';
 import './itemCount.css';
+
+const cookies = new Cookies();
 
 
 const ItemCount = ({initial, sku, stock, product, price}) => {
@@ -51,6 +53,13 @@ const ItemCount = ({initial, sku, stock, product, price}) => {
 	}
 
 	function addCart(counter) {
+		const token = cookies.get("token");
+		if (!token) {
+			alert("Debe iniciar sesión para realizar un pedido");
+			window.location.href = "/";
+			return;
+		}
+
 		if (Number(counter)<=Number(stock)) {
 			if (product.multiplicador && !isNaN(Number(product.multiplicador))) {
 				let contadorMultiplo=roundToNearestCeil(contador,product.multiplicador)
@@ -100,7 +109,7 @@ return (
 				<Typography sx={{ fontWeight: "bold", textDecoration: "none", color:"text.primary" }} variant="h6">
 					    {/* {price} */}
 					  </Typography>
-					<Button disabled={price ? false : true} size="medium" variant="contained" color="success"  sx={{ fontSize: 12, width:"100%", height:"100%", textAlign:"center" }}
+					<Button disabled={cookies.get("token") ? (price ? false : true) : false} size="medium" variant="contained" color="success"  sx={{ fontSize: 12, width:"100%", height:"100%", textAlign:"center" }}
 					onClick={()=>addCart(contador)} ><AddShoppingCart fontSize="small"/> </Button>
 				</Box>
 								            

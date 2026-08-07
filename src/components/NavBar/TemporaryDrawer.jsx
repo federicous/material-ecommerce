@@ -35,31 +35,26 @@ export default function TemporaryDrawer() {
 
   React.useEffect(() => {
     let cancel = false;
-    if (cookies.get("user")) {
-      const configuration = {
-        method: "get",
-        // url: `${config.SERVER}/api/categorias/label`,
-        url: `${config.SERVER}/api/categorias/lista`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      };
-  
-            // make the API call
-        axios(configuration)
-        .then((result) => {
-          if (cancel) return;
-          setNavList([...result.data].filter(Boolean))
-        })
-        .catch((error) => {
-          error = new Error();
-        })
-        return () => { 
-          cancel = true;
-        }
-    }
+    const configuration = {
+      method: "get",
+      url: `${config.SERVER}/api/categorias/lista`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    };
 
+    axios(configuration)
+      .then((result) => {
+        if (cancel) return;
+        setNavList([...result.data].filter(Boolean))
+      })
+      .catch((error) => {
+        error = new Error();
+      })
+      return () => { 
+        cancel = true;
+      }
   }, [user]);
 
   const [state, setState] = React.useState({

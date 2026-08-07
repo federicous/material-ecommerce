@@ -7,6 +7,7 @@ import ItemCount2 from '../ItemCount/ItemCount2'
 import {config} from "../../config/config";
 import { Edit as EditIcon } from '@material-ui/icons';
 import ApiQuery from "../utils/apiQuery/apiQuery"
+import { CartContext } from '../CartContext/CartContext';
 let apiQuery = new ApiQuery();
 
 function capitalizeFirstLetter(string) {
@@ -24,6 +25,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const Item = ({product, name, description, img, stock, model,sku, price, categoria}) => {
+  const cartContext = React.useContext(CartContext);
+  const canViewPrice = cartContext?.canViewPrice;
   const [isAdmin, setIsAdmin] = React.useState(false);
   const [iva, setIva] = React.useState(0);
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -126,12 +129,9 @@ const Item = ({product, name, description, img, stock, model,sku, price, categor
               <Typography sx={{fontSize:{xs:"x-small",sm:"small"}}}  variant="caption" color="text.secondary">
                 Código: {description}
               </Typography>
-              <Typography sx={{ fontWeight: "bold", textDecoration: "none", color:"text.primary" }} variant="h6">
-              {/* {price ? `$ ${price}` : "NO DISPONIBLE" } */}
-              {}
-              {/* {product.precioConIva ? ccyFormat(product.precioConIva/(1+iva/100)) : (price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE") } */}
-              {price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE"}
-            </Typography>
+              <Typography sx={{ fontWeight: "bold", textDecoration: "none", color: canViewPrice ? "text.primary" : "primary.main", fontSize: canViewPrice ? {xs:"small",sm:"medium"} : {xs:"x-small",sm:"small"} }} variant="h6">
+                {canViewPrice ? (price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE") : "Inicie sesión para ver precio"}
+              </Typography>
             </Link>
             {isAdmin ? <>
                 <LinkMui href={`${config.ADMINISTRADOR}/producto/${sku}`} target="_blank" style={{ textDecoration:"none", color:"inherit"}}>

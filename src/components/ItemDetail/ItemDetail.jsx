@@ -5,6 +5,7 @@ import ItemCount2 from '../ItemCount/ItemCount2'
 import {config} from "../../config/config";
 import { Edit as EditIcon } from '@material-ui/icons';
 import ApiQuery from "../utils/apiQuery/apiQuery"
+import { CartContext } from '../CartContext/CartContext';
 let apiQuery = new ApiQuery();
 
 function capitalizeFirstLetter(string) {
@@ -22,6 +23,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const ItemDetail = ({initial, name, model, description, img, stock, price, product, sku, categoria}) => {
+  const cartContext = React.useContext(CartContext);
+  const canViewPrice = cartContext?.canViewPrice;
   const [isAdmin, setIsAdmin] = React.useState(false)
   const [iva, setIva] = React.useState(0);
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -115,11 +118,8 @@ const ItemDetail = ({initial, name, model, description, img, stock, price, produ
             flexDirection: "column",
           }}
         >
-          <Typography sx={{ fontWeight: "bold" }} variant="h6">
-            {/* $ {price} */}
-            {/* {product.precioConIva ? ccyFormat(product.precioConIva/(1+iva/100)) : (price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE") } */}
-            {price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE" }
-            
+          <Typography sx={{ fontWeight: "bold", color: canViewPrice ? "text.primary" : "primary.main" }} variant="h6">
+            {canViewPrice ? (price ? `$ ${ccyFormat(price)}` : "NO DISPONIBLE") : "Inicie sesión para ver precio"}
           </Typography>
           {/* <Typography variant="body2">(Stock: {stock})</Typography> */}
           <ItemCount2
