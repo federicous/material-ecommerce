@@ -56,7 +56,7 @@ const ItemCount = ({initial, sku, stock, product, price}) => {
 		const token = cookies.get("token");
 		if (!token) {
 			alert("Debe iniciar sesión para realizar un pedido");
-			window.location.href = "/";
+			window.location.href = "/login";
 			return;
 		}
 

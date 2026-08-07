@@ -158,7 +158,7 @@ export default function NavBar() {
                   >
                     <Busqueda />
                     <Link
-                      to="/"
+                      to="/login"
                       style={{ textDecoration: "none", color: "inherit", marginLeft: "15px" }}
                     >
                       <Button
