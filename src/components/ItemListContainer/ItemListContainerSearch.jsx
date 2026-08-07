@@ -54,6 +54,12 @@ const ItemListContainer = () => {
 
 	useEffect(() => {
 		let cancel = false;
+		if (!patron || patron.trim().length < 3) {
+			setProducts([]);
+			setLoading(false);
+			setInitialLoad(false);
+			return;
+		}
 		setLoading(true);
 		
 		const configuration = {

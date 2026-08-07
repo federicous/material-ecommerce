@@ -54,9 +54,9 @@ export default function Busqueda() {
 		setPatron(event.target.value)
 	      }
 	useEffect(() => {
-		if (patron) {
+		if (patron && patron.trim().length >= 3) {
 			navigate(`/searchDrawer/${patron}`, { replace: true });	
-		} else {
+		} else if (!patron || patron.trim().length === 0) {
 			navigate(`/searchDrawer`, { replace: true });
 		}
 	}, [patron])
