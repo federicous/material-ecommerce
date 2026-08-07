@@ -43,10 +43,13 @@ const ItemHorizontal = ({product, name, description, img, stock, model,sku, pric
   }, [img]);
 
   React.useEffect(() => {
+    let cancel = false;
     apiQuery.get(`/permisos/nivel`)
     .then((respuesta)=>{
+      if (cancel) return;
       setIsAdmin(respuesta)
     })
+    return () => { cancel = true; }
   }, [])
 
   React.useEffect(() => {

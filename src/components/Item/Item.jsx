@@ -42,10 +42,13 @@ const Item = ({product, name, description, img, stock, model,sku, price, categor
   }, [img]);
 
   React.useEffect(() => {
+    let cancel = false;
     apiQuery.get(`/permisos/nivel`)
     .then((respuesta)=>{
+      if (cancel) return;
       setIsAdmin(respuesta)
     })
+    return () => { cancel = true; }
   }, [])
 
   React.useEffect(() => {

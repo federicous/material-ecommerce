@@ -40,10 +40,13 @@ const ItemDetail = ({initial, name, model, description, img, stock, price, produ
   }, [img]);
 
   React.useEffect(() => {
+    let cancel = false;
     apiQuery.get(`/permisos/nivel`)
     .then((respuesta)=>{
+      if (cancel) return;
       setIsAdmin(respuesta)
     })
+    return () => { cancel = true; }
   }, [])
 
   React.useEffect(() => {
