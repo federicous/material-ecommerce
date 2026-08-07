@@ -215,7 +215,6 @@ export default function NavBar() {
                     </Box> */}
               </>
             )}
-          </div>
         </Toolbar>
       </AppBar>
     </Box>
