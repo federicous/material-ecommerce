@@ -4,9 +4,10 @@ import {
   List,
   ListItem,
   ListItemIcon,
+  ListItemText,
   SwipeableDrawer,
 } from "@material-ui/core";
-import { Menu, Search, } from "@material-ui/icons";
+import { Menu, Search, LockOpen } from "@material-ui/icons";
 import { Box } from "@material-ui/system";
 import * as React from "react";
 import { Link } from "react-router-dom";
@@ -88,12 +89,23 @@ export default function TemporaryDrawer() {
       <List sx={{height:"100%", pb:"0px"}}>
         <Box sx={{height:"100%", display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
           <Box>
-            <ListItem
-              onClick={toggleDrawer(anchor, false)}
-              onKeyDown={toggleDrawer(anchor, false)}
-            >
-              <AccountDrawer/>
-            </ListItem>
+            {cookies.get("token") ? (
+              <ListItem
+                onClick={toggleDrawer(anchor, false)}
+                onKeyDown={toggleDrawer(anchor, false)}
+              >
+                <AccountDrawer/>
+              </ListItem>
+            ) : (
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <ListItem button onClick={toggleDrawer(anchor, false)}>
+                  <ListItemIcon sx={{ color: "primary.main" }}>
+                    <LockOpen />
+                  </ListItemIcon>
+                  <ListItemText primary="Iniciar Sesión" sx={{ color: "text.primary", fontWeight: "bold" }} />
+                </ListItem>
+              </Link>
+            )}
             <Divider />
             <Link to={`/searchDrawer/`} style={{ textDecoration:"none"}}>
               <ListItem button 
@@ -127,11 +139,15 @@ export default function TemporaryDrawer() {
               onClick={toggleDrawer(anchor, false)}
               onKeyDown={toggleDrawer(anchor, false)}
             />
-            <Divider />
-            <LogoutDrawer
-              onClick={toggleDrawer(anchor, false)}
-              onKeyDown={toggleDrawer(anchor, false)}
-            />
+            {cookies.get("token") && (
+              <>
+                <Divider />
+                <LogoutDrawer
+                  onClick={toggleDrawer(anchor, false)}
+                  onKeyDown={toggleDrawer(anchor, false)}
+                />
+              </>
+            )}
           </Box>
         </Box>
       </List>

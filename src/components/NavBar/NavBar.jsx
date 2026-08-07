@@ -94,7 +94,6 @@ export default function NavBar() {
               </>
             )}
           </div>
-          <div>
             {isMobile ? (
               <Box
                 style={{
@@ -105,16 +104,42 @@ export default function NavBar() {
                   alignItems: "center",
                 }}
               >
-                <Link
-                  to={`/cart`}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <IconButton>
-                    <Badge badgeContent={quantity} color="error">
-                      <ShoppingCart />
-                    </Badge>
-                  </IconButton>
-                </Link>
+                {usuario ? (
+                  <Link
+                    to={`/cart`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <IconButton>
+                      <Badge badgeContent={quantity} color="error">
+                        <ShoppingCart />
+                      </Badge>
+                    </IconButton>
+                  </Link>
+                ) : (
+                  <Link
+                    to="/login"
+                    style={{ textDecoration: "none", color: "inherit", marginRight: "8px" }}
+                  >
+                    <Button
+                      variant="contained"
+                      size="small"
+                      sx={{
+                        backgroundColor: "#ffffff",
+                        color: "#1565c0",
+                        fontWeight: "bold",
+                        borderRadius: "20px",
+                        fontSize: "11px",
+                        px: 1.5,
+                        py: 0.5,
+                        "&:hover": {
+                          backgroundColor: "#f0f0f0",
+                        },
+                      }}
+                    >
+                      Iniciar Sesión
+                    </Button>
+                  </Link>
+                )}
                 <TemporaryDrawer />
               </Box>
             ) : (
