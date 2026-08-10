@@ -25,7 +25,6 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FormHelperText from '@material-ui/core/FormHelperText';
 
 const cookies = new Cookies();
 
@@ -161,7 +160,6 @@ export default function Login() {
                               autoComplete="new-password"
                               onChange={(e) => setPassword(e.target.value)}
                             />
-                  <FormHelperText id="standard-weight-helper-text">{!password ? "Requiere: mayúscula, minúscula, número, +8 caracteres " : ""}</FormHelperText>
                 </FormControl>
           </FormGroup>
 
