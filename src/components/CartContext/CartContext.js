@@ -50,9 +50,12 @@ const CartContextProvider = ({children}) => {
 	useEffect(() => {
 		apiQuery.get(`/api/dolar`)
 			.then((respuesta) => {
-		  		setDolar(Number(respuesta.dolar))
-			})	    
-	      	}, [])
+				if (respuesta && respuesta.dolar) {
+					setDolar(Number(respuesta.dolar))
+				}
+			})
+			.catch(() => {})
+	}, [])
 
 	useEffect(() => {
 		let usuarioCookie = cookies.get("user");

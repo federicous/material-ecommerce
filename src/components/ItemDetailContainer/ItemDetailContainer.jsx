@@ -32,9 +32,10 @@ const ItemDetailContainer = ({initial}) => {
     let cancel = false;
     apiQuery.get(`/api/dolar`)
 		.then((respuesta) => {
-      if (cancel) return;
+      if (cancel || !respuesta || !respuesta.dolar) return;
       setDolar(Number(respuesta.dolar));
 		})
+		.catch(() => {})
     return () => { 
       cancel = true;
     }

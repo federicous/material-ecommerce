@@ -10,6 +10,7 @@ class ApiQuery {
 
   async get(url) {
     try {
+      const token = cookies.get("token");
       const configuration = {
         method: "get",
         url: `${config.SERVER}${url}`,
@@ -24,11 +25,13 @@ class ApiQuery {
 
     } catch (error) {
       console.log(error);
+      return null;
     }
   }
 
   async getArchivo(url) {
     try {
+      const token = cookies.get("token");
       const configuration = {
         method: "get",
         url: `${config.SERVER}${url}`,
@@ -44,6 +47,7 @@ class ApiQuery {
 
     } catch (error) {
       console.log(error);
+      return null;
     }
   }
 

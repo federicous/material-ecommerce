@@ -128,9 +128,11 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   React.useEffect(() => {
     apiQuery.get(`/api/dolar`)
 		.then((respuesta) => {
-      setDolar(Number(respuesta.dolar));
+      if (respuesta && respuesta.dolar) {
+        setDolar(Number(respuesta.dolar));
+      }
 		})
-
+		.catch(() => {});
   }, [])
 
   React.useEffect(() => {
