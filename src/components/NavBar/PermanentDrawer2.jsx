@@ -6,6 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
+import Typography from "@material-ui/core/Typography";
 import LogoutDrawer from "../Logout/LogoutDrawer";
 import ModeThemeDrawer from "../ModeTheme/ModeThemeDrawer";
 import AccountDrawer from "../Account/AccountDrawer";
@@ -235,6 +236,20 @@ export default function PermanentDrawerLeft() {
                   onClick={toggleDrawer(anchor, false)}
                   onKeyDown={toggleDrawer(anchor, false)}
                 />
+                <Divider />
+                <Box sx={{ py: 1.5, px: 2, textAlign: "center" }}>
+                  <Typography variant="caption" color="textSecondary" style={{ fontSize: "0.75rem" }}>
+                    Desarrollado por{" "}
+                    <a
+                      href="https://sitecnia.com.ar/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "inherit", textDecoration: "none", fontWeight: 600 }}
+                    >
+                      //Sitecnia
+                    </a>
+                  </Typography>
+                </Box>
               </Box>
             </Box>
           </List>

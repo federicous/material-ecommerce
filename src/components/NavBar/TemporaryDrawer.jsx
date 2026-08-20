@@ -6,6 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
   SwipeableDrawer,
+  Typography,
 } from "@material-ui/core";
 import { Menu, Search, LockOpen } from "@material-ui/icons";
 import { Box } from "@material-ui/system";
@@ -148,6 +149,20 @@ export default function TemporaryDrawer() {
                 />
               </>
             )}
+            <Divider />
+            <Box sx={{ py: 1.5, px: 2, textAlign: "center" }}>
+              <Typography variant="caption" color="textSecondary" style={{ fontSize: "0.75rem" }}>
+                Desarrollado por{" "}
+                <a
+                  href="https://sitecnia.com.ar/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "inherit", textDecoration: "none", fontWeight: 600 }}
+                >
+                  //Sitecnia
+                </a>
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </List>
