@@ -123,16 +123,6 @@ const ItemListContainer = () => {
 		setFilterOpen(open);
 	};
 
-	// Ref for auto-scroll
-	const loaderRef = React.useRef(null);
-	
-	// Auto-scroll effect
-	useEffect(() => {
-		if (loading && page > 1 && loaderRef.current) {
-			loaderRef.current.scrollIntoView({ behavior: 'auto', block: 'center' });
-		}
-	}, [loading, page]);
-
 	return (
 		<>
 		<Box style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', marginBottom: '16px', width: '100%' }}>
@@ -177,13 +167,12 @@ const ItemListContainer = () => {
 				<ItemList products={filteredProducts} />
 				
 				{/* Sentinel for Infinite Scroll */}
-				{!loading && hasMore && <div ref={lastElementRef} style={{ height: '200px', margin: '10px 0' }} />}
+				{!loading && hasMore && <div ref={lastElementRef} style={{ height: '20px', margin: '10px 0' }} />}
 				
 				{/* Bottom Loader */}
 				{loading && page > 1 && (
-					<Box display="flex" flexDirection="column" alignItems="center" my={4} ref={loaderRef}>
+					<Box display="flex" justifyContent="center" my={4}>
 						<CircularProgress disableShrink/>
-						<Box sx={{ height: 200 }} /> {/* Spacer for better scroll visibility */}
 					</Box>
 				)}
 				
