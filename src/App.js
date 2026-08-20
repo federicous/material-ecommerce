@@ -28,6 +28,8 @@ import PermanentDrawer2 from './components/NavBar/PermanentDrawer2'
 import { Box } from '@material-ui/system';
 import Cookies from "universal-cookie";
 
+import Footer from './components/Footer/Footer';
+
 const cookies = new Cookies();
 const token = cookies.get("token");  
 
@@ -93,42 +95,46 @@ function App() {
           <div id="back-to-top-anchor" />
           <NavBar />
           <ScrollToTop />
-          <Box sx={{display:"flex"}}>
+          <Box sx={{display:"flex", minHeight: "100vh"}}>
           {isMobile ? <></> : <PermanentDrawer2 />}
   
-          <Container
-            sx={{
-              marginTop: "80px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Routes>
-              <Route exact path="/" element={<HomePage2 />}/>
-              <Route exact path="/login" element={<Login />}/>
-              <Route exact path="/register" element={<Register />}/>
-              <Route path="/home" element={<HomePage2 />} />
-              <Route exact path="/category/:category" element={<ItemListContainer />} />
-              <Route exact path="/brand/:brand" element={<ItemListContainerBrand />} />
-              <Route exact path="/ofertas" element={<ItemListContainerOfertas />} />
-              <Route exact path="/novedades" element={<ItemListContainerNovedades />} />
-              <Route exact path="/:lista/category/:category" element={<ItemListContainer />} />
-              <Route exact path="/search/:patron" element={<ItemListContainerSearch />} />
-              <Route exact path="/searchDrawer" element={<ItemListContainerSearchDrawer />} />
-              <Route exact path="/searchDrawer/:patron" element={<ItemListContainerSearchDrawer />} />
-              <Route exact path="/detail/:sku" element={<ItemDetailContainer greeting="Lista de productos" initial={1} />} />
+          <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1, minHeight: "100vh", width: "100%" }}>
+            <Container
+              sx={{
+                marginTop: "80px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                flexGrow: 1,
+              }}
+            >
+              <Routes>
+                <Route exact path="/" element={<HomePage2 />}/>
+                <Route exact path="/login" element={<Login />}/>
+                <Route exact path="/register" element={<Register />}/>
+                <Route path="/home" element={<HomePage2 />} />
+                <Route exact path="/category/:category" element={<ItemListContainer />} />
+                <Route exact path="/brand/:brand" element={<ItemListContainerBrand />} />
+                <Route exact path="/ofertas" element={<ItemListContainerOfertas />} />
+                <Route exact path="/novedades" element={<ItemListContainerNovedades />} />
+                <Route exact path="/:lista/category/:category" element={<ItemListContainer />} />
+                <Route exact path="/search/:patron" element={<ItemListContainerSearch />} />
+                <Route exact path="/searchDrawer" element={<ItemListContainerSearchDrawer />} />
+                <Route exact path="/searchDrawer/:patron" element={<ItemListContainerSearchDrawer />} />
+                <Route exact path="/detail/:sku" element={<ItemDetailContainer greeting="Lista de productos" initial={1} />} />
 
-              <Route path="/" element={<ProtectedRoutes />}>
-                <Route exact path="/cart" element={<Cart />} />     
-                <Route exact path="/order" element={<Order />} />     
-                <Route exact path="/downloads" element={<Downloads />} />     
-                <Route exact path="/alert/:message" element={<AlertMessage />} />     
-              </Route>
-              <Route exact path="*" element={<Return />} /> 
-            </Routes>
-          </Container>
+                <Route path="/" element={<ProtectedRoutes />}>
+                  <Route exact path="/cart" element={<Cart />} />     
+                  <Route exact path="/order" element={<Order />} />     
+                  <Route exact path="/downloads" element={<Downloads />} />     
+                  <Route exact path="/alert/:message" element={<AlertMessage />} />     
+                </Route>
+                <Route exact path="*" element={<Return />} /> 
+              </Routes>
+            </Container>
+            <Footer />
+          </Box>
           </Box>
         </BrowserRouter>
       </ThemeProvider>

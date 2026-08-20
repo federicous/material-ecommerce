@@ -20,9 +20,14 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Desarrollado por '}
-      <Link to={`/home`} color="inherit">
-        //SITECNIA
-      </Link>{' '}
+      <a
+        href="https://sitecnia.com.ar/"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: "inherit", textDecoration: "none", fontWeight: 600 }}
+      >
+        //Sitecnia
+      </a>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
