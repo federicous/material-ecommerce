@@ -22,7 +22,8 @@ En lugar de que la IA lea miles de líneas de código y gaste tokens de contexto
 | :--- | :--- | :--- |
 | **Frontend Tienda** | `/home/yemes/Documentos/Codehouse/React/material-ecommerce` | Aplicación pública de catálogo, carrito y compras con Material-UI |
 | **Backend API** | `/home/yemes/Documentos/Codehouse/Backend/express-ecommerce` | API REST en Node.js/Express, Mongoose y MongoDB |
-| **Admin Panel** | `/home/yemes/Documentos/Codehouse/React/admin-react` | Panel de gestión y administración en React |
+| **Admin Panel** | `/home/yemes/Documentos/Codehouse/React/admin-react` | Panel de administración y catálogo en React |
+| **Gestión Panel** | `/home/yemes/Documentos/Codehouse/React/gestion-react` | Panel de gestión interna y administración en React |
 
 ---
 
@@ -34,8 +35,9 @@ Los datos del grafo se persisten en formato SQLite optimizado en:
 ~/.cache/codebase-memory-mcp/
 ├── _config.db                                                       # Configuración global
 ├── home-yemes-Documentos-Codehouse-Backend-express-ecommerce.db     # Base de datos del backend (~13 MB)
-├── home-yemes-Documentos-Codehouse-React-admin-react.db             # Base de datos del admin (~5.5 MB)
-├── home-yemes-Documentos-Codehouse-React-material-ecommerce.db      # Base de datos del frontend (~4.6 MB)
+├── home-yemes-Documentos-Codehouse-React-admin-react.db             # Base de datos del admin (~5.4 MB)
+├── home-yemes-Documentos-Codehouse-React-gestion-react.db           # Base de datos de gestión (~4.4 MB)
+├── home-yemes-Documentos-Codehouse-React-material-ecommerce.db      # Base de datos del frontend (~4.5 MB)
 └── logs/                                                            # Logs de indexación y escaneo
 ```
 
@@ -99,6 +101,11 @@ codebase-memory-mcp cli index_repository \
 # Reindexar panel admin
 codebase-memory-mcp cli index_repository \
   --repo-path /home/yemes/Documentos/Codehouse/React/admin-react \
+  --mode full
+
+# Reindexar panel gestión
+codebase-memory-mcp cli index_repository \
+  --repo-path /home/yemes/Documentos/Codehouse/React/gestion-react \
   --mode full
 ```
 
