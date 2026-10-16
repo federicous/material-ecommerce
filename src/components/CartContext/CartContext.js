@@ -279,7 +279,7 @@ const CartContextProvider = ({children}) => {
 class ItemClassContext {
 	get valorActual() {
 		return descuento; // Obtiene siempre el valor actualizado
-	    }
+	}
 	calcularPrecio(item, dolar) {
 		let precioConIva = parseFloat(item.precioConIva)
 		let iva = item.iva
@@ -289,13 +289,13 @@ class ItemClassContext {
 		let oferta = item.oferta
 		let precioOferta = parseFloat(item.precioOferta)
 
-		let price = (oferta && oferta == "si" && precioOferta) ? ccyFormat(precioOferta) : parseFloat(precio)
+		let esOferta = Boolean(oferta && (oferta == "si" || oferta === "SI" || oferta === true));
+		let isOfertaConPrecio = Boolean(esOferta && precioOferta);
+		let price = isOfertaConPrecio ? ccyFormat(precioOferta) : parseFloat(precio)
 		/* le saco el iva si viene incluido */
-		// let resultado = (precioConIva ? parseFloat(precioConIva) / (1 + (parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva)) / 100) : parseFloat((usd && `${usd}` != "0") ? usd * dolar : `${price}`)) * (qty ? parseFloat(qty) : 1);
-		let resultado = (precioConIva ? parseFloat(precioConIva) / (1 + (parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva)) / 100) : parseFloat((usd && `${usd}` != "0") ? usd * dolar : `${price}`)) * (qty ? parseFloat(qty) : 1);
-		// return ccyFormat(parseFloat(resultado))
-		return ccyFormat(parseFloat(aplicarDescuento(resultado,this.valorActual)))
-
+		let resultado = (precioConIva ? parseFloat(precioConIva) / (1 + (parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva)) / 100) : parseFloat((!isOfertaConPrecio && usd && `${usd}` != "0") ? usd * dolar : `${price}`)) * (qty ? parseFloat(qty) : 1);
+		
+		return ccyFormat(parseFloat(esOferta ? resultado : aplicarDescuento(resultado, this.valorActual)))
 	}
 	/* Backup funcion anterior */
 	calcularPrecio2(item, dolar) {
@@ -310,20 +310,20 @@ class ItemClassContext {
 	}
 
 	calcularPrecioContext(precioConIva, iva, precio, usd, qty, oferta, precioOferta, dolar) {
-		let price = (oferta && oferta == "si" && precioOferta) ? ccyFormat(precioOferta) : parseFloat(precio)
+		let esOferta = Boolean(oferta && (oferta == "si" || oferta === "SI" || oferta === true));
+		let isOfertaConPrecio = Boolean(esOferta && precioOferta);
+		let price = isOfertaConPrecio ? ccyFormat(precioOferta) : parseFloat(precio)
 		/* le saco el iva si viene incluido */
-		// let resultado = (precioConIva ? parseFloat(precioConIva) / (1 + (parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva)) / 100) : ((price && precio != 0) ? `${price}` : usd * dolar)) * (qty ? parseFloat(qty) : 1);
-		let resultado = (precioConIva ? parseFloat(precioConIva) / (1 + (parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva)) / 100) : ((usd && `${usd}` != "0") ? usd * dolar : `${price}`)) * (qty ? parseFloat(qty) : 1);
-		// let resultado = (precioConIva ? parseFloat(precioConIva)/(1+(parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva))/100) : (usd ? usd*dolar : `${price}`))*(qty ? parseFloat(qty) : 1);
-		// return resultado
-		return aplicarDescuento(resultado,this.valorActual)
+		let resultado = (precioConIva ? parseFloat(precioConIva) / (1 + (parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva)) / 100) : ((!isOfertaConPrecio && usd && `${usd}` != "0") ? usd * dolar : `${price}`)) * (qty ? parseFloat(qty) : 1);
+		return esOferta ? resultado : aplicarDescuento(resultado, this.valorActual)
 	}
 	calcularPrecioCantidad(precioConIva, iva, precio, usd, qty, oferta, precioOferta, dolar) {
-		let price = (oferta && oferta == "si" && precioOferta) ? ccyFormat(precioOferta) : parseFloat(precio)
+		let esOferta = Boolean(oferta && (oferta == "si" || oferta === "SI" || oferta === true));
+		let isOfertaConPrecio = Boolean(esOferta && precioOferta);
+		let price = isOfertaConPrecio ? ccyFormat(precioOferta) : parseFloat(precio)
 		/* le saco el iva si viene incluido */
-		let resultado = (precioConIva ? parseFloat(precioConIva) / (1 + (parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva)) / 100) : ((usd && `${usd}` != "0") ? usd * dolar : `${price}`)) * (qty ? parseFloat(qty) : 1);
-		// return ccyFormat(resultado)
-		return ccyFormat(parseFloat(aplicarDescuento(resultado,this.valorActual)))
+		let resultado = (precioConIva ? parseFloat(precioConIva) / (1 + (parseFloat(typeof iva === "string" ? iva.replace(/,/g, '.').replace(/%/g, '') : iva)) / 100) : ((!isOfertaConPrecio && usd && `${usd}` != "0") ? usd * dolar : `${price}`)) * (qty ? parseFloat(qty) : 1);
+		return ccyFormat(parseFloat(esOferta ? resultado : aplicarDescuento(resultado, this.valorActual)))
 	}
 }
 // export default ItemClass;
