@@ -65,6 +65,7 @@ const CartContextProvider = ({children}) => {
 		if (usuarioCookie) {
 			apiQuery.get(`/descuento?email=${usuarioCookie}`)
 			.then((respuesta)=>{
+                if (respuesta === null || respuesta === undefined) return;
 				setDescuento(respuesta)
 			})
 			.catch(() => {})
@@ -75,6 +76,7 @@ const CartContextProvider = ({children}) => {
 		if (usuario?.email) {
 			apiQuery.get(`/descuento?email=${usuario.email}`)
 			.then((respuesta)=>{
+                if (respuesta === null || respuesta === undefined) return;
 				setDescuento(respuesta)
 				// console.log(`usuario: ${usuario.email}`);
 				// console.log(respuesta);
@@ -82,6 +84,7 @@ const CartContextProvider = ({children}) => {
 		} else if (user?.email)  {
 			apiQuery.get(`/descuento?email=${user}`)
 			.then((respuesta)=>{
+                if (respuesta === null || respuesta === undefined) return;
 				setDescuento(respuesta)
 				// console.log(`user: ${user}`);
 				// console.log(respuesta);		
@@ -95,6 +98,7 @@ const CartContextProvider = ({children}) => {
 			console.log(`usuario: ${usuario.email}`);
 			apiQuery.get(`/api/descargas/permiso?email=${usuario.email}`)
 			.then((respuesta)=>{
+                if (respuesta === null || respuesta === undefined) return;
 				// console.log(`respuesta: ${respuesta}`);
 				setDescargas(respuesta)
 				// console.log(`usuario: ${usuario.email}`);
@@ -103,6 +107,7 @@ const CartContextProvider = ({children}) => {
 			// console.log(`user: ${user}`);
 			apiQuery.get(`/api/descargas/permiso?email=${user}`)
 			.then((respuesta)=>{
+                if (respuesta === null || respuesta === undefined) return;
 				// console.log(`respuesta: ${respuesta.userPermiso}`);
 				setDescargas(respuesta.userPermiso)
 				// console.log(`user: ${user}`);

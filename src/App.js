@@ -1,3 +1,5 @@
+import SessionGate from "./components/SessionGate";
+import SharedSessionControl from "./components/SharedSessionControl";
 import NavBar from './components/NavBar/NavBar';
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 import ItemListContainerBrand from './components/ItemListContainer/ItemListContainerBrand';
@@ -92,6 +94,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline/>
         <BrowserRouter>
+          <SharedSessionControl/>
+          <SessionGate>
           <div id="back-to-top-anchor" />
           <NavBar />
           <ScrollToTop />
@@ -136,6 +140,7 @@ function App() {
             <Footer />
           </Box>
           </Box>
+          </SessionGate>
         </BrowserRouter>
       </ThemeProvider>
     // </CartContextProvider>

@@ -26,6 +26,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 
+import { establishSession, currentToken } from "../sharedSession";
 const cookies = new Cookies();
 
 export default function Login() {
@@ -39,7 +40,7 @@ export default function Login() {
   const [loginFail, setLoginFail] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false);
   const [message, setMessage] = useState("");
-  // Backdrop or Loading spinner 
+  // Backdrop or Loading spinner
   const [open, setOpen] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -66,6 +67,7 @@ export default function Login() {
     const configuration = {
       method: "post",
       url: `${config.SERVER}/login`,
+      withCredentials: true,
       data: {
         email,
         password,
@@ -76,22 +78,14 @@ export default function Login() {
     axios(configuration)
       .then((result) => {
         setLogin(true);
-        setUser(cookies.get("user"));
-        cookies.set("token", result.data.token, {
-          path: "/",
-        });
-        cookies.set("user", result.data.email, {
-          path: "/",
-        });
-        cookies.set("IdVendedor", result.data.IdVendedor, {
-          path: "/",
-        });
+        setUser(result.data.email);
+        establishSession(result.data);
         // navigate(`/`, { replace: true });
         setOpen(false)
         window.location.href = "/";
       })
       .catch((error) => {
-        setMessage(error.response.data.message || "");        
+        setMessage(error.response?.data?.message || "No se pudo iniciar sesión");
         setLoginFail(true);
         setErrorMessage(true)
         setOpen(false)
@@ -178,15 +172,15 @@ export default function Login() {
               {login ? (
                   <Alert severity="success">Autenticación Correcta</Alert>
               ) : (
-                loginFail ? 
-                  ( message ? (                  
+                loginFail ?
+                  ( message ? (
                   <Alert severity="error">{message}</Alert>
                   ) : (
                   <Alert severity="error">Error de Autenticación</Alert>
                   )
                 ) : (
                   <><Alert severity="info">Ingrese sus credenciales</Alert></>
-                )     
+                )
               )}
             </Stack>
             <Button sx={{color:"text.primary", textDecorationLine:"underline"}} onClick={() => navigate(`/register`, { replace: true })} >Crear cuenta</Button>
@@ -203,7 +197,7 @@ export default function Login() {
         >
         <CircularProgress color="inherit" />
       </Backdrop>
-     </>         
+     </>
   );
 }
 
