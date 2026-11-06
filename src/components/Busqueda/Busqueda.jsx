@@ -57,7 +57,7 @@ export default function Busqueda() {
 	useEffect(() => {
 		if (patron && patron.trim().length >= 3) {
 			navigate(`/search/${patron}`, { replace: true });	
-		} else if (!patron || patron.trim().length === 0) {
+		} else if ((!patron || patron.trim().length === 0) && window.location.pathname.startsWith('/search/')) {
 			navigate(`/`, { replace: true });
 		}
 	}, [patron])
