@@ -242,19 +242,32 @@ export default function HomePage2() {
         >
           {/* <Link key={item.id} to={`/category/${item.value}`}> */}
           <Link key={item.id} to={getRoute(item.value)}>
-            <ImageSrc style={{ backgroundImage: `url(${item.image})` }} />
-            <ImageBackdrop className="MuiImageBackdrop-root" />
-            <Image>
+            <ImageSrc
+              style={{
+                backgroundImage: `url(${item.image})`,
+                ...(item.logoSize && {
+                  backgroundColor: "#1c2320",
+                  backgroundSize: item.logoSize,
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center 38%",
+                }),
+              }}
+            />
+            <ImageBackdrop
+              className="MuiImageBackdrop-root"
+              style={item.logoSize ? { opacity: 0.08 } : undefined}
+            />
+            <Image style={item.logoSize ? { alignItems: "flex-end" } : undefined}>
               <Typography
                 component="span"
                 variant="subtitle1"
                 color="inherit"
                 sx={{
                   position: "relative",
-                  p: 4,
-                  pt: 2,
-                  pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
-                  textShadow:"2px 2px 5px black",
+                  p: item.logoSize ? 1 : 4,
+                  pt: item.logoSize ? 1 : 2,
+                  pb: item.logoSize ? 1 : (theme) => `calc(${theme.spacing(1)} + 6px)`,
+                  textShadow: item.logoSize ? "none" : "2px 2px 5px black",
                 }}
               >
                 {item.name}
