@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import LogoutDrawer from "../Logout/LogoutDrawer";
 import ModeThemeDrawer from "../ModeTheme/ModeThemeDrawer";
 import AccountDrawer from '../Account/AccountDrawer'
+import ModuleAccessButtons from '../ModuleAccessButtons'
 import axios from "axios";
 // import {config} from "../../config/config";
 import {config} from "../../config/config";
@@ -107,6 +108,7 @@ export default function TemporaryDrawer() {
                 </ListItem>
               </Link>
             )}
+            {cookies.get("token") && <ModuleAccessButtons mobile />}
             <Divider />
             <Link to={`/searchDrawer/`} style={{ textDecoration:"none"}}>
               <ListItem button 

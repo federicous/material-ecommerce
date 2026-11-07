@@ -16,6 +16,7 @@ import { CartContext } from "../CartContext/CartContext";
 import TemporaryDrawer from "./TemporaryDrawer";
 import Busqueda from "../Busqueda/Busqueda";
 import Account from "../Account/Account";
+import ModuleAccessButtons from "../ModuleAccessButtons";
 import Cookies from "universal-cookie";
 // import ApiQuery from "../utils/apiQuery/apiQuery"
 // let apiQuery = new ApiQuery();
@@ -167,6 +168,7 @@ export default function NavBar() {
                           </Badge>
                         </IconButton>
                       </Link>
+                      <ModuleAccessButtons />
                       <Account />
                       {/* <PermanentDrawer/> */}
                     </Box>

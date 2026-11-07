@@ -1,11 +1,11 @@
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 import {config} from '../config/config';
-import {currentToken,expireIfCurrent,closeSharedSession,clearSession,isAdministrator,installSessionTransport} from './sharedSession';
+import {currentToken,expireIfCurrent,closeSharedSession,clearSession,isAdministrator,isManagementUser,installSessionTransport} from './sharedSession';
 jest.mock('axios',()=>({__esModule:true,default:Object.assign(jest.fn(),{interceptors:{request:{use:jest.fn()},response:{use:jest.fn()}}})}));
 const cookies=new Cookies();
 beforeEach(()=>{for(const n of ['token','user','IdVendedor'])cookies.remove(n,{path:'/'});axios.mockReset();});
-test('administrator check accepts only explicit allowed flags',()=>{expect(isAdministrator({isAdmin:'on'})).toBe(true);expect(isAdministrator({isAdmin:true})).toBe(true);expect(isAdministrator({isAdmin:'off'})).toBe(false);expect(isAdministrator({isAdmin:1})).toBe(false);});
+test('administrator and management checks accept only explicit allowed flags',()=>{expect(isAdministrator({isAdmin:'on'})).toBe(true);expect(isAdministrator({isAdmin:true})).toBe(true);expect(isAdministrator({isAdmin:'off'})).toBe(false);expect(isAdministrator({isAdmin:1})).toBe(false);expect(isManagementUser({isManagement:'on'})).toBe(true);expect(isManagementUser({isManagement:true})).toBe(true);expect(isManagementUser({isAdmin:true,isManagement:'off'})).toBe(false);});
 test('late401 retains renewed session',()=>{cookies.set('token','renewed',{path:'/'});expect(expireIfCurrent('old')).toBe(false);expect(currentToken()).toBe('renewed');});
 test('confirmed shared close clears all three host cookies',async()=>{cookies.set('token','old',{path:'/'});cookies.set('user','operator',{path:'/'});cookies.set('IdVendedor','seller',{path:'/'});axios.mockResolvedValue({data:{browserClear:true,scope:'same-host-browser'}});await closeSharedSession();expect(currentToken()).toBeUndefined();expect(cookies.get('user')).toBeUndefined();expect(cookies.get('IdVendedor')).toBeUndefined();});
 test('late close acknowledgement never erases a new identity',async()=>{cookies.set('token','old',{path:'/'});let release;axios.mockImplementation(()=>new Promise(r=>release=r));const pending=closeSharedSession();cookies.set('token','renewed',{path:'/'});release({data:{browserClear:true,scope:'same-host-browser'}});await expect(pending).rejects.toThrow('sesión cambió');expect(currentToken()).toBe('renewed');});
