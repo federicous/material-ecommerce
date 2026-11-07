@@ -7,3 +7,5 @@ test('shows separate buttons only for granted modules', () => {
   expect(availableModules({ isAdmin: false, isManagement: false }, urls)).toEqual([]);
   expect(availableModules(null, urls)).toEqual([]);
 });
+
+test('launchers enter protected screens using the existing shared session',()=>expect(availableModules({isAdmin:true,isManagement:true},urls).map(item=>item.href)).toEqual(['https://shop.test:8081/ordenes','https://shop.test:8082/facturas']));
