@@ -272,9 +272,9 @@ export default function HomePage2() {
               <Typography
                 component="span"
                 variant="subtitle1"
-                color="inherit"
                 sx={{
                   position: "relative",
+                  color: item.logoTextColor || "inherit",
                   p: item.logoWidth ? 1 : 4,
                   pt: item.logoWidth ? 0.5 : 2,
                   pb: item.logoWidth ? 1 : (theme) => `calc(${theme.spacing(1)} + 6px)`,
@@ -282,7 +282,10 @@ export default function HomePage2() {
                 }}
               >
                 {item.name}
-                <ImageMarked className="MuiImageMarked-root" />
+                <ImageMarked
+                  className="MuiImageMarked-root"
+                  style={item.logoTextColor ? { backgroundColor: item.logoTextColor } : undefined}
+                />
               </Typography>
             </Image>
           </Link>
