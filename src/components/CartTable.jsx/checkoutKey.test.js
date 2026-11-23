@@ -1,0 +1,11 @@
+import {getCheckoutKey,clearCheckoutKey} from './checkoutKey';
+beforeEach(()=>sessionStorage.clear());
+test('reuses a key for the same cart in a different order',()=>{let n=0;const create=()=>`key-${++n}`;const a=[{id:'b',qty:1},{id:'a',qty:2}];expect(getCheckoutKey(sessionStorage,create,a,'u',null,false)).toBe('key-1');expect(getCheckoutKey(sessionStorage,create,[...a].reverse(),'u',null,false)).toBe('key-1');expect(n).toBe(1)});
+test('refuses changed cart and preserves the uncertain original key',()=>{getCheckoutKey(sessionStorage,()=> 'key-1',[{id:'a',qty:1}],'u',null,false);expect(()=>getCheckoutKey(sessionStorage,()=> 'key-2',[{id:'a',qty:2}],'u',null,false)).toThrow('CHECKOUT_CHANGED');expect(sessionStorage.getItem('brm-checkout-key')).toBe('key-1');clearCheckoutKey(sessionStorage);expect(sessionStorage.getItem('brm-checkout-key')).toBeNull()});
+test('does not reuse key for another user or budget',()=>{getCheckoutKey(sessionStorage,()=> 'key-1',[],'u',null,false);expect(()=>getCheckoutKey(sessionStorage,()=> 'key-2',[],'other',null,false)).toThrow();expect(()=>getCheckoutKey(sessionStorage,()=> 'key-2',[],'u',null,true)).toThrow()});
+
+test('detects changed product prices as well as quantities',()=>{getCheckoutKey(sessionStorage,()=> 'key-1',[{id:'a',qty:1,price:100}],'u',null,false);expect(()=>getCheckoutKey(sessionStorage,()=> 'key-2',[{id:'a',qty:1,price:200}],'u',null,false)).toThrow('CHECKOUT_CHANGED')});
+
+test('detects seller or discount changes for the selected customer',()=>{const a={email:'x@example.com',vendedor:'a',descuento:10};getCheckoutKey(sessionStorage,()=> 'key-1',[],'u',a,false);expect(()=>getCheckoutKey(sessionStorage,()=> 'key-2',[],'u',{...a,descuento:20},false)).toThrow('CHECKOUT_CHANGED')});
+test('does not persist unrelated user fields',()=>{getCheckoutKey(sessionStorage,()=> 'key',[],'user',{email:'x@example.com',password:'private'},false);expect(sessionStorage.getItem('brm-checkout-snapshot')).not.toContain('private')});
+test('does not invent a successful key when storage is unavailable',()=>{const storage={getItem(){throw new Error('unavailable')},setItem:jest.fn(),removeItem:jest.fn()};expect(()=>getCheckoutKey(storage,()=> 'key',[],'u',null,false)).toThrow('unavailable');expect(storage.setItem).not.toHaveBeenCalled()});

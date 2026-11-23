@@ -4,6 +4,7 @@ import { Link as DomLink, useNavigate } from 'react-router-dom';
 import { Delete } from '@material-ui/icons';
 import './CartTable.css';
 import axios from "axios";
+import { getCheckoutKey, clearCheckoutKey } from './checkoutKey';
 // import {config} from "../../config/config";
 import {config} from "../../config/config";
 import Cookies from "universal-cookie";
@@ -23,9 +24,8 @@ function ccyFormatOne(num) {
   let numFloat = parseFloat(num)
   return `${numFloat.toFixed(1)}`;
       }
-    
 
-const token = cookies.get("token");
+
 
 // let dolar = config.DOLAR;
 
@@ -41,11 +41,14 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   const [usuario, setUsuario] = React.useState('');
   const [descuento, setDescuento] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState(false);
+  const [updateRequired, setUpdateRequired] = React.useState(false);
+  const [checkoutChanged, setCheckoutChanged] = React.useState(false);
 	const cartContext = React.useContext(CartContext);
   const itemClass = cartContext.itemClassContext;
 	const {user, changeUser,IdVendedor}= cartContext;
-	// Backdrop or Loading spinner 
+	// Backdrop or Loading spinner
 	const [open, setOpen] = React.useState(false);
+  const orderInFlight = React.useRef(false);
   const [dolar, setDolar] = React.useState(0)
   const [presupuesto, setPresupuesto] = React.useState(false);
   const [expandedRows, setExpandedRows] = React.useState({});
@@ -57,9 +60,6 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
     }));
   };
 
-	const handleClose = () => {
-	  setOpen(false);
-	};
   let navigate = useNavigate();
 
   function calcularPrecio(precioConIva,iva,precio,usd,qty,oferta,precioOferta) {
@@ -72,9 +72,24 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   }
 
   let handleOrden = () => {
+    if (orderInFlight.current) return;
+    orderInFlight.current = true;
+    setErrorMessage(false);
+    setUpdateRequired(false);
+    setCheckoutChanged(false);
+    let checkoutKey;
+    try {
+      checkoutKey = getCheckoutKey(sessionStorage, () => crypto.randomUUID(), cart, user, usuario, presupuesto);
+    } catch (error) {
+      orderInFlight.current = false;
+      setCheckoutChanged(error.message === 'CHECKOUT_CHANGED');
+      setErrorMessage(true);
+      return;
+    }
     setOpen(true)
     let cancel = false;
 
+    const token = cookies.get("token");
     let configuration;
 
     if (usuario!=='') {
@@ -88,6 +103,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
         // url: `${config.SERVER}/api/order/user`,
         headers: {
           Authorization: `Bearer ${token}`,
+          "Idempotency-Key": checkoutKey,
         },
         data: usuario,
         withCredentials: true,
@@ -99,8 +115,9 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
         url: `${config.SERVER}/api/order`,
         headers: {
           Authorization: `Bearer ${token}`,
+          "Idempotency-Key": checkoutKey,
         },
-        withCredentials: true, 
+        withCredentials: true,
       }
     }
 
@@ -108,19 +125,26 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
       axios(configuration)
       .then((result) => {
         if (cancel) return;
-        console.log(result.data);
+        if (!result.data || !result.data.ordenId) {
+          setErrorMessage(true);
+          setOpen(false);
+          return;
+        }
         // setProducts([...result.data.allProducts])
         // setPagesCant(Math.ceil(result.data.total/pageSize))
         // cleanCart();
+        clearCheckoutKey(sessionStorage);
         setOpen(false)
-        navigate(`/alert/${result.data.ordenId}`, { replace: true });
+        navigate(`/alert/${result.data.ordenId}`, { replace: true, state: { notificationStatus: result.data.notificationStatus, cleanupPending: result.data.cleanupPending } });
       })
       .catch((error) => {
+        setUpdateRequired(error?.response?.status === 426);
         setErrorMessage(true)
         setOpen(false)
         error = new Error();
       })
-      return () => { 
+      .finally(() => { orderInFlight.current = false; })
+      return () => {
         cancel = true;
       }
   }
@@ -160,10 +184,10 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
   //       apiQuery.get(`/descuento?email=${user}`)
   //       .then((respuesta)=>{
   //         setDescuento(respuesta)
-  //       }) 
+  //       })
   //     }
   // }, [usuario])
-  
+
 // React.useEffect(() => {
 
 // console.log(cart);
@@ -272,7 +296,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
                           }
                         })()
                       }
-                    </Typography>                  
+                    </Typography>
                   </Box>
                   </DomLink>
                 </TableCell>
@@ -308,7 +332,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
                       </Box>
                       <Box sx={{color:"text.secondary"}}>
                       ({ccyFormatOne(parseFloat(typeof row.iva === "string" ? row.iva.replace(/,/g, '.').replace(/%/g, '') : row.iva))}%)
-                      </Box>         
+                      </Box>
                     </Box>
 
                   </TableCell>
@@ -344,7 +368,7 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
             <TableRow>
               <TableCell colSpan={3}>TOTAL</TableCell>
               <TableCell align="center">{ccyFormat((parseFloat(total)+parseFloat(ivaTotal)))}</TableCell>
-            </TableRow>            
+            </TableRow>
             </>}
           </TableBody>
         </Table>
@@ -396,34 +420,39 @@ const CartTable = ({cart, removeFromCart, total, ivaTotal, cleanCart}) => {
                     }
                     label="Presupuesto"
                   />
-                  {errorMessage && <Typography color="error" variant="caption">Error al enviar la orden. Intente nuevamente.</Typography>}  
+                  {errorMessage && <Typography color="error" variant="caption">{updateRequired ? 'Actualizá la aplicación antes de crear un pedido.' : 'No pudimos confirmar el pedido. Revisá tu historial antes de volver a enviarlo para evitar duplicados.'}</Typography>}
 
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={12}>
-                <Button sx={{ width:"100%"}} variant='contained' 
+                <Button sx={{ width:"100%"}} variant='contained'
                 onClick={handleOrden}
-                disabled={usuario ? false : true}
+                disabled={open || !usuario}
                 >
                   Enviar orden
                 </Button>
               </Grid>
             </Grid>
-        </Box>        
+        </Box>
 
       </> : <>
-      <Button sx={{my:3}} variant='contained' 
+      <Button sx={{my:3}} variant='contained'
       onClick={handleOrden}
+      disabled={open}
       >
         Enviar orden
       </Button>
-      
+      {errorMessage && <Typography color="error" variant="caption">{updateRequired ? 'Actualizá la aplicación antes de crear un pedido.' : 'No pudimos confirmar el pedido. Revisá tu historial antes de volver a enviarlo para evitar duplicados.'}</Typography>}
+
       </>}
 
+      {checkoutChanged && <Box sx={{ my: 2 }}>
+        <Typography color="error">El carrito o cliente cambió desde un intento anterior. Revisá el historial o consultá con tu vendedor antes de crear otro pedido.</Typography>
+        <Button onClick={() => { if (window.confirm('¿Confirmaste que el intento anterior no generó un pedido duplicado?')) { clearCheckoutKey(sessionStorage); setCheckoutChanged(false); setErrorMessage(false); } }}>Ya revisé el historial</Button>
+      </Box>}
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
-        onClick={handleClose}
         >
         <CircularProgress color="inherit" />
       </Backdrop>

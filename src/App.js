@@ -25,6 +25,7 @@ import { blue, green } from '@material-ui/core/colors';
 import { CartContext } from './components/CartContext/CartContext';
 import AlertMessage from './components/AlertMessage/AlertMessage';
 import Order from './components/Order/Order';
+import NotificationAdmin from './components/NotificationAdmin/NotificationAdmin';
 import Downloads from "./components/Downloads/Downloads"
 import PermanentDrawer2 from './components/NavBar/PermanentDrawer2'
 import { Box } from '@material-ui/system';
@@ -130,7 +131,8 @@ function App() {
 
                 <Route path="/" element={<ProtectedRoutes />}>
                   <Route exact path="/cart" element={<Cart />} />     
-                  <Route exact path="/order" element={<Order />} />     
+                  <Route exact path="/order" element={<Order />} />
+                  <Route exact path="/notifications" element={<NotificationAdmin />} />
                   <Route exact path="/downloads" element={<Downloads />} />     
                   <Route exact path="/alert/:message" element={<AlertMessage />} />     
                 </Route>

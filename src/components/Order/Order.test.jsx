@@ -1,0 +1,10 @@
+import React from 'react';
+import {render,screen} from '@testing-library/react';
+import '@testing-library/jest-dom';
+import {MemoryRouter} from 'react-router-dom';
+import Order from './Order';
+import ApiQuery from '../utils/apiQuery/apiQuery';
+jest.mock('../OrderTable/OrderTable',()=>()=> <div>Historial</div>);
+jest.mock('../utils/apiQuery/apiQuery', () => jest.fn());
+test('shows the notifications link to an administrator',async()=>{ApiQuery.mockImplementation(()=>({get:()=>Promise.resolve(true)}));render(<MemoryRouter><Order/></MemoryRouter>);expect(await screen.findByText('Notificaciones pendientes')).toHaveAttribute('href','/notifications')});
+test('does not show the link to other users',async()=>{ApiQuery.mockImplementation(()=>({get:()=>Promise.resolve(false)}));render(<MemoryRouter><Order/></MemoryRouter>);await screen.findByText('Historial');expect(screen.queryByText('Notificaciones pendientes')).toBeNull()});

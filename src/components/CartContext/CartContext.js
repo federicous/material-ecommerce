@@ -185,6 +185,10 @@ const CartContextProvider = ({children}) => {
 		setCart([])
 	}
 
+	function clearLocalCart() {
+		setCart([])
+	}
+
 	function changeUser(user) {
 		setUsuario(user)
 	}
@@ -343,6 +347,7 @@ let itemClassContext = new ItemClassContext();
 			addToCart,
 			removeFromCart,
 			cleanCart,
+			clearLocalCart,
 			total,
 			ivaTotal,
 			setModeTheme,
