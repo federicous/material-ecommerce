@@ -55,6 +55,27 @@ function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [dolar, setDolar] = React.useState(0)
+  const [mailStatus, setMailStatus] = React.useState(null);
+
+  React.useEffect(() => {
+    if (!open) return;
+    let active = true;
+    setMailStatus('loading');
+    apiQuery.get(`/api/order/${row._id || row.id}/my-notification`).then(result => {
+      if (active) setMailStatus(result && result.status ? result.status : 'error');
+    }).catch(() => { if (active) setMailStatus('error'); });
+    return () => { active = false; };
+  }, [open, row._id, row.id]);
+
+  const mailLabels = {
+    loading: 'Consultando estado del correo…',
+    pending: 'Correo pendiente de envío; se reintentará si corresponde.',
+    sending: 'Correo en proceso de envío.',
+    accepted: 'Correo aceptado por el proveedor. Esto no confirma su recepción.',
+    review: 'Correo con inconvenientes: contactá a BRM Tools para su revisión.',
+    unavailable: 'No hay información de envío disponible para este pedido.',
+    error: 'No se pudo consultar el estado del correo. Intentá nuevamente.',
+  };
 
   React.useEffect(() => {
     apiQuery.get(`/api/dolar`)
@@ -73,7 +94,7 @@ function Row(props) {
           <Button
             aria-label="expand row"
             size="small"
-            onClick={() => setOpen(!open)}
+            onClick={event => { event.stopPropagation(); setOpen(!open); }}
             sx={{color:"inherit"}}
           >
             {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
@@ -92,6 +113,7 @@ function Row(props) {
               <Typography variant="h6" gutterBottom component="div">
                 Orden ID: {row._id ? row._id : row.id} {row.presupuesto ? "(Presupuesto)" : ""} 
               </Typography>
+              <Typography role="status">{mailLabels[mailStatus] || ''}</Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
