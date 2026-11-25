@@ -9,7 +9,20 @@ export const cookieIdentity = () => JSON.stringify(tokenValues());
 export function assertCookies() { if (new Set(tokenValues()).size > 1) throw Object.assign(new Error('Hay cookies de sesión contradictorias. Cerrá la sesión compartida y volvé a ingresar.'), {sessionConflict:true}); }
 export function clearSession() { for (const name of ['token','user','IdVendedor']) { cookies.remove(name,{path:'/'}); if(window.location.hostname.includes('.')&&!/^[0-9.]+$/.test(window.location.hostname))cookies.remove(name,{path:'/',domain:window.location.hostname}); } window.dispatchEvent(new Event(SESSION_EVENT)); }
 export function expireIfCurrent(requestToken) { if (new Set(tokenValues()).size > 1 || currentToken() !== requestToken) return false; clearSession(); return true; }
-export function establishSession(data) { if (typeof data?.token !== 'string' || !data.token || typeof data.email !== 'string') throw Error('Respuesta de autenticación inválida'); const options={path:'/',secure:window.location.protocol==='https:',sameSite:'lax',maxAge:3600}; for (const [name,value] of Object.entries({token:data.token,user:data.email,IdVendedor:data.IdVendedor || ''})) cookies.set(name,value,options); window.dispatchEvent(new Event(SESSION_EVENT)); }
+export function establishSession(data) {
+  if (typeof data?.token !== 'string' || !data.token || typeof data.email !== 'string') {
+    throw Error('Respuesta de autenticación inválida');
+  }
+  const reportedAge = data.sessionMaxAgeSeconds;
+  // Allow rolling deployments and cap the browser lifetime at one workday.
+  const maxAge = Number.isInteger(reportedAge) && reportedAge > 0 && reportedAge <= 8 * 60 * 60
+    ? reportedAge : 60 * 60;
+  const options = {path: '/', secure: window.location.protocol === 'https:', sameSite: 'lax', maxAge};
+  for (const [name, value] of Object.entries({token: data.token, user: data.email, IdVendedor: data.IdVendedor || ''})) {
+    cookies.set(name, value, options);
+  }
+  window.dispatchEvent(new Event(SESSION_EVENT));
+}
 export async function closeSharedSession() { const token=currentToken(),identity=cookieIdentity(); const response=await axios({method:'post',timeout:15000,url:config.SERVER+'/api/auth/browser-logout',withCredentials:true,headers:token?{Authorization:'Bearer '+token}:{}}); if (response?.data?.browserClear!==true || response.data.scope!=='same-host-browser') throw Error('No se confirmó el alcance de cierre. Reintentá antes de cambiar de usuario.'); if (currentToken() && (currentToken()!==token || cookieIdentity()!==identity)) throw Error('La sesión cambió durante el cierre. Revisá las aplicaciones.'); clearSession(); }
 export const isAdministrator = user => [true,'true','on'].includes(user?.isAdmin);
 export const isManagementUser = user => [true,'true','on'].includes(user?.isManagement);
