@@ -1,190 +1,76 @@
-import ItemList from '../ItemList/ItemList'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react';
 import { useParams } from 'react-router';
-// import { getFirestore } from '../../services/getFirebase';
-import { Typography, Box, Pagination, Stack, CircularProgress, Button, Drawer, Grid, Skeleton, Card, CardContent } from '@material-ui/core'
-import axios from "axios";
-// import {config} from "../../config/config"
-import {config} from "../../config/config"
-import Cookies from "universal-cookie";
-import ProductFilters from '../ProductFilters/ProductFilters';
+import { Typography, Box, CircularProgress, Button, Drawer } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import ItemList from '../ItemList/ItemList';
+import ProductFilters from '../ProductFilters/ProductFilters';
+import useProductPages from './useProductPages';
 
-const cookies = new Cookies();
+export function SearchResults({ term, inDrawer = false }) {
+  const { products, status, page, hasMore, sentinel } = useProductPages(term.length >= 3 ? `/api/search/${encodeURIComponent(term)}` : null);
+  const [filters, setFilters] = useState({ lista: [], label: [] });
+  const [filterOpen, setFilterOpen] = useState(false);
+  const filteredProducts = products.filter(product =>
+    (!filters.lista.length || filters.lista.includes(product.lista)) &&
+    (!filters.label.length || filters.label.includes(product.label))
+  );
 
-const ItemListContainer = () => {
+  return (
+    <>
+      <Box sx={{ display: 'flex', justifyContent: inDrawer ? 'flex-end' : 'space-evenly', alignItems: 'center', mb: 2, width: '100%' }}>
+        {!inDrawer && <Typography variant="h5">Busqueda: "{term}"</Typography>}
+        <Button
+          variant="outlined"
+          size={inDrawer ? 'small' : 'medium'}
+          startIcon={<FilterListIcon />}
+          onClick={() => setFilterOpen(true)}
+        >
+          Filtrar
+        </Button>
+      </Box>
 
-	const {patron} = useParams()
-	const [products, setProducts] = useState([])
-	const [filteredProducts, setFilteredProducts] = useState([])
-	const [page, setPage] = useState(1);
-	const [hasMore, setHasMore] = useState(true);
-	const [loading, setLoading] = useState(false);
-	const [initialLoad, setInitialLoad] = useState(true);
-	const pageSize = 12;
-	
-	const [errorMessage, setErrorMessage] = useState(false);
-	
-	// Filter state
-	const [filters, setFilters] = useState({ lista: [], label: [] });
-	const [filterOpen, setFilterOpen] = useState(false);
+      <Drawer anchor="right" open={filterOpen} onClose={() => setFilterOpen(false)}>
+        <Box width={300} p={2} role="presentation">
+          <ProductFilters products={products} filters={filters} onChange={setFilters} />
+          <Box display="flex" justifyContent="flex-end" mt={2}>
+            <Button variant="contained" color="primary" onClick={() => setFilterOpen(false)}>
+              Ver Resultados
+            </Button>
+          </Box>
+        </Box>
+      </Drawer>
 
-	const observer = React.useRef();
+      {products.length > 0 && <ItemList products={filteredProducts} />}
 
-	const lastElementRef = React.useCallback(node => {
-		if (loading) return;
-		if (observer.current) observer.current.disconnect();
-		observer.current = new IntersectionObserver(entries => {
-			if (entries[0].isIntersecting && hasMore) {
-				setPage(prevPage => prevPage + 1);
-			}
-		});
-		if (node) observer.current.observe(node);
-	}, [loading, hasMore]);
-
-	const token = cookies.get("token");
-
-	// Reset on search change
-	useEffect(() => {
-		setPage(1);
-		setProducts([]);
-		setHasMore(true);
-		setInitialLoad(true);
-	}, [patron]);
-
-	useEffect(() => {
-		let cancel = false;
-		if (!patron || patron.trim().length < 3) {
-			setProducts([]);
-			setLoading(false);
-			setInitialLoad(false);
-			return;
-		}
-		setLoading(true);
-		
-		const configuration = {
-			method: "get",
-			url: `${config.SERVER}/api/search/${patron}?page=${page}&pageSize=${pageSize}`,
-			headers: {
-			  Authorization: `Bearer ${token}`,
-			},
-			withCredentials: true,
-		      };
-		      
-		      axios(configuration)
-			.then((result) => {
-				if (cancel) return;
-				const newProducts = result.data.allProducts;
-				const total = result.data.total;
-				
-				setProducts(prev => {
-					// Detect if we are appending or replacing (based on page for safety, or just logic)
-					// If page is 1, replace. Else append.
-					return page === 1 ? newProducts : [...prev, ...newProducts];
-				});
-
-				const totalPages = Math.ceil(total / pageSize);
-				if (page >= totalPages) {
-					setHasMore(false);
-				}
-				
-				setLoading(false);
-				setInitialLoad(false);
-			})
-			.catch((error) => {
-				setErrorMessage(true)
-          		setLoading(false);
-				setInitialLoad(false);
-			})
-			return () => { 
-				cancel = true;
-			}
-	}, [patron, page]);
-	
-	// Filtering Effect
-	useEffect(() => {
-		let filtered = products;
-
-		if (filters.lista && filters.lista.length > 0) {
-			filtered = filtered.filter(product => filters.lista.includes(product.lista));
-		}
-
-		if (filters.label && filters.label.length > 0) {
-			filtered = filtered.filter(product => filters.label.includes(product.label));
-		}
-
-		setFilteredProducts(filtered);
-	}, [products, filters]);
-
-	const toggleFilterDrawer = (open) => (event) => {
-		if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-		  return;
-		}
-		setFilterOpen(open);
-	};
-
-	return (
-		<>
-		<Box style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', marginBottom: '16px', width: '100%' }}>
-			<Typography variant='h5'>Busqueda: "{patron}"</Typography>
-			<Button 
-				variant="outlined" 
-				startIcon={<FilterListIcon />} 
-				onClick={toggleFilterDrawer(true)}
-			>
-				Filtrar
-			</Button>
-		</Box>
-
-		<Drawer
-			anchor="right"
-			open={filterOpen}
-			onClose={toggleFilterDrawer(false)}
-		>
-			<Box
-				width={300} p={2}
-				role="presentation"
-			>
-				<ProductFilters 
-					products={products} 
-					filters={filters} 
-					onChange={setFilters} 
-				/>
-				<Box display="flex" justifyContent="flex-end" mt={2}>
-					<Button variant="contained" color="primary" onClick={toggleFilterDrawer(false)}>
-						Ver Resultados
-					</Button>
-				</Box>
-			</Box>
-		</Drawer>
-
-		{initialLoad && page === 1 ? (
-			<Box sx={{ display: 'flex', mt:"30vh", height:"100%", justifyContent: 'center' }}>
-				<CircularProgress />
-			</Box>
-		) : (
-			<>
-				<ItemList products={filteredProducts} />
-				
-				{/* Sentinel for Infinite Scroll */}
-				{!loading && hasMore && <div ref={lastElementRef} style={{ height: '20px', margin: '10px 0' }} />}
-				
-				{/* Bottom Loader */}
-				{loading && page > 1 && (
-					<Box display="flex" justifyContent="center" my={4}>
-						<CircularProgress disableShrink/>
-					</Box>
-				)}
-				
-				{!hasMore && products.length > 0 && (
-					<Box display="flex" justifyContent="center" my={2}>
-						<Typography variant="body2" color="textSecondary">No hay más productos</Typography>
-					</Box>
-				)}
-			</>
-		)}
-		</>
-	)
+      {status === 'loading' && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: page === 1 ? '30vh' : 4 }}>
+          <CircularProgress aria-label="Cargando resultados" />
+        </Box>
+      )}
+      {status === 'error' && (
+        <Typography role="alert">
+          {page === 1
+            ? 'No se pudo completar la búsqueda. Probá con otro término.'
+            : 'No se pudieron cargar más resultados.'}
+        </Typography>
+      )}
+      {status === 'success' && (
+        <>
+          {products.length === 0 && <Typography>Sin resultados</Typography>}
+          {hasMore && <div ref={sentinel} style={{ height: '20px', margin: '10px 0' }} />}
+          {!hasMore && products.length > 0 && (
+            <Box display="flex" justifyContent="center" my={2}>
+              <Typography variant="body2" color="textSecondary">No hay más productos</Typography>
+            </Box>
+          )}
+        </>
+      )}
+    </>
+  );
 }
 
-export default ItemListContainer
+export default function ItemListContainerSearch() {
+  const { patron } = useParams();
+  const term = patron?.trim() || '';
+  return <SearchResults key={term} term={term} />;
+}
